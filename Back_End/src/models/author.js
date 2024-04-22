@@ -9,12 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Author.belongsToMany(models.Books, { through: "Book_Authors" });
     }
   }
   //object relational mapping
   Author.init(
     {
       author_name: DataTypes.STRING,
+      address: DataTypes.STRING,
+      phone: DataTypes.STRING,
+      bio: DataTypes.STRING,
     },
     {
       sequelize,

@@ -9,13 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Order_Book.belongsTo(models.User);
+      Order_Book.hasMany(models.Payment);
+      Order_Book.hasMany(models.Order_Detail);
     }
   }
   //object relational mapping
   Order_Book.init(
     {
       order_date: DataTypes.STRING,
+      totalPrice: DataTypes.INTEGER,
       description: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,

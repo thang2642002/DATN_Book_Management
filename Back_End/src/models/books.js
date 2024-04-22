@@ -9,15 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Books.belongsToMany(models.Suppliers, { through: "Book_Suppliers" });
+      Books.belongsToMany(models.Author, { through: "Book_Authors" });
+      Books.belongsTo(models.Genres);
+      Books.hasMany(models.Transaction);
+      Books.hasMany(models.Order_Detail);
+      Books.hasMany(models.Review);
+      Books.hasMany(models.Cart_Item);
     }
   }
   //object relational mapping
   Books.init(
     {
-      name_book: DataTypes.STRING,
+      title: DataTypes.STRING,
       author: DataTypes.STRING,
-      genres: DataTypes.STRING,
+      genresId: DataTypes.INTEGER,
       price: DataTypes.INTEGER,
+      quantity: DataTypes.INTEGER,
     },
     {
       sequelize,

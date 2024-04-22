@@ -9,9 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       quantity: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       unit_price: {
+        type: Sequelize.INTEGER,
+      },
+      description: {
+        type: Sequelize.STRING,
+      },
+      orderId: {
+        type: Sequelize.INTEGER,
+      },
+      bookId: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

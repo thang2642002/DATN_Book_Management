@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Suppliers.belongsToMany(models.Books, { through: "Book_Suppliers" });
     }
   }
   //object relational mapping
@@ -17,6 +18,8 @@ module.exports = (sequelize, DataTypes) => {
       suppliers_name: DataTypes.STRING,
       constact_info: DataTypes.STRING,
       description: DataTypes.STRING,
+      phone: DataTypes.STRING,
+      email: DataTypes.STRING,
     },
     {
       sequelize,

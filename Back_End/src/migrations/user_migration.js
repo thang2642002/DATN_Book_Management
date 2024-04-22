@@ -18,7 +18,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       phone: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+      },
+      address: {
+        type: Sequelize.STRING,
       },
       role: {
         type: Sequelize.STRING,
