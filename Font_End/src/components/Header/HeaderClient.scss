@@ -1,0 +1,38 @@
+.container-header {
+  background-color: #0a68ff;
+  padding: 10px 0;
+  .logo {
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .search {
+    .btn-search {
+      color: #fff;
+      border: none;
+      outline: none;
+      background-color: green;
+      &::hover {
+        opacity: 0.8 !important;
+      }
+    }
+  }
+  .content-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+
+    .btn-header {
+      background-color: transparent;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .icon {
+      margin: 0 5px;
+      font-size: 18px;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+.catagory-container {
+  .catagory-content {
+    display: flex;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px 4px 70px 4px;
+    margin: 16px 0px 0px 0px;
+    align-items: center;
+    justify-content: space-around;
+
+    a {
+      text-decoration: none;
+    }
+
+    .catagory-item {
+      max-width: 115px;
+      max-height: 46px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        width: 46px;
+        height: 46px;
+      }
+      .title-catagory {
+        text-align: center;
+        color: #000;
+        padding-top: 5px;
+      }
+    }
+  }
+}

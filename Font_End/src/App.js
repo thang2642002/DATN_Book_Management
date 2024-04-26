@@ -1,16 +1,36 @@
-import Header from "./components/Admin/Header/Header";
-import { Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { routers } from "./routers/index";
+import DefaultHeader from "./components/DefaultHeader/DefaultHeader";
 import "./App.scss";
+import { Fragment } from "react";
+
+
 function App() {
   return (
     <div className="app-container">
       <div className="header-container">
-        <Header />
+        <Routes>
+          {routers.map((route) => {
+            const Page = route.page;
+            const Layout = route.isShowHeader ? DefaultHeader : Fragment;
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={
+                  <Layout>
+                    <Page />
+                  </Layout>
+                }
+              />
+            );
+          })}
+        </Routes>
       </div>
-      <div className="sidebar_container"></div>
-      <div className="content-container">
-        <Outlet />
+      <div className="sliderbar_container">
+    
       </div>
+      <div className="content-container"></div>
     </div>
   );
 }
