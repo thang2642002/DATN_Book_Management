@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import { routers } from "./routers/index";
 import DefaultHeader from "./components/DefaultHeader/DefaultHeader";
 import "./App.scss";
-import { Fragment } from "react";
-
+import { Fragment, useEffect } from "react";
+import axios from "axios";
 
 function App() {
   return (
@@ -27,9 +27,7 @@ function App() {
           })}
         </Routes>
       </div>
-      <div className="sliderbar_container">
-    
-      </div>
+      <div className="sliderbar_container"></div>
       <div className="content-container"></div>
     </div>
   );

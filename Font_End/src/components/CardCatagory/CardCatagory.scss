@@ -1,0 +1,24 @@
+.card-catagogy-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .card-catagogy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    img {
+      width: 100px;
+      height: 100px;
+    }
+    .title-product {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

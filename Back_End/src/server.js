@@ -2,53 +2,35 @@ import express from "express";
 import configViewEngine from "./config/viewEngine";
 import initWebRoutes from "./routes/web";
 import apiWebRoutes from "./routes/api";
+import configCors from "./config/cors";
 require("dotenv").config();
-import bodyParser from "body-parser";
 // import connection from "./config/connectDB";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-//config cors
-app.use(function (req, res, next) {
-  // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", process.env.REACT_URL);
+// Config cors
+configCors(app);
 
-  // Request methods you wish to allow
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
+// Config view engine
+configViewEngine(app);
 
-  // Request headers you wish to allow
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type, Authorization"
-  );
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader("Access-Control-Allow-Credentials", true);
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  // Pass to next layer of middleware
+// Middleware để log request body
+app.use((req, res, next) => {
+  console.log("Headers:", req.headers);
+  console.log("Request Body:", req.body);
   next();
 });
 
-//config view engine
-configViewEngine(app);
+// Config body-parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-//config body-parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-//test connection db
+// Test connection db
 // connection();
 
-//init web routes
-// initWebRoutes(app);
+// Init web routes
+initWebRoutes(app);
 apiWebRoutes(app);
 
 app.listen(PORT, () => {

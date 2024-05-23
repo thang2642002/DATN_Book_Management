@@ -1,0 +1,18 @@
+.catagory-product-header {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+
+  .icon-menu {
+    img {
+      width: 100%;
+    }
+  }
+  .title-catagory {
+    margin-left: 10px;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #212121;
+    letter-spacing: 0px;
+  }
+}

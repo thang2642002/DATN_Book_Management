@@ -11,7 +11,7 @@ module.exports = {
       suppliers_name: {
         type: Sequelize.STRING,
       },
-      constact_info: {
+      contact_info: {
         type: Sequelize.STRING,
       },
       description: {

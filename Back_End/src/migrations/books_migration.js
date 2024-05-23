@@ -11,8 +11,11 @@ module.exports = {
       title: {
         type: Sequelize.STRING,
       },
-      author: {
+      img_book: {
         type: Sequelize.STRING,
+      },
+      authorId: {
+        type: Sequelize.INTEGER,
       },
       genresId: {
         type: Sequelize.INTEGER,
@@ -21,6 +24,9 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       quantity: {
+        type: Sequelize.INTEGER,
+      },
+      sales: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

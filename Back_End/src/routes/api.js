@@ -1,19 +1,15 @@
-import express from "express";
-import controller from "../controller/controller";
-
-const router = express.Router();
-
-/**
- *
- * @param {*} app : express app
- */
+import apiUser from "./apiUser";
+import apiProduct from "./apiProduct";
+import apiGenres from "./apiGenres";
+import apiAuthor from "./apiAuthor";
+import apiSuppliers from "./apiSuppliers";
 
 const apiWebRoutes = (app) => {
-  //path, handler
-  router.get("/", controller.handleHelloWord);
-  router.get("/user", controller.handleUserPage);
-
-  return app.use("/", router);
+  app.use("/api/users", apiUser);
+  app.use("/api/products", apiProduct);
+  app.use("/api/genres", apiGenres);
+  app.use("/api/author", apiAuthor);
+  app.use("/api/suppliers", apiSuppliers);
 };
 
 export default apiWebRoutes;

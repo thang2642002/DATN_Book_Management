@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Author.belongsToMany(models.Books, { through: "Book_Authors" });
+      Author.hasMany(models.Books, {
+        foreignKey: "authorId",
+      });
     }
   }
   //object relational mapping

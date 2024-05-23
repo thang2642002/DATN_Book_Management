@@ -1,0 +1,28 @@
+.Cart_flashsale {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+  img {
+    max-width: 100%; /* Đảm bảo hình ảnh không vượt quá phần tử container */
+    margin-bottom: 10px; /* Khoảng cách giữa hình ảnh và văn bản */
+  }
+  .title {
+    font-size: 16px;
+    min-height: 2.8rem;
+    margin-left: 10px;
+  }
+  .special-priceprice {
+    font-size: 16px;
+    color: #c92127;
+    margin-left: 10px;
+    font-weight: 600;
+    margin: 0 10px;
+  }
+  .old-price {
+    font-size: 14px;
+    color: #999; /* Màu chữ cho giá cũ */
+    text-decoration: line-through; /* Gạch ngang giá cũ */
+    margin-left: 10px;
+  }
+}

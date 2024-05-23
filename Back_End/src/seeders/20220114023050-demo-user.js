@@ -16,22 +16,28 @@ module.exports = {
       "User",
       [
         {
-          email: "John Doe",
-          password: "123",
+          email: "tranthang0369@gmail.com",
+          password: "12345",
           username: "fake11",
-          phone: 123456789,
+          phone: "0342925377",
+          address: "HN",
+          role: "admin",
         },
         {
           email: "John Doe2",
           password: "123",
           username: "fake12",
           phone: 123456789,
+          address: "SG",
+          role: "user",
         },
         {
           email: "John Doe3",
           password: "123",
           username: "fake13",
           phone: 123456789,
+          address: "TP.HCM",
+          role: "user",
         },
       ],
       {}

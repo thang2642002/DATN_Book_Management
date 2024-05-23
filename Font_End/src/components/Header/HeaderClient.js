@@ -8,9 +8,15 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import "./HeaderClient.scss";
 
 const HeaderClient = () => {
+  const navigate = useNavigate();
+
+  const handleLoginAccount = () => {
+    navigate("/sign-in");
+  };
   return (
     <div className="container-header">
       <Container>
@@ -44,7 +50,7 @@ const HeaderClient = () => {
                   Thông báo
                 </button>
               </div>
-              <div className="cart">
+              <div className="cart" onClick={handleLoginAccount}>
                 <button variant="light" className="btn-header">
                   <MdAccountCircle className="icon" />
                   Tài Khoản
