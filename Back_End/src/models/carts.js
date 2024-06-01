@@ -9,8 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Carts.belongsTo(models.User);
-      Carts.hasMany(models.Cart_Item);
+      Carts.belongsTo(models.User, { foreignKey: "userId" });
+      Carts.hasMany(models.Cart_Item, { foreignKey: "cartId" });
+      Carts.belongsToMany(models.Books, {
+        through: models.Cart_Item,
+        foreignKey: "cartId",
+      });
     }
   }
   //object relational mapping
@@ -18,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       userId: DataTypes.INTEGER,
       createDate: DataTypes.STRING,
+      quantity: DataTypes.INTEGER,
     },
     {
       sequelize,

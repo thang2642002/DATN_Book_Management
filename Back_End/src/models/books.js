@@ -9,10 +9,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "authorId",
       });
       Books.belongsTo(models.Genres, { foreignKey: "genresId" });
-      Books.hasMany(models.Transaction);
-      Books.hasMany(models.Order_Detail);
-      Books.hasMany(models.Review);
-      Books.hasMany(models.Cart_Item);
+      Books.hasMany(models.Transaction, { foreignKey: "bookId" });
+      Books.hasMany(models.Order_Detail, { foreignKey: "bookId" });
+      Books.hasMany(models.Review, { foreignKey: "bookId" });
+      Books.hasMany(models.Cart_Item, { foreignKey: "bookId" });
+      Books.belongsToMany(models.Carts, {
+        through: models.Cart_Item,
+        foreignKey: "bookId",
+      });
     }
   }
 

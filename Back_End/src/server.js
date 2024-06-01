@@ -3,6 +3,8 @@ import configViewEngine from "./config/viewEngine";
 import initWebRoutes from "./routes/web";
 import apiWebRoutes from "./routes/api";
 import configCors from "./config/cors";
+import bodyParser from "body-parser";
+
 require("dotenv").config();
 // import connection from "./config/connectDB";
 
@@ -17,12 +19,15 @@ configViewEngine(app);
 
 // Middleware để log request body
 app.use((req, res, next) => {
+  // console.log("Request Body:", req.body); // Log body của yêu cầu
   next();
 });
 
 // Config body-parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 
 // Test connection db
 // connection();

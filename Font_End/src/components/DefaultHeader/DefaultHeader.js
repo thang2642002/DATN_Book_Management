@@ -1,10 +1,11 @@
-import Header from "../Header/Header";
 import HeaderClient from "../Header/HeaderClient";
-function DefaultHeader({ children }) {
+import { Outlet } from "react-router-dom";
+
+function DefaultHeader() {
   return (
     <div>
       <HeaderClient />
-      {children}
+      <Outlet />
     </div>
   );
 }

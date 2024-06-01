@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       order_date: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
       },
       description: {
         type: Sequelize.STRING,

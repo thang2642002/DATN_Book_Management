@@ -47,8 +47,26 @@ const getAllProductById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  const { title, img_book, authorId, genresId, price, quantity, sales } =
-    req.body;
+  const {
+    title,
+    img_book,
+    authorId,
+    genresId,
+    price,
+    quantity,
+    sales,
+    supplierIds,
+  } = req.body;
+  console.log(
+    title,
+    img_book,
+    authorId,
+    genresId,
+    price,
+    quantity,
+    sales,
+    supplierIds
+  );
 
   try {
     if (
@@ -72,7 +90,8 @@ const createProduct = async (req, res) => {
       genresId,
       price,
       quantity,
-      sales
+      sales,
+      supplierIds
     );
     console.log(dataProduct);
     if (dataProduct) {

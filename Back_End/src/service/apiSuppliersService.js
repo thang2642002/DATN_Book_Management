@@ -1,54 +1,53 @@
-import db from "../models/index";
-import { Op } from "sequelize";
-
-const getSuppliersByName = async (name) => {
-  try {
-    const nameSuppliers = await db.Suppliers.findAll({
-      where: {
-        suppliers_name: {
-          [Op.like]: `%${name}%`,
-        },
-      },
-    });
-    return nameSuppliers;
-  } catch (error) {
-    console.error("Error fetching suppliers by name: ", error);
-    throw error;
-  }
-};
+const db = require("../models");
 
 const getAllSuppliers = async () => {
   try {
-    const supplier = await db.Suppliers.findAll();
-    if (!supplier) {
-      return null;
-    }
-    return supplier;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getSuppliersById = async (id) => {
-  try {
-    let supplier = await db.Suppliers.findOne({
-      where: { id: id },
+    const listSupplier = await db.Suppliers.findAll({
+      include: [
+        {
+          model: db.Books,
+          // through: {
+          //   model: db.Book_Suppliers,
+          //   attributes: [],
+          // },
+        },
+      ],
     });
-    if (!supplier) {
-      return null;
-    }
-    return supplier;
+    return listSupplier;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
-const createSuppliers = async (
+const getSupplierById = async (id) => {
+  try {
+    const supplier = await db.Suppliers.findOne({
+      where: { id: id },
+      include: [
+        {
+          model: db.Books,
+          through: {
+            model: db.Book_Suppliers,
+            attributes: [],
+          },
+        },
+      ],
+    });
+    return supplier;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const createSupplier = async (
   suppliers_name,
   contact_info,
   description,
   phone,
-  email
+  email,
+  bookIds
 ) => {
   try {
     const newSupplier = await db.Suppliers.create({
@@ -58,52 +57,65 @@ const createSuppliers = async (
       phone,
       email,
     });
-    if (!newSupplier) {
-      return null;
+
+    // Tạo mối quan hệ với các books
+    if (bookIds && bookIds.length > 0) {
+      await newSupplier.setBooks(bookIds);
     }
+
     return newSupplier;
   } catch (error) {
-    console.error("Error creating supplier: ", error);
-  }
-};
-
-const updateSuppliers = async (id, dataSuppliers) => {
-  try {
-    const idSuppliers = await db.Suppliers.findOne({
-      where: {
-        id: id,
-      },
-    });
-    if (!idSuppliers) {
-      return null;
-    }
-    await idSuppliers.update(dataSuppliers);
-    return idSuppliers;
-  } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
-const deleteSuppliers = async (id) => {
+const updateSupplier = async (id, dataUpdate) => {
   try {
-    const supplier = await db.Suppliers.findOne({
-      id: id,
-    });
+    const supplier = await db.Suppliers.findByPk(id);
     if (!supplier) {
       return null;
     }
-    await supplier.destroy();
+
+    const { bookIds, ...supplierData } = dataUpdate;
+
+    await supplier.update(supplierData);
+
+    // Cập nhật mối quan hệ với các books
+    if (bookIds && bookIds.length > 0) {
+      await supplier.setBooks(bookIds);
+    }
+
     return supplier;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw new Error("Failed to update supplier");
+  }
+};
+
+const removeSupplier = async (supplierId) => {
+  try {
+    const supplier = await db.Suppliers.findByPk(supplierId);
+    if (!supplier) {
+      return false;
+    }
+
+    // Xóa tất cả các mối quan hệ của nhà cung cấp với sách trong bảng liên kết
+    await db.Book_Suppliers.destroy({ where: { supplierId: supplierId } });
+
+    // Sau đó xóa nhà cung cấp
+    await supplier.destroy();
+    return true;
+  } catch (error) {
+    console.error("Error deleting supplier:", error);
+    throw new Error("Delete supplier failed");
   }
 };
 
 module.exports = {
-  getSuppliersByName,
   getAllSuppliers,
-  getSuppliersById,
-  createSuppliers,
-  updateSuppliers,
-  deleteSuppliers,
+  getSupplierById,
+  createSupplier,
+  updateSupplier,
+  removeSupplier,
 };

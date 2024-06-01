@@ -20,20 +20,62 @@ const getUserById = async (userId) => {
   }
 };
 
-const createUser = async (email, password, username, address, phone, role) => {
-  const user = await db.User.create({
-    email,
-    password,
-    username,
-    address,
-    phone,
-    role,
-  });
-  if (user) {
+const createUser = async (
+  email,
+  password,
+  username,
+  address,
+  phone,
+  role,
+  avatar = req.body.base64Image
+) => {
+  try {
+    const checkEmailExist = await db.User.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (checkEmailExist) {
+      return {
+        status: 400,
+        message: "Email already exists",
+      };
+    }
+
+    let base64Avatar = null;
+    if (avatar) {
+      // Chuyển đổi avatar thành base64 nếu nó tồn tại
+      base64Avatar = avatar.toString("base64");
+    }
+
+    const user = await db.User.create({
+      email,
+      password,
+      username,
+      address,
+      phone,
+      role,
+      avatar: base64Avatar, // Lưu base64Avatar vào cơ sở dữ liệu
+    });
+    console.log("user", user);
+    if (user) {
+      return {
+        status: 200,
+        message: "User created successfully",
+        data: user,
+      };
+    } else {
+      return {
+        status: 500,
+        message: "Failed to create user",
+      };
+    }
+  } catch (error) {
     return {
-      status: 200,
-      message: "Create User the successs",
-      data: user,
+      status: 500,
+      message: "An error occurred",
+      error: error.message,
     };
   }
 };

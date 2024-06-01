@@ -49,8 +49,9 @@ const SignInPage = () => {
   const handleLogin = async () => {
     if (checkInputLogin()) {
       let userLogin = await Login(email, password);
-      toast(userLogin.data.message);
-      if (userLogin.data.data) {
+      console.log("check login: ", userLogin);
+      toast(userLogin.message);
+      if (userLogin.data) {
         setTimeout(() => {
           navigate("/");
         }, 4000);

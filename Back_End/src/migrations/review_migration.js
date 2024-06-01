@@ -15,13 +15,13 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       rating: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       comment: {
         type: Sequelize.STRING,
       },
       reviewDate: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,

@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Cart_Item.belongsTo(models.Books);
-      Cart_Item.belongsTo(models.Carts);
+      Cart_Item.belongsTo(models.Books, { foreignKey: "bookId" });
+      Cart_Item.belongsTo(models.Carts, { foreignKey: "cartId" });
     }
   }
   //object relational mapping
@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       cartId: DataTypes.INTEGER,
       bookId: DataTypes.INTEGER,
-      quantity: DataTypes.INTEGER,
     },
     {
       sequelize,

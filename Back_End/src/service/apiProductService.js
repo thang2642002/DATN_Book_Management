@@ -10,6 +10,7 @@ const getAllProducts = async () => {
         {
           model: db.Author,
         },
+        { model: db.Suppliers },
       ],
     });
     if (!listProduct) {
@@ -27,8 +28,15 @@ const getAllProductById = async (id) => {
       where: {
         id: id,
       },
-      include: db.Genres,
-      include: db.Author,
+      include: [
+        {
+          model: db.Genres,
+        },
+        {
+          model: db.Author,
+        },
+        { model: db.Suppliers },
+      ],
     });
     if (!productById) {
       return null;
@@ -46,26 +54,38 @@ const createProduct = async (
   genresId,
   price,
   quantity,
-  sales
+  sales,
+  supplierIds
 ) => {
+  let transaction;
   try {
+    transaction = await db.sequelize.transaction();
     const genres = await db.Genres.findByPk(genresId);
     if (!genres) {
       return false;
     }
 
-    let dataProduct = await db.Books.create({
-      title,
-      img_book,
-      authorId,
-      genresId,
-      price,
-      quantity,
-      sales,
-    });
+    let dataProduct = await db.Books.create(
+      {
+        title,
+        img_book,
+        authorId,
+        genresId,
+        price,
+        quantity,
+        sales,
+      },
+      { transaction }
+    );
+    if (supplierIds && supplierIds.length > 0) {
+      await dataProduct.addSuppliers(supplierIds, { transaction });
+    }
+    await transaction.commit();
     return dataProduct;
   } catch (error) {
-    console.log(error);
+    if (transaction) await transaction.rollback();
+    console.error(error);
+    throw error;
   }
 };
 
@@ -79,6 +99,16 @@ const updateProduct = async (id, dataUpdate) => {
 
     await product.update(dataUpdate);
     console.log("checkUpdate", dataUpdate);
+
+    // Kiểm tra nếu có supplierIds được cung cấp trong dữ liệu cập nhật
+    if (dataUpdate.supplierIds && Array.isArray(dataUpdate.supplierIds)) {
+      // Xóa tất cả các mối quan hệ cũ với các nhà cung cấp
+      await product.removeSuppliers();
+
+      // Thêm các mối quan hệ mới với các nhà cung cấp được cung cấp
+      await product.addSuppliers(dataUpdate.supplierIds);
+    }
+
     return product;
   } catch (error) {
     console.error(error);
@@ -92,6 +122,7 @@ const removeProduct = async (productId) => {
     if (!product) {
       return false;
     }
+    await db.Book_Suppliers.destroy({ where: { bookId: productId } });
     await product.destroy();
     return true;
   } catch (error) {

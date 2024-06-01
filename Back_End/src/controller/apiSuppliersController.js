@@ -1,170 +1,151 @@
-import apiSuppliersService from "../service/apiSuppliersService";
+const apiSupplierService = require("../service/apiSuppliersService");
 
-const getSuppliersByName = async (req, res) => {
-  const { suppliers_name: name } = req.body;
-  console.log("check name", name);
-
-  if (!name) {
-    return res.status(400).json({
-      message: "Supplier name is required",
-    });
-  }
-
+const getAllSuppliers = async (req, res) => {
   try {
-    const nameSuppliers = await apiSuppliersService.getSuppliersByName(name);
-    if (nameSuppliers.length > 0) {
+    let listSupplier = await apiSupplierService.getAllSuppliers();
+    if (listSupplier) {
       return res.status(200).json({
-        message: "Show Suppliers by name is successful",
-        data: nameSuppliers,
+        message: "Show List Supplier is successful",
+        data: listSupplier,
       });
     } else {
-      return res.status(404).json({
-        message: "Supplier not found",
+      return res.status(200).json({
+        message: "Show List Supplier failed",
         data: [],
       });
     }
   } catch (error) {
     return res.status(500).json({
-      message: "Error fetching suppliers by name",
+      message: "Show List Supplier error",
+      data: [],
     });
   }
 };
 
-const getAllSuppliers = async (req, res) => {
+const getSupplierById = async (req, res) => {
+  const id = req.params.id;
+
   try {
-    const dataSuppliers = await apiSuppliersService.getAllSuppliers();
-    if (dataSuppliers) {
+    let supplierById = await apiSupplierService.getSupplierById(id);
+    if (supplierById) {
       return res.status(200).json({
-        message: "Show all suppliers is the success",
-        data: dataSuppliers,
+        message: "Get supplier by id is successful",
+        data: supplierById,
       });
     } else {
       return res.status(200).json({
-        message: "Show all suppliers is the faild",
+        message: "Get supplier by id failed",
         data: [],
       });
     }
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Show all suppliers is the error",
+      message: "Get supplier by id error",
     });
   }
 };
 
-const getSuppliersById = async (req, res) => {
-  const id = req.params.id;
-  console.log(id);
+const createSupplier = async (req, res) => {
+  const { suppliers_name, contact_info, description, phone, email, bookIds } =
+    req.body;
 
   try {
-    let supplier = await apiSuppliersService.getSuppliersById(id);
-    if (supplier) {
+    if (
+      !suppliers_name ||
+      !contact_info ||
+      !description ||
+      !phone ||
+      !email ||
+      !bookIds
+    ) {
       return res.status(200).json({
-        message: "Show Suppliers by id is the succress",
-        data: supplier,
-      });
-    } else {
-      return res.status(200).json({
-        message: "Show Suppliers by id is the succress",
-        data: [],
+        message: "All fields are required",
       });
     }
-  } catch (error) {
-    return res.status(500).json({
-      message: "Show Suppliers by id is the succress",
-    });
-  }
-};
 
-const createSuppliers = async (req, res) => {
-  const { suppliers_name, contact_info, description, phone, email } = req.body;
-  try {
-    if (!suppliers_name || !contact_info || !description || !phone || !email) {
-      return res.status(200).json({
-        message: "Input is the requid",
-      });
-    }
-    let dataSuppliers = await apiSuppliersService.createSuppliers(
+    const dataSupplier = await apiSupplierService.createSupplier(
       suppliers_name,
       contact_info,
       description,
       phone,
-      email
+      email,
+      bookIds
     );
-    if (dataSuppliers) {
+
+    if (dataSupplier) {
       return res.status(200).json({
-        message: "Create suppliers is the success",
-        data: dataSuppliers,
+        message: "Create supplier is successful",
+        data: dataSupplier,
       });
     } else {
       return res.status(200).json({
-        message: "Create suppliers is the faild",
+        message: "Create supplier failed",
         data: [],
       });
     }
   } catch (error) {
     return res.status(500).json({
-      message: "Create suppliers is the error",
+      message: "Create supplier error",
+      data: [],
     });
   }
 };
 
-const updateSuppliers = async (req, res) => {
+const updateSupplier = async (req, res) => {
   const id = req.params.id;
-  const dataSuppliers = req.body;
+  const dataUpdate = req.body;
 
   try {
-    const updateSuppliers = await apiSuppliersService.updateSuppliers(
+    let updateSupplier = await apiSupplierService.updateSupplier(
       id,
-      dataSuppliers
+      dataUpdate
     );
-    if (updateSuppliers) {
+    if (updateSupplier) {
       return res.status(200).json({
-        message: "Update Suppliesr is the success",
-        data: updateSuppliers,
+        message: "Update supplier was successful",
+        data: updateSupplier,
       });
     } else {
-      return res.status(200).json({
-        message: "Update Suppliesr is the faild",
-        data: updateSuppliers,
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Update Suppliesr is the error",
-      data: updateSuppliers,
-    });
-  }
-};
-
-const deleteSuppliers = async (req, res) => {
-  const id = req.body.id;
-  try {
-    const deleteSuppliers = await apiSuppliersService.deleteSuppliers(id);
-    if (deleteSuppliers) {
-      return res.status(200).json({
-        message: "Delete Suppliers is the success",
-        data: deleteSuppliers,
-      });
-    } else {
-      return res.status(200).json({
-        message: "Delete Suppliers is the faild",
+      return res.status(404).json({
+        message: "Update supplier failed: Supplier not found",
         data: [],
       });
     }
   } catch (error) {
+    console.error(error);
     return res.status(500).json({
-      message: "Delete Suppliers is the error",
+      message: "An error occurred while updating the supplier",
     });
+  }
+};
+
+const deleteSupplier = async (req, res) => {
+  const supplierId = req.params.id;
+
+  if (!supplierId) {
+    return res.status(400).json({ message: "Supplier ID is required" });
+  }
+
+  try {
+    const result = await apiSupplierService.removeSupplier(supplierId);
+    if (result) {
+      return res
+        .status(200)
+        .json({ message: "Supplier deleted successfully", data: result });
+    } else {
+      return res.status(404).json({ message: "Supplier not found" });
+    }
+  } catch (error) {
+    console.error("Error deleting supplier:", error);
+    return res.status(500).json({ message: "Delete supplier failed" });
   }
 };
 
 module.exports = {
-  getSuppliersByName,
+  createSupplier,
+  updateSupplier,
+  deleteSupplier,
   getAllSuppliers,
-  getSuppliersById,
-  createSuppliers,
-  updateSuppliers,
-  deleteSuppliers,
+  getSupplierById,
 };

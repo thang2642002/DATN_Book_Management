@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Order_Book extends Model {
     /**
@@ -8,16 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      Order_Book.belongsTo(models.User);
-      Order_Book.hasMany(models.Payment);
-      Order_Book.hasMany(models.Order_Detail);
+      // Define association here
+      Order_Book.belongsTo(models.User, { foreignKey: "userId" });
+      Order_Book.hasMany(models.Payment, { foreignKey: "orderId" });
+      Order_Book.hasMany(models.Order_Detail, { foreignKey: "orderId" });
     }
   }
-  //object relational mapping
+
+  // Object Relational Mapping
   Order_Book.init(
     {
-      order_date: DataTypes.STRING,
+      order_date: DataTypes.DATE,
       totalPrice: DataTypes.INTEGER,
       description: DataTypes.STRING,
       userId: DataTypes.INTEGER,
@@ -27,5 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Order_Book",
     }
   );
+
   return Order_Book;
 };

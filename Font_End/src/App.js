@@ -1,30 +1,24 @@
+// src/App.js
 import { Routes, Route } from "react-router-dom";
 import { routers } from "./routers/index";
-import DefaultHeader from "./components/DefaultHeader/DefaultHeader";
 import "./App.scss";
-import { Fragment, useEffect } from "react";
-import axios from "axios";
 
 function App() {
   return (
     <div className="app-container">
       <div className="header-container">
         <Routes>
-          {routers.map((route) => {
-            const Page = route.page;
-            const Layout = route.isShowHeader ? DefaultHeader : Fragment;
-            return (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={
-                  <Layout>
-                    <Page />
-                  </Layout>
-                }
-              />
-            );
-          })}
+          {routers.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element}>
+              {route.children?.map((child, childIndex) => (
+                <Route
+                  key={childIndex}
+                  path={child.path}
+                  element={child.element}
+                />
+              ))}
+            </Route>
+          ))}
         </Routes>
       </div>
       <div className="sliderbar_container"></div>

@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Payment.belongsTo(models.Order_Book);
+      Payment.belongsTo(models.Order_Book, { foreignKey: "orderId" });
+      Payment.belongsTo(models.Transaction, { foreignKey: "transactionId" });
     }
   }
   //object relational mapping
