@@ -17,8 +17,6 @@ configViewEngine(app);
 
 // Middleware để log request body
 app.use((req, res, next) => {
-  console.log("Headers:", req.headers);
-  console.log("Request Body:", req.body);
   next();
 });
 
