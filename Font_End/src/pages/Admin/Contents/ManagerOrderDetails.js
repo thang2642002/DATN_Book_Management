@@ -1,15 +1,17 @@
 import React from "react";
-import ModalCreatePubliers from "./Modals/ModalCreatePubliers";
-import ModalUpdatePubliers from "./Modals/ModalUpdatePubliers";
+import ModalCreateOrderDetails from "./Modals/ModalCreateOrderDetails";
+import ModalUpdateOrderDetails from "./Modals/ModalUpdateOrderDetails";
 import { useEffect, useState } from "react";
 import { getListUser } from "../../../services/userService";
-import TablePubliers from "./Modals/TablePubliers";
+import TableOrderDetails from "./Modals/TableOrderDetails";
 import { FcPlus } from "react-icons/fc";
 
-// import "./ManagerPubliers.scss";
-const ManagerPubliers = () => {
-  const [showModalCreatePubliers, setShowModalCreatePubliers] = useState(false);
-  const [showModalUpdatePubliers, setShowModalUpdatePubliers] = useState(false);
+// import "./ManagerOrderDetails.scss";
+const ManagerOrderDetails = () => {
+  const [showModalCreateOrderDetails, setShowModalCreateOrderDetails] =
+    useState(false);
+  const [showModalUpdateOrderDetails, setShowModalUpdateOrderDetails] =
+    useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   //   const [listUser, setListUser] = useState([]);
 
@@ -31,31 +33,31 @@ const ManagerPubliers = () => {
 
   return (
     <div className="manager-user-container">
-      <div className="title">Manager Publiers</div>
+      <div className="title">Manager Order Details</div>
       <div className="user-contents">
         <div className="btn-add-new">
           <button
             className="btn btn-primary "
-            onClick={() => setShowModalCreatePubliers(true)}
+            onClick={() => setShowModalCreateOrderDetails(true)}
           >
             <FcPlus />
-            Add new publiers
+            Add new Order Details
           </button>
         </div>
-        <ModalCreatePubliers
-          show={showModalCreatePubliers}
-          setShow={setShowModalCreatePubliers}
+        <ModalCreateOrderDetails
+          show={showModalCreateOrderDetails}
+          setShow={setShowModalCreateOrderDetails}
           //   fetchListUser={fetchListUser}
         />
-        <ModalUpdatePubliers
-          show={showModalUpdatePubliers}
-          setShow={setShowModalUpdatePubliers}
+        <ModalUpdateOrderDetails
+          show={showModalUpdateOrderDetails}
+          setShow={setShowModalUpdateOrderDetails}
           //   fetchListUser={fetchListUser}
           //   dataUpdate={dataUpdate}
         />
 
         <div className="btn-table-container">
-          <TablePubliers
+          <TableOrderDetails
           // listUser={listUser}
           // handleClickUpdate={handleClickUpdate}
           />
@@ -65,4 +67,4 @@ const ManagerPubliers = () => {
   );
 };
 
-export default ManagerPubliers;
+export default ManagerOrderDetails;

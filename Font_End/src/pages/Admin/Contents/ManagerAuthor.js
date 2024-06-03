@@ -2,8 +2,8 @@ import React from "react";
 import ModalCreateAuthor from "./Modals/ModalCreateAuthor";
 import ModalUpdateAuthor from "./Modals/ModalUpdateAuthor";
 import { useEffect, useState } from "react";
-import { getListUser } from "../../../services/userService";
-import TableAuthor from "./Modals/TableGenres";
+import { getListAuthor } from "../../../services/authorService";
+import TableAuthor from "./Modals/TableAuthor";
 import { FcPlus } from "react-icons/fc";
 
 // import "./ManagerAuthor.scss";
@@ -11,18 +11,18 @@ const ManagerAuthor = () => {
   const [showModalCreateAuthor, setShowModalCreateAuthor] = useState(false);
   const [showModalUpdateAuthor, setShowModalUpdateAuthor] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
-  //   const [listUser, setListUser] = useState([]);
+  const [listAuthor, setListAuthor] = useState([]);
 
-  //   const fetchListUser = async () => {
-  //     let dataUser = await getListUser();
-  //     if (dataUser && dataUser.errcode === 0) {
-  //       setListUser(dataUser.data);
-  //     }
-  //   };
+  const fetchListAuthor = async () => {
+    let dataAuthor = await getListAuthor();
+    if (dataAuthor && dataAuthor.errcode === 0) {
+      setListAuthor(dataAuthor.data);
+    }
+  };
 
-  //   useEffect(() => {
-  //     fetchListUser();
-  //   }, []);
+  useEffect(() => {
+    fetchListAuthor();
+  }, []);
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -31,7 +31,7 @@ const ManagerAuthor = () => {
 
   return (
     <div className="manager-user-container">
-      <div className="title">Manager Genres</div>
+      <div className="title">Manager Author</div>
       <div className="user-contents">
         <div className="btn-add-new">
           <button
@@ -39,7 +39,7 @@ const ManagerAuthor = () => {
             onClick={() => setShowModalCreateAuthor(true)}
           >
             <FcPlus />
-            Add new genres
+            Add new author
           </button>
         </div>
         <ModalCreateAuthor
@@ -56,8 +56,8 @@ const ManagerAuthor = () => {
 
         <div className="btn-table-container">
           <TableAuthor
-          // listUser={listUser}
-          // handleClickUpdate={handleClickUpdate}
+            listAuthor={listAuthor}
+            // handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

@@ -100,7 +100,7 @@ const ModalUpdateBook = (props) => {
         className="modal-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Update A User</Modal.Title>
+          <Modal.Title>Update A Book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">

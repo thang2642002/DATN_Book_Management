@@ -6,15 +6,21 @@ import { UpdateUser } from "../../../../services/userService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
-const ModalUpdateGenres = (props) => {
+const ModalUpdatePubliers = (props) => {
   const { show, setShow, fetchListUser, dataUpdate } = props;
   const handleClose = () => {
     setShow(false);
-    setName("");
-    setDescription("");
+    setOrderId("");
+    setPaymentDate("");
+    setAmount("");
+    setPaymentMethod("");
+    setTransactionId("");
   };
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [orderId, setOrderId] = useState("");
+  const [paymentDate, setPaymentDate] = useState("");
+  const [amount, setAmount] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [transactionId, setTransactionId] = useState("");
 
   //   useEffect(() => {
   //     if (!_.isEmpty(dataUpdate)) {
@@ -37,8 +43,21 @@ const ModalUpdateGenres = (props) => {
   // };
 
   const handleSubmitUpdateUsers = async () => {
-    if (!name) {
-      toast.error("Invalid name");
+    if (!orderId) {
+      toast.error("Invalid username");
+    }
+    if (!paymentDate) {
+      toast.error("Invalid contact");
+    }
+    if (!amount) {
+      toast.error("Invalid phone");
+    }
+
+    if (!paymentMethod) {
+      toast.error("Invalid email");
+    }
+    if (!transactionId) {
+      toast.error("Invalid email");
     }
 
     // let data = await UpdateUser(userName, address, phone, role, image);
@@ -68,28 +87,58 @@ const ModalUpdateGenres = (props) => {
         className="modal-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Update A Genres</Modal.Title>
+          <Modal.Title>Update A Payment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
             <div className="col-md-6">
-              <label className="form-label">Email</label>
+              <label className="form-label">Order Id</label>
               <input
                 type="email"
                 className="form-control"
-                value={name}
+                value={orderId}
                 disabled
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setOrderId(e.target.value)}
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Password</label>
+              <label className="form-label">paymentDate</label>
               <input
                 type="password"
                 className="form-control"
-                value={description}
+                value={paymentDate}
                 disabled
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setPaymentDate(e.target.value)}
+              />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Amount</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="User Name"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Payment Method</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Address"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Transaction ID</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Address"
+                value={transactionId}
+                onChange={(e) => setTransactionId(e.target.value)}
               />
             </div>
           </form>
@@ -107,4 +156,4 @@ const ModalUpdateGenres = (props) => {
   );
 };
 
-export default ModalUpdateGenres;
+export default ModalUpdatePubliers;

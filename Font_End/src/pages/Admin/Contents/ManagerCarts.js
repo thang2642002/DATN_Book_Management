@@ -1,9 +1,9 @@
 import React from "react";
-import ModalCreateCarts from "./Modals/ModalCreatePubliers";
-import ModalUpdateCarts from "./Modals/ModalUpdatePubliers";
+import ModalCreateCarts from "./Modals/ModalCreateCarts";
+import ModalUpdateCarts from "./Modals/ModalUpdateCarts";
 import { useEffect, useState } from "react";
 import { getListUser } from "../../../services/userService";
-import TableCarts from "./Modals/TablePubliers";
+import TableCarts from "./Modals/TableCarts";
 import { FcPlus } from "react-icons/fc";
 
 // import "./ManagerCarts.scss";
@@ -31,7 +31,7 @@ const ManagerCarts = () => {
 
   return (
     <div className="manager-user-container">
-      <div className="title">Manager Genres</div>
+      <div className="title">Manager Carts</div>
       <div className="user-contents">
         <div className="btn-add-new">
           <button
@@ -39,7 +39,7 @@ const ManagerCarts = () => {
             onClick={() => setShowModalCreateCarts(true)}
           >
             <FcPlus />
-            Add new TableCarts
+            Add new carts
           </button>
         </div>
         <ModalCreateCarts

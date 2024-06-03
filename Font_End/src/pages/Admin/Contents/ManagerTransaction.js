@@ -1,15 +1,17 @@
 import React from "react";
-import ModalCreatePubliers from "./Modals/ModalCreatePubliers";
-import ModalUpdatePubliers from "./Modals/ModalUpdatePubliers";
+import ModalCreateTransaction from "./Modals/ModalCreateTransaction";
+import ModalUpdateTransaction from "./Modals/ModalUpdateTransaction";
 import { useEffect, useState } from "react";
 import { getListUser } from "../../../services/userService";
-import TablePubliers from "./Modals/TablePubliers";
+import TableTransaction from "./Modals/TableTransaction";
 import { FcPlus } from "react-icons/fc";
 
-// import "./ManagerPubliers.scss";
-const ManagerPubliers = () => {
-  const [showModalCreatePubliers, setShowModalCreatePubliers] = useState(false);
-  const [showModalUpdatePubliers, setShowModalUpdatePubliers] = useState(false);
+// import "./ManagerTransaction.scss";
+const ManagerTransaction = () => {
+  const [ShowModalCreateTransaction, setShowModalCreateTransaction] =
+    useState(false);
+  const [showModalUpdateTransaction, setShowModalUpdateTransaction] =
+    useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   //   const [listUser, setListUser] = useState([]);
 
@@ -31,31 +33,31 @@ const ManagerPubliers = () => {
 
   return (
     <div className="manager-user-container">
-      <div className="title">Manager Publiers</div>
+      <div className="title">Manager Transaction</div>
       <div className="user-contents">
         <div className="btn-add-new">
           <button
             className="btn btn-primary "
-            onClick={() => setShowModalCreatePubliers(true)}
+            onClick={() => setShowModalCreateTransaction(true)}
           >
             <FcPlus />
-            Add new publiers
+            Add New Transaction
           </button>
         </div>
-        <ModalCreatePubliers
-          show={showModalCreatePubliers}
-          setShow={setShowModalCreatePubliers}
+        <ModalCreateTransaction
+          show={ShowModalCreateTransaction}
+          setShow={setShowModalCreateTransaction}
           //   fetchListUser={fetchListUser}
         />
-        <ModalUpdatePubliers
-          show={showModalUpdatePubliers}
-          setShow={setShowModalUpdatePubliers}
+        <ModalUpdateTransaction
+          show={showModalUpdateTransaction}
+          setShow={setShowModalUpdateTransaction}
           //   fetchListUser={fetchListUser}
           //   dataUpdate={dataUpdate}
         />
 
         <div className="btn-table-container">
-          <TablePubliers
+          <TableTransaction
           // listUser={listUser}
           // handleClickUpdate={handleClickUpdate}
           />
@@ -65,4 +67,4 @@ const ManagerPubliers = () => {
   );
 };
 
-export default ManagerPubliers;
+export default ManagerTransaction;

@@ -6,17 +6,20 @@ const getAllAuthors = async (req, res) => {
     if (listAuthor) {
       return res.status(200).json({
         message: "Show list author is the success",
+        errcode: 0,
         data: listAuthor,
       });
     } else {
       return res.status(200).json({
         message: "Show list author is the faild",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     return res.status(500).json({
       message: "Show list author is the error",
+      errcode: -1,
     });
   }
 };
@@ -29,17 +32,20 @@ const getAllAuthorById = async (req, res) => {
     if (getAuthorById) {
       return res.status(200).json({
         message: "Get author by id is the success",
+        errcode: 0,
         data: getAuthorById,
       });
     } else {
       return res.status(200).json({
         message: "Get author by id is the faild",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     return res.status(500).json({
       message: "Get author by id is the error",
+      errcode: -1,
     });
   }
 };

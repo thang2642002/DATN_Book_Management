@@ -66,7 +66,7 @@ const SideBar = (props) => {
                 Manager Users
               </MenuItem>
               <MenuItem>
-                <Link to="/admin/managerGenres" /> 
+                <Link to="/admin/managerGenres" />
                 Manager Genres
               </MenuItem>
               <MenuItem>
@@ -92,6 +92,14 @@ const SideBar = (props) => {
               <MenuItem>
                 <Link to="/admin/managerPayments" />
                 Manager Payment
+              </MenuItem>
+              <MenuItem>
+                <Link to="/admin/managerOrder" />
+                Manager Order
+              </MenuItem>
+              <MenuItem>
+                <Link to="/admin/managerOrderDetails" />
+                Manager Order Details
               </MenuItem>
             </SubMenu>
           </Menu>

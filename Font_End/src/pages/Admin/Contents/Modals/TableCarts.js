@@ -5,22 +5,18 @@ const TablePubliers = () => {
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Contact Info</th>
-            <th scope="col">Description</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
+            <th scope="col">User ID</th>
+            <th scope="col">Create Date</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>Thắng</td>
-            <td>HCM</td>
-            <td>blabla</td>
-            <td>1234</td>
-            <td>tranthang@gmail.com</td>
+            <td>1</td>
+            <td>20/5/2024</td>
+            <td>10</td>
             <td>
               <button className="btn btn-secondary">View</button>
               <button

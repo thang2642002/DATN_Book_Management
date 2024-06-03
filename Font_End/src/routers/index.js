@@ -16,6 +16,11 @@ import ManagerBooks from "../pages/Admin/Contents/ManagerBooks";
 import ManagerGenres from "../pages/Admin/Contents/ManagerGenres";
 import ManagerAuthor from "../pages/Admin/Contents/ManagerAuthor";
 import ManagerPubliers from "../pages/Admin/Contents/ManagerPubliers";
+import ManagerCarts from "../pages/Admin/Contents/ManagerCarts";
+import ManagerTransaction from "../pages/Admin/Contents/ManagerTransaction";
+import ManagerPayment from "../pages/Admin/Contents/ManagerPayment";
+import ManagerOrder from "../pages/Admin/Contents/ManagerOrder";
+import ManagerOrderDetails from "../pages/Admin/Contents/ManagerOrderDetails";
 
 export const routers = [
   {
@@ -41,6 +46,11 @@ export const routers = [
       { path: "managerBooks", element: <ManagerBooks /> },
       { path: "managerAuthors", element: <ManagerAuthor /> },
       { path: "managerPubliers", element: <ManagerPubliers /> },
+      { path: "managerCarts", element: <ManagerCarts /> },
+      { path: "managerTransactions", element: <ManagerTransaction /> },
+      { path: "managerPayments", element: <ManagerPayment /> },
+      { path: "managerOrder", element: <ManagerOrder /> },
+      { path: "managerOrderDetails", element: <ManagerOrderDetails /> },
       // Add more admin routes here
     ],
   },

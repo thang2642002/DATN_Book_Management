@@ -6,17 +6,20 @@ const getAllProducts = async (req, res) => {
     if (listProduct) {
       return res.status(200).json({
         message: "Show List Producut is the success",
+        errcode: 0,
         data: listProduct,
       });
     } else {
       return res.status(200).json({
         message: "Show List Producut is the falied",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     return res.status(200).json({
       message: "Show List Producut is the error",
+      errcode: -1,
       data: [],
     });
   }

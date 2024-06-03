@@ -1,4 +1,5 @@
-const TableBooks = () => {
+const TableBooks = (props) => {
+  const { listBook } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -15,26 +16,31 @@ const TableBooks = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Sách Hay</td>
-            <td>Author</td>
-            <td>Genres</td>
-            <td>Price</td>
-            <td>Quantity</td>
-            <td>Salse</td>
+          {listBook &&
+            listBook.map((book, index) => {
+              return (
+                <tr key={index + 1}>
+                  <td>{book.id}</td>
+                  <td>{book.title}</td>
+                  <td>{book.authorId}</td>
+                  <td>{book.genresId}</td>
+                  <td>{book.price}</td>
+                  <td>{book.quantity}</td>
+                  <td>{book.sales}</td>
 
-            <td>
-              <button className="btn btn-secondary">View</button>
-              <button
-                className="btn btn-warning mx-3"
-                // onClick={() => handleClickUpdate(user)}
-              >
-                Upadte
-              </button>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
+                  <td>
+                    <button className="btn btn-secondary">View</button>
+                    <button
+                      className="btn btn-warning mx-3"
+                      // onClick={() => handleClickUpdate(user)}
+                    >
+                      Upadte
+                    </button>
+                    <button className="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

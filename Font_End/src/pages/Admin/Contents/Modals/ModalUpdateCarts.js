@@ -6,15 +6,17 @@ import { UpdateUser } from "../../../../services/userService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
-const ModalUpdateGenres = (props) => {
+const ModalUpdateCarts = (props) => {
   const { show, setShow, fetchListUser, dataUpdate } = props;
   const handleClose = () => {
     setShow(false);
-    setName("");
-    setDescription("");
+    setUserId("");
+    setCreateDate("");
+    setQuantity("");
   };
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [userId, setUserId] = useState("");
+  const [createDate, setCreateDate] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   //   useEffect(() => {
   //     if (!_.isEmpty(dataUpdate)) {
@@ -37,8 +39,14 @@ const ModalUpdateGenres = (props) => {
   // };
 
   const handleSubmitUpdateUsers = async () => {
-    if (!name) {
-      toast.error("Invalid name");
+    if (!userId) {
+      toast.error("Invalid username");
+    }
+    if (!createDate) {
+      toast.error("Invalid address");
+    }
+    if (!quantity) {
+      toast.error("Invalid phone");
     }
 
     // let data = await UpdateUser(userName, address, phone, role, image);
@@ -68,28 +76,38 @@ const ModalUpdateGenres = (props) => {
         className="modal-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Update A Genres</Modal.Title>
+          <Modal.Title>Update A Carts</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
             <div className="col-md-6">
-              <label className="form-label">Email</label>
+              <label className="form-label">User ID</label>
               <input
                 type="email"
                 className="form-control"
-                value={name}
+                value={userId}
                 disabled
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setUserId(e.target.value)}
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Password</label>
+              <label className="form-label">createDate</label>
               <input
                 type="password"
                 className="form-control"
-                value={description}
+                value={createDate}
                 disabled
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setCreateDate(e.target.value)}
+              />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Quantity</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="User Name"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
               />
             </div>
           </form>
@@ -107,4 +125,4 @@ const ModalUpdateGenres = (props) => {
   );
 };
 
-export default ModalUpdateGenres;
+export default ModalUpdateCarts;
