@@ -66,8 +66,8 @@ const SideBar = (props) => {
                 Manager Users
               </MenuItem>
               <MenuItem>
-                <Link to="/admin/managerGenres" />
-                Manager Genrens
+                <Link to="/admin/managerGenres" /> 
+                Manager Genres
               </MenuItem>
               <MenuItem>
                 <Link to="/admin/managerBooks" />

@@ -13,6 +13,9 @@ import Admin from "../pages/Admin/Admin";
 import Dashboard from "../pages/Admin/Contents/Dashboard";
 import ManagerUser from "../pages/Admin/Contents/ManagerUser";
 import ManagerBooks from "../pages/Admin/Contents/ManagerBooks";
+import ManagerGenres from "../pages/Admin/Contents/ManagerGenres";
+import ManagerAuthor from "../pages/Admin/Contents/ManagerAuthor";
+import ManagerPubliers from "../pages/Admin/Contents/ManagerPubliers";
 
 export const routers = [
   {
@@ -34,7 +37,10 @@ export const routers = [
     children: [
       { path: "Dashboard", element: <Dashboard /> },
       { path: "managerUsers", element: <ManagerUser /> },
+      { path: "managerGenres", element: <ManagerGenres /> },
       { path: "managerBooks", element: <ManagerBooks /> },
+      { path: "managerAuthors", element: <ManagerAuthor /> },
+      { path: "managerPubliers", element: <ManagerPubliers /> },
       // Add more admin routes here
     ],
   },
