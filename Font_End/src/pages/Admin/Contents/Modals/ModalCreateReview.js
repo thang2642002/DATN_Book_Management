@@ -2,59 +2,58 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { createOrderDetails } from "../../../../services/orderDetailsService";
-// import "./ModalCreateOrderDetails.scss";
+import { createReview } from "../../../../services/reviewService";
+// import "./ModalCreateReview.scss";
 
-const ModalCreateOrderDetails = (props) => {
-  const { show, setShow, fetchListOrderDetails } = props;
+const ModalCreateReview = (props) => {
+  const { show, setShow, fetchListReview } = props;
   const handleClose = () => {
     setShow(false);
-    setQuantity("");
-    setUnitPrice("");
-    setDescription("");
-    setOrderId("");
     setBookId("");
+    setUserId("");
+    setRating("");
+    setComment("");
+    setReviewDate("");
   };
-  const [quantity, setQuantity] = useState("");
-  const [unitPrice, setUnitPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [orderId, setOrderId] = useState("");
   const [bookId, setBookId] = useState("");
+  const [userId, setUserId] = useState("");
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
+  const [reviewDate, setReviewDate] = useState(Date);
 
-  const handleSubmitCreateOrderDetails = async () => {
-    if (!quantity) {
-      toast.error("Ivalid quantity");
-      return;
-    }
-    if (!unitPrice) {
-      toast.error("Ivalid unit Price");
-      return;
-    }
-
-    if (!orderId) {
-      toast.error("Ivalid Order ID");
-      return;
-    }
-
+  const handleSubmitCreateReview = async () => {
     if (!bookId) {
-      toast.error("Ivalid book ID");
+      toast.error("Ivalid Book ID");
+      return;
+    }
+    if (!userId) {
+      toast.error("Ivalid User ID");
       return;
     }
 
-    let data = await createOrderDetails(
-      quantity,
-      unitPrice,
-      description,
-      orderId,
-      bookId
-    );
+    if (!rating) {
+      toast.error("Ivalid Rating");
+      return;
+    }
+
+    if (!comment) {
+      toast.error("Ivalid Comment");
+      return;
+    }
+
+    if (!reviewDate) {
+      toast.error("Ivalid Review Date");
+      return;
+    }
+
+    let data = await createReview(bookId, userId, rating, comment, reviewDate);
 
     console.log("check data: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();
-      await fetchListOrderDetails();
+      await fetchListReview();
     }
     if (data && data.errcode !== 0) {
       toast.error(data.message);
@@ -75,46 +74,10 @@ const ModalCreateOrderDetails = (props) => {
         className="modal-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Craete New Order Details</Modal.Title>
+          <Modal.Title>Craete New Review</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
-            <div className="col-md-6">
-              <label className="form-label">Quantity</label>
-              <input
-                type="text"
-                className="form-control"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Unit Price</label>
-              <input
-                type="text"
-                className="form-control"
-                value={unitPrice}
-                onChange={(e) => setUnitPrice(e.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Description</label>
-              <input
-                type="text"
-                className="form-control"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Order ID</label>
-              <input
-                type="text"
-                className="form-control"
-                value={orderId}
-                onChange={(e) => setOrderId(e.target.value)}
-              />
-            </div>
             <div className="col-md-6">
               <label className="form-label">Book ID</label>
               <input
@@ -124,16 +87,49 @@ const ModalCreateOrderDetails = (props) => {
                 onChange={(e) => setBookId(e.target.value)}
               />
             </div>
+            <div className="col-md-6">
+              <label className="form-label">User ID</label>
+              <input
+                type="text"
+                className="form-control"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Rating</label>
+              <input
+                type="text"
+                className="form-control"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Comment</label>
+              <input
+                type="text"
+                className="form-control"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Review Date</label>
+              <input
+                type="text"
+                className="form-control"
+                value={reviewDate}
+                onChange={(e) => setReviewDate(e.target.value)}
+              />
+            </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            onClick={() => handleSubmitCreateOrderDetails()}
-          >
+          <Button variant="primary" onClick={() => handleSubmitCreateReview()}>
             Save
           </Button>
         </Modal.Footer>
@@ -142,4 +138,4 @@ const ModalCreateOrderDetails = (props) => {
   );
 };
 
-export default ModalCreateOrderDetails;
+export default ModalCreateReview;

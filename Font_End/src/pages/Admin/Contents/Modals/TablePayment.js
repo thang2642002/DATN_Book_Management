@@ -1,4 +1,5 @@
-const TablePayment = () => {
+const TablePayment = (props) => {
+  const { listPayment } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -14,24 +15,29 @@ const TablePayment = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>20/5/2024</td>
-            <td>500</td>
-            <td>Credit Card</td>
-            <td>1</td>
-            <td>
-              <button className="btn btn-secondary">View</button>
-              <button
-                className="btn btn-warning mx-3"
-                // onClick={() => handleClickUpdate(user)}
-              >
-                Upadte
-              </button>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
+          {listPayment &&
+            listPayment.map((payment, index) => {
+              return (
+                <tr key={index + 1}>
+                  <td>{payment.id}</td>
+                  <td>{payment.orderId}</td>
+                  <td>{payment.paymentDate}</td>
+                  <td>{payment.amount}</td>
+                  <td>{payment.paymnetMethod}</td>
+                  <td>{payment.transactionId}</td>
+                  <td>
+                    <button className="btn btn-secondary">View</button>
+                    <button
+                      className="btn btn-warning mx-3"
+                      // onClick={() => handleClickUpdate(user)}
+                    >
+                      Upadte
+                    </button>
+                    <button className="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

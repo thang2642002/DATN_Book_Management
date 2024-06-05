@@ -6,11 +6,13 @@ const getAllPayment = async (req, res) => {
     if (dataPayment) {
       return res.status(200).json({
         message: "Show all payment is the success",
+        errcode: 0,
         data: dataPayment,
       });
     } else {
       return res.status(200).json({
         message: "Show all payment is the faild",
+        errcode: 1,
         data: [],
       });
     }
@@ -18,6 +20,7 @@ const getAllPayment = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Show all payment is the error",
+      errcode: -1,
     });
   }
 };
@@ -30,11 +33,13 @@ const getAllPaymentById = async (req, res) => {
     if (dataPayment) {
       return res.status(200).json({
         message: "Show payment by id is the success",
+        errcode: 0,
         data: dataPayment,
       });
     } else {
       return res.status(200).json({
         message: "Show payment by id is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -42,6 +47,7 @@ const getAllPaymentById = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Show payment by id is the error",
+      errcode: -1,
     });
   }
 };
@@ -59,6 +65,7 @@ const createPayment = async (req, res) => {
     ) {
       return res.status(200).json({
         message: "Input is the requid",
+        errcode: 1,
       });
     }
     const payment = await apiPaymentService.createPayment(
@@ -71,11 +78,13 @@ const createPayment = async (req, res) => {
     if (payment) {
       return res.status(200).json({
         message: "Ctrate Payment is the success",
+        errcode: 0,
         data: payment,
       });
     } else {
       return res.status(200).json({
         message: "Ctrate Payment is the faild",
+        errcode: 1,
         data: [],
       });
     }
@@ -83,6 +92,7 @@ const createPayment = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Ctrate Payment is the error",
+      errcode: -1,
     });
   }
 };
@@ -95,17 +105,20 @@ const updatePayment = async (req, res) => {
     if (!dataPayment) {
       return res.status(200).json({
         message: "Input is the requid",
+        errcode: 1,
       });
     }
     const payment = await apiPaymentService.updatePayment(id, dataPayment);
     if (payment) {
       return res.status(200).json({
         message: "Update Payment is the success",
+        errcode: 0,
         data: payment,
       });
     } else {
       return res.status(200).json({
         message: "Update Payment is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -113,6 +126,7 @@ const updatePayment = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Update Payment is the error",
+      errcode: -1,
     });
   }
 };
@@ -124,17 +138,20 @@ const deletePayment = async (req, res) => {
     if (payment) {
       return res.status(200).json({
         message: "Delete Payment is the success",
+        errcode: 0,
         data: payment,
       });
     } else {
       return res.status(200).json({
         message: "Delete Payment is the failed",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     return res.status(500).json({
       message: "Delete Payment is the error",
+      errcode: -1,
     });
   }
 };

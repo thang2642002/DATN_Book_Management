@@ -2,11 +2,11 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-// import { createUser } from "../../../../services/userService";
+import { createPayment } from "../../../../services/paymentService";
 // import "./ModalCreatePayment.scss";
 
 const ModalCreatePayment = (props) => {
-  const { show, setShow, fetchListUser } = props;
+  const { show, setShow, fetchListPayment } = props;
   const handleClose = () => {
     setShow(false);
     setOrderId("");
@@ -21,50 +21,46 @@ const ModalCreatePayment = (props) => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [transactionId, setTransactionId] = useState("");
 
-  const handleSubmitCreateUsers = async () => {
+  const handleSubmitCreatePayment = async () => {
     if (!orderId) {
-      toast.error("Ivalid name");
+      toast.error("Ivalid Order ID");
       return;
     }
     if (!paymentDate) {
-      toast.error("Ivalid name");
+      toast.error("Ivalid Payment Date");
       return;
     }
     if (!amount) {
-      toast.error("Ivalid name");
+      toast.error("Ivalid Amount");
       return;
     }
     if (!paymentMethod) {
-      toast.error("Ivalid name");
+      toast.error("Ivalid Payment Method");
       return;
     }
     if (!transactionId) {
-      toast.error("Ivalid name");
+      toast.error("Ivalid Transaction ID");
       return;
     }
 
-    // let data = await createUser(
-    //   email,
-    //   password,
-    //   username,
-    //   address,
-    //   phone,
-    //   role,
-    //   image
-    // );
+    let data = await createPayment(
+      orderId,
+      paymentDate,
+      amount,
+      paymentMethod,
+      transactionId
+    );
 
-    // console.log("check data: ", data);
+    console.log("check data: ", data);
 
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
-
-    // console.log("check res: ", res.data);
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListPayment();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
@@ -88,7 +84,7 @@ const ModalCreatePayment = (props) => {
             <div className="col-md-6">
               <label className="form-label">Order ID</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 value={orderId}
                 onChange={(e) => setOrderId(e.target.value)}
@@ -97,7 +93,7 @@ const ModalCreatePayment = (props) => {
             <div className="col-md-6">
               <label className="form-label">Payment Date</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={paymentDate}
                 onChange={(e) => setPaymentDate(e.target.value)}
@@ -106,7 +102,7 @@ const ModalCreatePayment = (props) => {
             <div className="col-md-6">
               <label className="form-label">Amount</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -115,7 +111,7 @@ const ModalCreatePayment = (props) => {
             <div className="col-md-6">
               <label className="form-label">PaymentMethod</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
@@ -124,7 +120,7 @@ const ModalCreatePayment = (props) => {
             <div className="col-md-6">
               <label className="form-label">Transaction Id</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={transactionId}
                 onChange={(e) => setTransactionId(e.target.value)}
@@ -136,7 +132,7 @@ const ModalCreatePayment = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUsers()}>
+          <Button variant="primary" onClick={() => handleSubmitCreatePayment()}>
             Save
           </Button>
         </Modal.Footer>

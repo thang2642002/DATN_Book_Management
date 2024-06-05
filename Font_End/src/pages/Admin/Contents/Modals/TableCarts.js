@@ -1,4 +1,5 @@
-const TablePubliers = () => {
+const TablePubliers = (props) => {
+  const { listCarts } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -12,22 +13,27 @@ const TablePubliers = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>20/5/2024</td>
-            <td>10</td>
-            <td>
-              <button className="btn btn-secondary">View</button>
-              <button
-                className="btn btn-warning mx-3"
-                // onClick={() => handleClickUpdate(user)}
-              >
-                Upadte
-              </button>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
+          {listCarts &&
+            listCarts.map((carts, index) => {
+              return (
+                <tr key={index + 1}>
+                  <td>{carts.id}</td>
+                  <td>{carts.userId}</td>
+                  <td>{carts.createDate}</td>
+                  <td>{carts.quantity}</td>
+                  <td>
+                    <button className="btn btn-secondary">View</button>
+                    <button
+                      className="btn btn-warning mx-3"
+                      // onClick={() => handleClickUpdate(user)}
+                    >
+                      Upadate
+                    </button>
+                    <button className="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

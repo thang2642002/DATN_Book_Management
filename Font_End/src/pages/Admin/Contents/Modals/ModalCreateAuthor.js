@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-// import { createUser } from "../../../../services/userService";
+import { createAuthor } from "../../../../services/authorService";
 // import "./ModalCreateAuthor.scss";
 
 const ModalCreateAuthor = (props) => {
@@ -19,7 +19,7 @@ const ModalCreateAuthor = (props) => {
   const [phone, setPhone] = useState("");
   const [bio, setBio] = useState("");
 
-  const handleSubmitCreateUsers = async () => {
+  const handleSubmitCreateAuthor = async () => {
     if (!name) {
       toast.error("Ivalid name");
       return;
@@ -39,28 +39,18 @@ const ModalCreateAuthor = (props) => {
       return;
     }
 
-    // let data = await createUser(
-    //   email,
-    //   password,
-    //   username,
-    //   address,
-    //   phone,
-    //   role,
-    //   image
-    // );
+    let data = await createAuthor(name, address, phone, bio);
 
-    // console.log("check data: ", data);
+    console.log("check data: ", data);
 
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
-
-    // console.log("check res: ", res.data);
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListUser();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
@@ -84,16 +74,16 @@ const ModalCreateAuthor = (props) => {
             <div className="col-md-6">
               <label className="form-label">Name</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Description</label>
+              <label className="form-label">Address</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -102,16 +92,16 @@ const ModalCreateAuthor = (props) => {
             <div className="col-md-6">
               <label className="form-label">Description</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Description</label>
+              <label className="form-label">Bio</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
@@ -123,7 +113,7 @@ const ModalCreateAuthor = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUsers()}>
+          <Button variant="primary" onClick={() => handleSubmitCreateAuthor()}>
             Save
           </Button>
         </Modal.Footer>

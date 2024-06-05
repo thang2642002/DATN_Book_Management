@@ -2,25 +2,25 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { UpdateUser } from "../../../../services/userService";
+// import { UpdateUser } from "../../../../services/userService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
-const ModalUpdateOrderDetails = (props) => {
+const ModalUpdateReview = (props) => {
   const { show, setShow, fetchListUser, dataUpdate } = props;
   const handleClose = () => {
     setShow(false);
-    setQuantity("");
-    setUnitPrice("");
-    setDescription("");
-    setOrderId("");
     setBookId("");
+    setUserId("");
+    setRating("");
+    setComment("");
+    setReviewDate("");
   };
-  const [quantity, setQuantity] = useState("");
-  const [unitPrice, setUnitPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [orderId, setOrderId] = useState("");
   const [bookId, setBookId] = useState("");
+  const [userId, setUserId] = useState("");
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
+  const [reviewDate, setReviewDate] = useState("");
 
   //   useEffect(() => {
   //     if (!_.isEmpty(dataUpdate)) {
@@ -43,18 +43,22 @@ const ModalUpdateOrderDetails = (props) => {
   // };
 
   const handleSubmitUpdateUsers = async () => {
-    if (!quantity) {
-      toast.error("Invalid username");
+    if (!bookId) {
+      toast.error("Invalid Book ID");
     }
-    if (!unitPrice) {
-      toast.error("Invalid address");
+    if (!userId) {
+      toast.error("Invalid User ID");
     }
-    if (!orderId) {
-      toast.error("Invalid phone");
+    if (!rating) {
+      toast.error("Invalid Rating");
     }
 
-    if (!bookId) {
-      toast.error("Invalid bio");
+    if (!comment) {
+      toast.error("Invalid Comment");
+    }
+
+    if (!reviewDate) {
+      toast.error("Invalid Review Date");
     }
 
     // let data = await UpdateUser(userName, address, phone, role, image);
@@ -84,58 +88,58 @@ const ModalUpdateOrderDetails = (props) => {
         className="modal-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Update A Order Details</Modal.Title>
+          <Modal.Title>Update A Review</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
             <div className="col-md-6">
-              <label className="form-label">Quantity</label>
-              <input
-                type="text"
-                className="form-control"
-                value={quantity}
-                disabled
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Unit Price</label>
-              <input
-                type="text"
-                className="form-control"
-                value={unitPrice}
-                disabled
-                onChange={(e) => setUnitPrice(e.target.value)}
-              />
-            </div>
-            <div className="col-12">
-              <label className="form-label">Description</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="User Name"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-            <div className="col-12">
-              <label className="form-label">Order ID</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Address"
-                value={orderId}
-                onChange={(e) => setOrderId(e.target.value)}
-              />
-            </div>
-            <div className="col-12">
               <label className="form-label">Book ID</label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Address"
                 value={bookId}
+                disabled
                 onChange={(e) => setBookId(e.target.value)}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">User ID</label>
+              <input
+                type="text"
+                className="form-control"
+                value={userId}
+                disabled
+                onChange={(e) => setUserId(e.target.value)}
+              />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Rating</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="User Name"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Comment</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Address"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Review Date</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Address"
+                value={reviewDate}
+                onChange={(e) => setReviewDate(e.target.value)}
               />
             </div>
           </form>
@@ -153,4 +157,4 @@ const ModalUpdateOrderDetails = (props) => {
   );
 };
 
-export default ModalUpdateOrderDetails;
+export default ModalUpdateReview;

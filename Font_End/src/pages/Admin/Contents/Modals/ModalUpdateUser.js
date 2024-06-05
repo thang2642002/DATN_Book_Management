@@ -48,6 +48,7 @@ const ModalUpdateUser = (props) => {
   //     setAvatar(base64String); // Lưu chuỗi base64 vào state
   //   }
   // };
+
   const handleUploadImage = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {
       setPreviewImage(URL.createObjectURL(e.target.files[0]));
@@ -56,6 +57,8 @@ const ModalUpdateUser = (props) => {
   };
 
   const handleSubmitUpdateUsers = async () => {
+    console.log("check upadte data", dataUpdate);
+
     if (!userName) {
       toast.error("Invalid username");
     }

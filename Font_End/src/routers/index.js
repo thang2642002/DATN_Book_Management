@@ -21,6 +21,7 @@ import ManagerTransaction from "../pages/Admin/Contents/ManagerTransaction";
 import ManagerPayment from "../pages/Admin/Contents/ManagerPayment";
 import ManagerOrder from "../pages/Admin/Contents/ManagerOrder";
 import ManagerOrderDetails from "../pages/Admin/Contents/ManagerOrderDetails";
+import ManagerReview from "../pages/Admin/Contents/ManagerReview";
 
 export const routers = [
   {
@@ -51,6 +52,8 @@ export const routers = [
       { path: "managerPayments", element: <ManagerPayment /> },
       { path: "managerOrder", element: <ManagerOrder /> },
       { path: "managerOrderDetails", element: <ManagerOrderDetails /> },
+
+      { path: "managerReviews", element: <ManagerReview /> },
       // Add more admin routes here
     ],
   },

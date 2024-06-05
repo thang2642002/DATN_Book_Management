@@ -5,17 +5,20 @@ const getAllGenres = async (req, res) => {
     if (getListGenres) {
       return res.status(200).json({
         message: "Show List Genres The Success",
+        errcode: 0,
         data: getListGenres,
       });
     } else {
       return res.status(200).json({
         message: "Show List Genres The Failed",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     console.log(error);
     return res.status(500).json({
+      errcode: 1,
       message: "Show List Genres The Error",
     });
   }
@@ -30,11 +33,13 @@ const getGenresById = async (req, res) => {
     if (getGenresById) {
       return res.status(200).json({
         message: "Show Genres The Id Succsess",
+        errcode: 0,
         data: getGenresById,
       });
     } else {
       return res.status(200).json({
         message: "Show Genres The Id Failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -42,6 +47,7 @@ const getGenresById = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Show Genres The Id Error",
+      errcode: 1,
     });
   }
 };
@@ -53,6 +59,7 @@ const createGenres = async (req, res) => {
     if (!genresName) {
       return res.status(200).json({
         message: "Input Genres Name The Requied",
+        errcode: 1,
       });
     }
     const dataGenres = await apiGenresService.createGenres(
@@ -62,11 +69,13 @@ const createGenres = async (req, res) => {
     if (dataGenres) {
       return res.status(200).json({
         message: "Create Genres The Success ",
+        errcode: 0,
         data: dataGenres,
       });
     } else {
       return res.status(200).json({
         message: "Create Genres The Failed ",
+        errcode: 1,
         data: [],
       });
     }
@@ -74,6 +83,7 @@ const createGenres = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Create Genres The Error",
+      errcode: -1,
     });
   }
 };
@@ -91,17 +101,20 @@ const UpdateGenres = async (req, res) => {
     if (updateGenres) {
       return res.status(200).json({
         message: "Update Genres Is The Success ",
+        errcode: 0,
         data: updateGenres,
       });
     } else {
       return res.status(200).json({
         message: "Update Genres Is The Failed ",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     return res.status(500).json({
       message: "Update Genres Is The Error ",
+      errcode: -1,
     });
   }
 };
@@ -112,11 +125,13 @@ const deleteGenres = async (req, res) => {
     if (deleteGenres) {
       return res.status(200).json({
         message: "Delete Genres Success",
+        errcode: 0,
         data: deleteGenres,
       });
     } else {
       return res.status(204).json({
         message: "No Genres Found to Delete",
+        errcode: 1,
         data: [],
       });
     }
@@ -124,6 +139,7 @@ const deleteGenres = async (req, res) => {
     console.error(error);
     return res.status(500).json({
       message: "Error Deleting Genres",
+      errcode: -1,
       error: error.message,
     });
   }

@@ -2,11 +2,11 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-// import { createUser } from "../../../../services/userService";
+import { createSuppliers } from "../../../../services/publiersService";
 // import "./ModalCreatePubliers.scss";
 
 const ModalCreatePubliers = (props) => {
-  const { show, setShow, fetchListUser } = props;
+  const { show, setShow, fetchListPubliers } = props;
   const handleClose = () => {
     setShow(false);
     setName("");
@@ -20,14 +20,15 @@ const ModalCreatePubliers = (props) => {
   const [description, setDescription] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [bookIds, setBookIds] = useState("");
 
-  const handleSubmitCreateUsers = async () => {
+  const handleSubmitCreatePubliers = async () => {
     if (!name) {
       toast.error("Ivalid name");
       return;
     }
     if (!contactInfo) {
-      toast.error("Ivalid address");
+      toast.error("Ivalid contact info");
       return;
     }
 
@@ -37,32 +38,33 @@ const ModalCreatePubliers = (props) => {
     }
 
     if (!email) {
-      toast.error("Ivalid bio");
+      toast.error("Ivalid email");
+      return;
+    }
+    if (!bookIds) {
+      toast.error("Ivalid bookIds");
       return;
     }
 
-    // let data = await createUser(
-    //   email,
-    //   password,
-    //   username,
-    //   address,
-    //   phone,
-    //   role,
-    //   image
-    // );
+    let data = await createSuppliers(
+      name,
+      contactInfo,
+      description,
+      phone,
+      email,
+      bookIds
+    );
 
-    // console.log("check data: ", data);
+    console.log("check data: ", data);
 
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
-
-    // console.log("check res: ", res.data);
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListPubliers();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
@@ -86,7 +88,7 @@ const ModalCreatePubliers = (props) => {
             <div className="col-md-6">
               <label className="form-label">Name</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -95,7 +97,7 @@ const ModalCreatePubliers = (props) => {
             <div className="col-md-6">
               <label className="form-label">Contact Info</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={contactInfo}
                 onChange={(e) => setContactInfo(e.target.value)}
@@ -104,16 +106,16 @@ const ModalCreatePubliers = (props) => {
             <div className="col-md-6">
               <label className="form-label">Description</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={description}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div className="col-md-6">
               <label className="form-label">Phone</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -122,10 +124,20 @@ const ModalCreatePubliers = (props) => {
             <div className="col-md-6">
               <label className="form-label">Email</label>
               <input
-                type="password"
+                type="email"
                 className="form-control"
-                value={phone}
+                required
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">BookId</label>
+              <input
+                type="text"
+                className="form-control"
+                value={bookIds}
+                onChange={(e) => setBookIds(e.target.value)}
               />
             </div>
           </form>
@@ -134,7 +146,10 @@ const ModalCreatePubliers = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUsers()}>
+          <Button
+            variant="primary"
+            onClick={() => handleSubmitCreatePubliers()}
+          >
             Save
           </Button>
         </Modal.Footer>

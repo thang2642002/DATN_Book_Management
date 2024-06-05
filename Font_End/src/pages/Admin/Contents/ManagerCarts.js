@@ -2,7 +2,7 @@ import React from "react";
 import ModalCreateCarts from "./Modals/ModalCreateCarts";
 import ModalUpdateCarts from "./Modals/ModalUpdateCarts";
 import { useEffect, useState } from "react";
-import { getListUser } from "../../../services/userService";
+import { getListCart } from "../../../services/cartsService";
 import TableCarts from "./Modals/TableCarts";
 import { FcPlus } from "react-icons/fc";
 
@@ -11,23 +11,24 @@ const ManagerCarts = () => {
   const [showModalCreateCarts, setShowModalCreateCarts] = useState(false);
   const [showModalUpdateCarts, setShowModalUpdateCarts] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
-  //   const [listUser, setListUser] = useState([]);
+  const [listCarts, setListCarts] = useState([]);
 
-  //   const fetchListUser = async () => {
-  //     let dataUser = await getListUser();
-  //     if (dataUser && dataUser.errcode === 0) {
-  //       setListUser(dataUser.data);
-  //     }
-  //   };
+  const fetchListCarts = async () => {
+    let dataCarts = await getListCart();
+    if (dataCarts && dataCarts.errcode === 0) {
+      setListCarts(dataCarts.data);
+    }
+    console.log("chek cart", dataCarts);
+  };
 
-  //   useEffect(() => {
-  //     fetchListUser();
-  //   }, []);
+  useEffect(() => {
+    fetchListCarts();
+  }, []);
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  // const handleClickUpdate = (user) => {
+  //   setShowModalUpdateGenres(true);
+  //   setDataUpdate(user);
+  // };
 
   return (
     <div className="manager-user-container">
@@ -45,7 +46,7 @@ const ManagerCarts = () => {
         <ModalCreateCarts
           show={showModalCreateCarts}
           setShow={setShowModalCreateCarts}
-          //   fetchListUser={fetchListUser}
+          fetchListCarts={fetchListCarts}
         />
         <ModalUpdateCarts
           show={showModalUpdateCarts}
@@ -56,8 +57,8 @@ const ManagerCarts = () => {
 
         <div className="btn-table-container">
           <TableCarts
-          // listUser={listUser}
-          // handleClickUpdate={handleClickUpdate}
+            listCarts={listCarts}
+            // handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

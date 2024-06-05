@@ -1,30 +1,30 @@
-const TableOrderDetails = (props) => {
-  const { listOrderDetails } = props;
+const TableReview = (props) => {
+  const { listReview } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Unit price</th>
-            <th scope="col">Description</th>
-            <th scope="col">Order ID</th>
             <th scope="col">Book ID</th>
+            <th scope="col">User ID</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Review Date</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {listOrderDetails &&
-            listOrderDetails.map((orderDetails, index) => {
+          {listReview &&
+            listReview.map((review, index) => {
               return (
                 <tr key={index + 1}>
-                  <td>{orderDetails.id}</td>
-                  <td>{orderDetails.quantity}</td>
-                  <td>{orderDetails.unit_price}</td>
-                  <td>{orderDetails.description}</td>
-                  <td>{orderDetails.orderId}</td>
-                  <td>{orderDetails.bookId}</td>
+                  <td>{review.id}</td>
+                  <td>{review.bookId}</td>
+                  <td>{review.userId}</td>
+                  <td>{review.rating}</td>
+                  <td>{review.comment}</td>
+                  <td>{review.reviewDate}</td>
                   <td>
                     <button className="btn btn-secondary">View</button>
                     <button
@@ -44,4 +44,4 @@ const TableOrderDetails = (props) => {
   );
 };
 
-export default TableOrderDetails;
+export default TableReview;

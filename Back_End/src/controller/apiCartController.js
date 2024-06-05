@@ -6,11 +6,13 @@ const getAllCart = async (req, res) => {
     if (dataCart) {
       return res.status(200).json({
         message: "Show All Cart is the success",
+        errcode: 0,
         data: dataCart,
       });
     } else {
       return res.status(200).json({
         message: "Show All Cart is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -18,6 +20,7 @@ const getAllCart = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Show All Cart is the error",
+      errcode: -1,
     });
   }
 };
@@ -29,11 +32,13 @@ const getAllCartById = async (req, res) => {
     if (dataCart) {
       return res.status(200).json({
         message: "Show Cart by id is the success",
+        errcode: 0,
         data: dataCart,
       });
     } else {
       return res.status(200).json({
         message: "Show Cart by id is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -41,6 +46,7 @@ const getAllCartById = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Show Cart by id is the error",
+      errcode: -1,
     });
   }
 };
@@ -51,6 +57,7 @@ const createCart = async (req, res) => {
     if (!userId || !createDate || !quantity || !bookIds) {
       return res.status(400).json({
         message: "Input is required",
+        errcode: 1,
       });
     }
     const dataCart = await apiCartService.createCart(
@@ -62,11 +69,13 @@ const createCart = async (req, res) => {
     if (dataCart) {
       return res.status(200).json({
         message: "Create cart is the success",
+        errcode: 0,
         data: dataCart,
       });
     } else {
       return res.status(400).json({
         message: "Create cart is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -74,6 +83,7 @@ const createCart = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Create cart is the error",
+      errcode: -1,
     });
   }
 };
@@ -92,11 +102,13 @@ const updateCart = async (req, res) => {
     if (carts) {
       return res.status(200).json({
         message: "Update cart is the success",
+        errcode: 0,
         data: carts,
       });
     } else {
       return res.status(400).json({
         message: "Update cart is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -104,6 +116,7 @@ const updateCart = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Update cart is the error",
+      errcode: -1,
     });
   }
 };
@@ -115,11 +128,13 @@ const deleteCart = async (req, res) => {
     if (dataCart) {
       return res.status(200).json({
         message: "Delete cart is the success",
+        errcode: 0,
         data: dataCart,
       });
     } else {
       return res.status(400).json({
         message: "Delete cart is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -127,6 +142,7 @@ const deleteCart = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Delete cart is the error",
+      errcode: -1,
     });
   }
 };

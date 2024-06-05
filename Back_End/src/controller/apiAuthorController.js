@@ -57,6 +57,7 @@ const createAuthor = async (req, res) => {
     if (!author_name || !address || !phone || !bio) {
       return res.status(200).json({
         message: "Input is the requied",
+        errcode: 1,
       });
     }
     let createNewAuthor = await apiAuthorService.createAuthor(
@@ -68,18 +69,20 @@ const createAuthor = async (req, res) => {
     if (createNewAuthor) {
       return res.status(200).json({
         message: "Create author is the success",
+        errcode: 0,
         data: createNewAuthor,
       });
     } else {
       return res.status(200).json({
         message: "Input is the faild",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     return res.status(500).json({
       message: "Create author is the error",
-      data: [],
+      errcode: -1,
     });
   }
 };

@@ -2,7 +2,7 @@ import React from "react";
 import ModalCreateGenres from "./Modals/ModalCreateGenres";
 import ModalUpdateGenres from "./Modals/ModalUpdateGenres";
 import { useEffect, useState } from "react";
-import { getListUser } from "../../../services/userService";
+import { getListGenres } from "../../../services/genresService";
 import TableGenres from "./Modals/TableGenres";
 import { FcPlus } from "react-icons/fc";
 
@@ -11,18 +11,18 @@ const ManagerGenres = () => {
   const [showModalCreateGenres, setShowModalCreateGenres] = useState(false);
   const [showModalUpdateGenres, setShowModalUpdateGenres] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
-  //   const [listUser, setListUser] = useState([]);
+  const [listGenres, setListGenres] = useState([]);
 
-  //   const fetchListUser = async () => {
-  //     let dataUser = await getListUser();
-  //     if (dataUser && dataUser.errcode === 0) {
-  //       setListUser(dataUser.data);
-  //     }
-  //   };
+  const fetchListGenres = async () => {
+    let dataGenres = await getListGenres();
+    if (dataGenres && dataGenres.errcode === 0) {
+      setListGenres(dataGenres.data);
+    }
+  };
 
-  //   useEffect(() => {
-  //     fetchListUser();
-  //   }, []);
+  useEffect(() => {
+    fetchListGenres();
+  }, []);
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -45,7 +45,7 @@ const ManagerGenres = () => {
         <ModalCreateGenres
           show={showModalCreateGenres}
           setShow={setShowModalCreateGenres}
-          //   fetchListUser={fetchListUser}
+          fetchListGenres={fetchListGenres}
         />
         <ModalUpdateGenres
           show={showModalUpdateGenres}
@@ -56,8 +56,8 @@ const ManagerGenres = () => {
 
         <div className="btn-table-container">
           <TableGenres
-          // listUser={listUser}
-          // handleClickUpdate={handleClickUpdate}
+            listGenres={listGenres}
+            // handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

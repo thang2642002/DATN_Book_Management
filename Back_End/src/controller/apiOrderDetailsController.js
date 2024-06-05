@@ -6,11 +6,13 @@ const getAllOrderDetails = async (req, res) => {
     if (dataOrderDetails) {
       return res.status(200).json({
         message: "Show all orderdetail is the success",
+        errcode: 0,
         data: dataOrderDetails,
       });
     } else {
       return res.status(200).json({
         message: "Show all orderdetail is the failde",
+        errcode: 1,
         data: [],
       });
     }
@@ -18,6 +20,7 @@ const getAllOrderDetails = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Show all orderdetail is the error",
+      errcode: -1,
     });
   }
 };
@@ -31,11 +34,13 @@ const getAllOrderDetailsById = async (req, res) => {
     if (dataOrderDetails) {
       return res.status(200).json({
         message: "Show orderDetail by id is the success",
+        errcode: 0,
         data: dataOrderDetails,
       });
     } else {
       return res.status(200).json({
         message: "Show orderDetail by id is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -43,6 +48,7 @@ const getAllOrderDetailsById = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Show orderDetail by id is the error",
+      errcode: 1,
     });
   }
 };
@@ -53,6 +59,7 @@ const createOrderDetails = async (req, res) => {
     if (!quantity || !unit_price || !description || !orderId || !bookId) {
       return res.status(200).json({
         message: "Input is the requid",
+        errcode: 1,
       });
     }
     const dataOrderDetails = await apiOrderDetailService.createOrderDetails(
@@ -65,11 +72,13 @@ const createOrderDetails = async (req, res) => {
     if (dataOrderDetails) {
       return res.status(200).json({
         message: "Create OrderDeatails is the success",
+        errcode: 0,
         data: dataOrderDetails,
       });
     } else {
       return res.status(200).json({
         message: "Create OrderDeatails is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -77,6 +86,7 @@ const createOrderDetails = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Create OrderDeatails is the error",
+      errcode: 1,
     });
   }
 };
@@ -93,11 +103,13 @@ const updateOrderDetails = async (req, res) => {
     if (orderDetails) {
       return res.status(200).json({
         message: "Update orderDetail is the success",
+        errcode: 0,
         data: orderDetails,
       });
     } else {
       return res.status(200).json({
         message: "Update orderDetail is the failed",
+        errcode: 1,
         data: [],
       });
     }
@@ -105,6 +117,7 @@ const updateOrderDetails = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Update orderDetail is the error",
+      errcode: -1,
     });
   }
 };
@@ -116,11 +129,13 @@ const deleteOrderDetails = async (req, res) => {
     if (orderDetail) {
       return res.status(200).json({
         message: "Delete orderDetail is the success",
+        errcode: 0,
         data: orderDetail,
       });
     } else {
       return res.status(200).json({
         message: "Delete orderDetail is the fialed",
+        errcode: 1,
         data: [],
       });
     }
@@ -128,6 +143,7 @@ const deleteOrderDetails = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Delete orderDetail is the erorr",
+      errcode: -1,
     });
   }
 };

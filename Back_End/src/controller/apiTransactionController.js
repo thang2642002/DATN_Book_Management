@@ -13,6 +13,7 @@ const createTransaction = async (req, res) => {
     ) {
       res.status(200).json({
         message: "Input is the requid",
+        errcode: 1,
       });
     }
     const newTransaction = await transactionService.createTransaction({
@@ -25,17 +26,19 @@ const createTransaction = async (req, res) => {
     if (newTransaction) {
       res.status(201).json({
         message: "Transaction created successfully",
+        errcode: 0,
         data: newTransaction,
       });
     } else {
       res.status(201).json({
         message: "Transaction created faild",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, errcode: -1 });
   }
 };
 
@@ -50,17 +53,19 @@ const updateTransaction = async (req, res) => {
     if (updateTransaction) {
       res.status(200).json({
         message: "Transaction updated successfully",
+        errcode: 0,
         data: updatedTransaction,
       });
     } else {
       res.status(200).json({
         message: "Transaction updated faild",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, errcode: -1 });
   }
 };
 
@@ -72,14 +77,17 @@ const deleteTransaction = async (req, res) => {
     if (transaction) {
       res.status(200).json({
         message: "Transaction deleted successfully",
+        errcode: 0,
         data: transaction,
       });
     } else {
-      res.status(200).json({ message: "Transaction deleted faild" });
+      res
+        .status(200)
+        .json({ message: "Transaction deleted faild", errcode: 1 });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, errcode: -1 });
   }
 };
 
@@ -92,17 +100,19 @@ const getTransactionById = async (req, res) => {
     if (transaction) {
       res.status(200).json({
         message: "Show Transaction is the success",
+        errcode: 0,
         data: transaction,
       });
     } else {
       res.status(200).json({
         message: "Show Transaction is the faild",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, errcode: -1 });
   }
 };
 
@@ -112,16 +122,19 @@ const getAllTransactions = async (req, res) => {
     if (transactions) {
       res.status(200).json({
         message: "Show Transaction is the success",
+        errcode: 0,
         data: transactions,
       });
     } else {
-      res
-        .status(200)
-        .json({ message: "Show Transaction is the faild", data: [] });
+      res.status(200).json({
+        message: "Show Transaction is the faild",
+        errcode: 1,
+        data: [],
+      });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message, errcode: 1 });
   }
 };
 

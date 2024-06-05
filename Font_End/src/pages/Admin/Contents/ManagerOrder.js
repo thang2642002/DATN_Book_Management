@@ -2,7 +2,7 @@ import React from "react";
 import ModalCreateOrder from "./Modals/ModalCreateOrder";
 import ModalUpdateOrder from "./Modals/ModalUpdateOrder";
 import { useEffect, useState } from "react";
-import { getListUser } from "../../../services/userService";
+import { getListOrder } from "../../../services/orderService";
 import TableOrder from "./Modals/TableOrder";
 import { FcPlus } from "react-icons/fc";
 
@@ -11,18 +11,18 @@ const ManagerOrder = () => {
   const [showModalCreateOrder, setShowModalCreateOrder] = useState(false);
   const [showModalUpdateOrder, setShowModalUpdateOrder] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
-  //   const [listUser, setListUser] = useState([]);
+  const [listOrder, setListOrder] = useState([]);
 
-  //   const fetchListUser = async () => {
-  //     let dataUser = await getListUser();
-  //     if (dataUser && dataUser.errcode === 0) {
-  //       setListUser(dataUser.data);
-  //     }
-  //   };
+  const fetchListOrder = async () => {
+    let dataOrder = await getListOrder();
+    if (dataOrder && dataOrder.errcode === 0) {
+      setListOrder(dataOrder.data);
+    }
+  };
 
-  //   useEffect(() => {
-  //     fetchListUser();
-  //   }, []);
+  useEffect(() => {
+    fetchListOrder();
+  }, []);
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -45,7 +45,7 @@ const ManagerOrder = () => {
         <ModalCreateOrder
           show={showModalCreateOrder}
           setShow={setShowModalCreateOrder}
-          //   fetchListUser={fetchListUser}
+          fetchListOrder={fetchListOrder}
         />
         <ModalUpdateOrder
           show={showModalUpdateOrder}
@@ -56,8 +56,8 @@ const ManagerOrder = () => {
 
         <div className="btn-table-container">
           <TableOrder
-          // listUser={listUser}
-          // handleClickUpdate={handleClickUpdate}
+            listOrder={listOrder}
+            // handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

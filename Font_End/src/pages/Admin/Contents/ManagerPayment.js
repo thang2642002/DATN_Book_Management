@@ -2,7 +2,7 @@ import React from "react";
 import ModalCreatepayment from "./Modals/ModalCreatePayment";
 import ModalUpdatepayment from "./Modals/ModalUpdatePayment";
 import { useEffect, useState } from "react";
-import { getListUser } from "../../../services/userService";
+import { getListPayment } from "../../../services/paymentService";
 import TablePayment from "./Modals/TablePayment";
 import { FcPlus } from "react-icons/fc";
 
@@ -11,18 +11,18 @@ const ManagerPayment = () => {
   const [ShowModalCreatePayment, setShowModalCreatePayment] = useState(false);
   const [showModalUpdatePayment, setShowModalUpdatePayment] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
-  //   const [listUser, setListUser] = useState([]);
+  const [listPayment, setListPayment] = useState([]);
 
-  //   const fetchListUser = async () => {
-  //     let dataUser = await getListUser();
-  //     if (dataUser && dataUser.errcode === 0) {
-  //       setListUser(dataUser.data);
-  //     }
-  //   };
+  const fetchListPayment = async () => {
+    let dataPayment = await getListPayment();
+    if (dataPayment && dataPayment.errcode === 0) {
+      setListPayment(dataPayment.data);
+    }
+  };
 
-  //   useEffect(() => {
-  //     fetchListUser();
-  //   }, []);
+  useEffect(() => {
+    fetchListPayment();
+  }, []);
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -45,19 +45,19 @@ const ManagerPayment = () => {
         <ModalCreatepayment
           show={ShowModalCreatePayment}
           setShow={setShowModalCreatePayment}
-          //   fetchListUser={fetchListUser}
+          fetchListPayment={fetchListPayment}
         />
         <ModalUpdatepayment
           show={showModalUpdatePayment}
           setShow={setShowModalUpdatePayment}
-          //   fetchListUser={fetchListUser}
+          // fetchListPayment={fetchListPayment}
           //   dataUpdate={dataUpdate}
         />
 
         <div className="btn-table-container">
           <TablePayment
-          // listUser={listUser}
-          // handleClickUpdate={handleClickUpdate}
+            listPayment={listPayment}
+            // handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

@@ -82,6 +82,10 @@ const SideBar = (props) => {
                 Manager Publiers
               </MenuItem>
               <MenuItem>
+                <Link to="/admin/managerReviews" />
+                Manager Review
+              </MenuItem>
+              <MenuItem>
                 <Link to="/admin/managerCarts" />
                 Manager Cart
               </MenuItem>

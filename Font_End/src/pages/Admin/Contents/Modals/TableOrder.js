@@ -1,4 +1,5 @@
-const TableOrder = () => {
+const TableOrder = (props) => {
+  const { listOrder } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -13,23 +14,28 @@ const TableOrder = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>20/5/2024</td>
-            <td>balaba</td>
-            <td>100</td>
-            <td>2</td>
-            <td>
-              <button className="btn btn-secondary">View</button>
-              <button
-                className="btn btn-warning mx-3"
-                // onClick={() => handleClickUpdate(user)}
-              >
-                Upadte
-              </button>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
+          {listOrder &&
+            listOrder.map((order, index) => {
+              return (
+                <tr key={index + 1}>
+                  <td>{order.id}</td>
+                  <td>{order.order_date}</td>
+                  <td>{order.totalPrice}</td>
+                  <td>{order.description}</td>
+                  <td>{order.userId}</td>
+                  <td>
+                    <button className="btn btn-secondary">View</button>
+                    <button
+                      className="btn btn-warning mx-3"
+                      // onClick={() => handleClickUpdate(user)}
+                    >
+                      Upadte
+                    </button>
+                    <button className="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

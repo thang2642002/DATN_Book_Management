@@ -6,11 +6,13 @@ const getAllReviews = async (req, res) => {
     if (reviews) {
       return res.status(200).json({
         message: "Retrieve all reviews successfully",
+        errcode: 0,
         data: reviews,
       });
     } else {
       return res.status(404).json({
         message: "No reviews found",
+        errcode: 1,
         data: [],
       });
     }
@@ -18,7 +20,7 @@ const getAllReviews = async (req, res) => {
     console.error("Error retrieving reviews:", error);
     return res.status(500).json({
       message: "An error occurred while retrieving reviews",
-      data: [],
+      errcode: -1,
     });
   }
 };
@@ -31,11 +33,13 @@ const getReviewById = async (req, res) => {
     if (review) {
       return res.status(200).json({
         message: "Retrieve review successfully",
+        errcode: 0,
         data: review,
       });
     } else {
       return res.status(404).json({
         message: "Review not found",
+        errcode: 1,
         data: null,
       });
     }
@@ -43,7 +47,7 @@ const getReviewById = async (req, res) => {
     console.error("Error retrieving review:", error);
     return res.status(500).json({
       message: "An error occurred while retrieving review",
-      data: null,
+      errcode: -1,
     });
   }
 };
@@ -55,6 +59,7 @@ const createReview = async (req, res) => {
     if (!bookId || !userId || !rating || !comment || !reviewDate) {
       return res.status(400).json({
         message: "All fields are required",
+        errcode: 1,
       });
     }
 
@@ -69,19 +74,21 @@ const createReview = async (req, res) => {
     if (newReview) {
       return res.status(201).json({
         message: "Review created successfully",
+        errcode: 0,
         data: newReview,
       });
     } else {
       return res.status(500).json({
         message: "Failed to create review",
-        data: null,
+        errcode: 1,
+        data: [],
       });
     }
   } catch (error) {
     console.error("Error creating review:", error);
     return res.status(500).json({
       message: "An error occurred while creating review",
-      data: null,
+      errcode: -1,
     });
   }
 };
@@ -95,11 +102,13 @@ const updateReview = async (req, res) => {
     if (updatedReview) {
       return res.status(200).json({
         message: "Review updated successfully",
+        errcode: 0,
         data: updatedReview,
       });
     } else {
       return res.status(404).json({
         message: "Review not found",
+        errcode: 1,
         data: null,
       });
     }
@@ -107,7 +116,7 @@ const updateReview = async (req, res) => {
     console.error("Error updating review:", error);
     return res.status(500).json({
       message: "An error occurred while updating review",
-      data: null,
+      errcode: -1,
     });
   }
 };
@@ -120,11 +129,13 @@ const deleteReview = async (req, res) => {
     if (deleted) {
       return res.status(200).json({
         message: "Review deleted successfully",
+        errcode: 0,
         data: deleted,
       });
     } else {
       return res.status(404).json({
         message: "Review not found",
+        errcode: 1,
         data: null,
       });
     }
@@ -132,7 +143,7 @@ const deleteReview = async (req, res) => {
     console.error("Error deleting review:", error);
     return res.status(500).json({
       message: "An error occurred while deleting review",
-      data: null,
+      errcode: -1,
     });
   }
 };

@@ -2,7 +2,7 @@ import React from "react";
 import ModalCreateTransaction from "./Modals/ModalCreateTransaction";
 import ModalUpdateTransaction from "./Modals/ModalUpdateTransaction";
 import { useEffect, useState } from "react";
-import { getListUser } from "../../../services/userService";
+import { getListTransaction } from "../../../services/transactionService";
 import TableTransaction from "./Modals/TableTransaction";
 import { FcPlus } from "react-icons/fc";
 
@@ -13,18 +13,19 @@ const ManagerTransaction = () => {
   const [showModalUpdateTransaction, setShowModalUpdateTransaction] =
     useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
-  //   const [listUser, setListUser] = useState([]);
+  const [listTransaction, setListTransaction] = useState([]);
 
-  //   const fetchListUser = async () => {
-  //     let dataUser = await getListUser();
-  //     if (dataUser && dataUser.errcode === 0) {
-  //       setListUser(dataUser.data);
-  //     }
-  //   };
+  const fetchListTransaction = async () => {
+    let dataTransaction = await getListTransaction();
+    if (dataTransaction && dataTransaction.errcode === 0) {
+      setListTransaction(dataTransaction.data);
+    }
+    console.log("check tran", dataTransaction);
+  };
 
-  //   useEffect(() => {
-  //     fetchListUser();
-  //   }, []);
+  useEffect(() => {
+    fetchListTransaction();
+  }, []);
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -47,7 +48,7 @@ const ManagerTransaction = () => {
         <ModalCreateTransaction
           show={ShowModalCreateTransaction}
           setShow={setShowModalCreateTransaction}
-          //   fetchListUser={fetchListUser}
+          fetchListTransaction={fetchListTransaction}
         />
         <ModalUpdateTransaction
           show={showModalUpdateTransaction}
@@ -58,8 +59,8 @@ const ManagerTransaction = () => {
 
         <div className="btn-table-container">
           <TableTransaction
-          // listUser={listUser}
-          // handleClickUpdate={handleClickUpdate}
+            listTransaction={listTransaction}
+            // handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

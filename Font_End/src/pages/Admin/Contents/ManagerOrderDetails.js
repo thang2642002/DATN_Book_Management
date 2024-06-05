@@ -2,7 +2,7 @@ import React from "react";
 import ModalCreateOrderDetails from "./Modals/ModalCreateOrderDetails";
 import ModalUpdateOrderDetails from "./Modals/ModalUpdateOrderDetails";
 import { useEffect, useState } from "react";
-import { getListUser } from "../../../services/userService";
+import { getListOrderDetails } from "../../../services/orderDetailsService";
 import TableOrderDetails from "./Modals/TableOrderDetails";
 import { FcPlus } from "react-icons/fc";
 
@@ -13,18 +13,18 @@ const ManagerOrderDetails = () => {
   const [showModalUpdateOrderDetails, setShowModalUpdateOrderDetails] =
     useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
-  //   const [listUser, setListUser] = useState([]);
+  const [listOrderDetails, setListOrderDetails] = useState([]);
 
-  //   const fetchListUser = async () => {
-  //     let dataUser = await getListUser();
-  //     if (dataUser && dataUser.errcode === 0) {
-  //       setListUser(dataUser.data);
-  //     }
-  //   };
+  const fetchListOrderDetails = async () => {
+    let dataUser = await getListOrderDetails();
+    if (dataUser && dataUser.errcode === 0) {
+      setListOrderDetails(dataUser.data);
+    }
+  };
 
-  //   useEffect(() => {
-  //     fetchListUser();
-  //   }, []);
+  useEffect(() => {
+    fetchListOrderDetails();
+  }, []);
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -47,7 +47,7 @@ const ManagerOrderDetails = () => {
         <ModalCreateOrderDetails
           show={showModalCreateOrderDetails}
           setShow={setShowModalCreateOrderDetails}
-          //   fetchListUser={fetchListUser}
+          fetchListOrderDetails={fetchListOrderDetails}
         />
         <ModalUpdateOrderDetails
           show={showModalUpdateOrderDetails}
@@ -58,8 +58,8 @@ const ManagerOrderDetails = () => {
 
         <div className="btn-table-container">
           <TableOrderDetails
-          // listUser={listUser}
-          // handleClickUpdate={handleClickUpdate}
+            listOrderDetails={listOrderDetails}
+            // handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

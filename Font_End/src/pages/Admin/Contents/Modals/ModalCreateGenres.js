@@ -2,11 +2,11 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-// import { createUser } from "../../../../services/userService";
+import { createGenres } from "../../../../services/genresService";
 // import "./ModalCreateGenres.scss";
 
 const ModalCreateGenres = (props) => {
-  const { show, setShow, fetchListUser } = props;
+  const { show, setShow, fetchListGenres } = props;
   const handleClose = () => {
     setShow(false);
     setName("");
@@ -15,34 +15,23 @@ const ModalCreateGenres = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmitCreateUsers = async () => {
+  const handleSubmitCreateGenres = async () => {
     if (!name) {
       toast.error("Ivalid name");
       return;
     }
+    let data = await createGenres(name, description);
 
-    // let data = await createUser(
-    //   email,
-    //   password,
-    //   username,
-    //   address,
-    //   phone,
-    //   role,
-    //   image
-    // );
+    console.log("check data: ", data);
 
-    // console.log("check data: ", data);
-
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
-
-    // console.log("check res: ", res.data);
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListGenres();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
@@ -66,7 +55,7 @@ const ModalCreateGenres = (props) => {
             <div className="col-md-6">
               <label className="form-label">Name</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -75,7 +64,7 @@ const ModalCreateGenres = (props) => {
             <div className="col-md-6">
               <label className="form-label">Description</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -87,7 +76,7 @@ const ModalCreateGenres = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUsers()}>
+          <Button variant="primary" onClick={() => handleSubmitCreateGenres()}>
             Save
           </Button>
         </Modal.Footer>
