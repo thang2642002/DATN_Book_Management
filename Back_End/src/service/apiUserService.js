@@ -81,6 +81,7 @@ const createUser = async (
 };
 
 const updateUserService = async (userId, dataUser) => {
+  console.log("Data", dataUser);
   try {
     const user = await db.User.findByPk(userId);
     if (!user) {

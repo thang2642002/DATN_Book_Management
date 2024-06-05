@@ -4,6 +4,7 @@ import express from "express";
 
 const router = express.Router();
 
+router.get("/get-page", apiUserController.getPage);
 router.get("/get-all-user", apiUserController.getAllUser);
 router.get("/get-user-by-id/:id", apiUserController.getUserById);
 router.post(

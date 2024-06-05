@@ -1,5 +1,11 @@
 import apiUserService from "../service/apiUserService";
 
+const getPage = (req, res) => {
+  const page = parseInt(req.query.page);
+  const pageSize = parseInt(req.query.pageSize);
+  console.log("check: ", page, pageSize);
+};
+
 const getAllUser = async (req, res) => {
   try {
     let getAllUser = await apiUserService.getAllUser();
@@ -108,6 +114,7 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const userId = req.params.id;
   const dataUser = req.body;
+  console.log("data user:", dataUser);
 
   try {
     const updatedUser = await apiUserService.updateUserService(
@@ -237,4 +244,5 @@ module.exports = {
   getUserById,
   handleRegister,
   handleLogin,
+  getPage,
 };

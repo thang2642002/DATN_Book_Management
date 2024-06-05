@@ -1,5 +1,5 @@
 const TableUser = (props) => {
-  const { listUser, handleClickUpdate } = props;
+  const { listUser, handleClickUpdate, handleShowDelete } = props;
 
   return (
     <div className="table-user-container px-4 mt-4">
@@ -37,7 +37,12 @@ const TableUser = (props) => {
                   >
                     Upadte
                   </button>
-                  <button className="btn btn-danger">Delete</button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleShowDelete(user)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))

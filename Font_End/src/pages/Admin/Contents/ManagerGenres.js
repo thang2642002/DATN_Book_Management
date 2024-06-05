@@ -1,5 +1,6 @@
 import React from "react";
 import ModalCreateGenres from "./Modals/ModalCreateGenres";
+import ModalDeleteGenres from "./Modals/ModalDeleteGenres";
 import ModalUpdateGenres from "./Modals/ModalUpdateGenres";
 import { useEffect, useState } from "react";
 import { getListGenres } from "../../../services/genresService";
@@ -10,8 +11,10 @@ import "./ManagerGenres.scss";
 const ManagerGenres = () => {
   const [showModalCreateGenres, setShowModalCreateGenres] = useState(false);
   const [showModalUpdateGenres, setShowModalUpdateGenres] = useState(false);
+  const [showModalDeleteGenres, setShowModalDeleteGenres] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   const [listGenres, setListGenres] = useState([]);
+  const [dataDelete, setDataDelete] = useState({});
 
   const fetchListGenres = async () => {
     let dataGenres = await getListGenres();
@@ -24,10 +27,15 @@ const ManagerGenres = () => {
     fetchListGenres();
   }, []);
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  const handleShowModalDelete = (genres) => {
+    setShowModalDeleteGenres(true);
+    setDataDelete(genres);
+  };
+
+  const handleClickUpdate = (genres) => {
+    setShowModalUpdateGenres(true);
+    // setDataUpdate(user);
+  };
 
   return (
     <div className="manager-user-container">
@@ -47,17 +55,22 @@ const ManagerGenres = () => {
           setShow={setShowModalCreateGenres}
           fetchListGenres={fetchListGenres}
         />
+        <ModalDeleteGenres
+          show={showModalDeleteGenres}
+          setShow={setShowModalDeleteGenres}
+          fetchListGenres={fetchListGenres}
+          dataDelete={dataDelete}
+        />
         <ModalUpdateGenres
           show={showModalUpdateGenres}
           setShow={setShowModalUpdateGenres}
-          //   fetchListUser={fetchListUser}
-          //   dataUpdate={dataUpdate}
         />
 
         <div className="btn-table-container">
           <TableGenres
             listGenres={listGenres}
-            // handleClickUpdate={handleClickUpdate}
+            handleShowModalDelete={handleShowModalDelete}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

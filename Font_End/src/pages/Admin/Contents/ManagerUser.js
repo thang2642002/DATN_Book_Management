@@ -1,8 +1,9 @@
 import React from "react";
 import ModalCreateUser from "./Modals/ModalCreateUser";
 import ModalUpdateUser from "./Modals/ModalUpdateUser";
+import ModalDeleteUser from "./Modals/ModalDeleteUser";
 import { useEffect, useState } from "react";
-import { getListUser } from "../../../services/userService";
+import { getListUser, deleteUser } from "../../../services/userService";
 import TableUser from "./Modals/TableUser";
 import { FcPlus } from "react-icons/fc";
 
@@ -10,7 +11,10 @@ import "./ManagerUser.scss";
 const ManagerUser = () => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
   const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
+  const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataDelete, setDataDelete] = useState({});
+
   const [listUser, setListUser] = useState([]);
 
   const fetchListUser = async () => {
@@ -27,6 +31,11 @@ const ManagerUser = () => {
   const handleClickUpdate = (user) => {
     setShowModalUpdateUser(true);
     setDataUpdate(user);
+  };
+
+  const handleShowDelete = (user) => {
+    setShowModalDeleteUser(true);
+    setDataDelete(user);
   };
 
   return (
@@ -58,6 +67,14 @@ const ManagerUser = () => {
           <TableUser
             listUser={listUser}
             handleClickUpdate={handleClickUpdate}
+            handleShowDelete={handleShowDelete}
+          />
+
+          <ModalDeleteUser
+            show={showModalDeleteUser}
+            setShow={setShowModalDeleteUser}
+            fetchListUser={fetchListUser}
+            dataDelete={dataDelete}
           />
         </div>
       </div>

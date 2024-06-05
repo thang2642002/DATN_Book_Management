@@ -39,19 +39,35 @@ const UpdateUser = (id, username, address, phone, role, image) => {
 
   console.log("check userdata:", dataUser);
 
-  return axios.put(
-    `http://localhost:5000/api/users/update-user/${id}`,
-    dataUser,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  return axios
+    .put(
+      `http://localhost:5000/api/users/update-user/${id}`,
+      { data: { id, ...dataUser } }
+
+      // {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // }
+    )
+    .then((user) => {
+      console.log("user", user);
+    });
+};
+
+const deleteUser = (id) => {
+  return axios.delete(`/api/users/delete-user/${id}`, { data: { id } });
 };
 
 const getListUser = () => {
   return axios.get("/api/users/get-all-user");
 };
 
-export { registerNewUser, Login, createUser, getListUser, UpdateUser };
+export {
+  registerNewUser,
+  Login,
+  createUser,
+  getListUser,
+  UpdateUser,
+  deleteUser,
+};

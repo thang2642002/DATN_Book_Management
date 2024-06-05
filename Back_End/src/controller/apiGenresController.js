@@ -91,6 +91,8 @@ const createGenres = async (req, res) => {
 const UpdateGenres = async (req, res) => {
   const { genresName, description } = req.body;
   const genresId = req.params.id;
+  console.log("id: ", genresId);
+
   try {
     const updateGenres = await apiGenresService.updateGenres(
       genresName,
