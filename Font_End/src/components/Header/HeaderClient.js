@@ -23,7 +23,7 @@ const HeaderClient = () => {
       <Container>
         <Row>
           <Col sm={2}>
-            <Link to="/">
+            <Link to="/" style={{ "text-decoration": "none" }}>
               <div className="logo">BookStore</div>
             </Link>
           </Col>
@@ -57,6 +57,11 @@ const HeaderClient = () => {
                 <button variant="light" className="btn-header">
                   <MdAccountCircle className="icon" />
                   Tài Khoản
+                  <ul>
+                    <li>Thông tin tài khoản</li>
+                    <li>Đơn hàng</li>
+                    <li>Đăng xuất</li>
+                  </ul>
                 </button>
               </div>
               <div className="note">

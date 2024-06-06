@@ -23,6 +23,30 @@
     justify-content: space-between;
     gap: 5px;
 
+    .cart {
+      position: relative;
+
+      &:hover ul {
+        display: block;
+      }
+      ul {
+        z-index: 999;
+        position: absolute;
+        top: 28px;
+        display: none;
+        width: 150%;
+        background-color: #fff;
+        padding: 8px 5px;
+        border-radius: 5px;
+        li {
+          text-decoration: none;
+          list-style: none;
+          padding: 5px 0;
+          color: #000;
+        }
+      }
+    }
+
     .btn-header {
       background-color: transparent;
       border: none;
