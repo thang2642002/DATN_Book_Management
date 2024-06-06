@@ -51,7 +51,13 @@ const SignInPage = () => {
       let userLogin = await Login(email, password);
       console.log("check login: ", userLogin);
       toast(userLogin.message);
+      console.log("check tokens", userLogin.access_tokens);
+
       if (userLogin.data) {
+        localStorage.setItem(
+          "acceess_tokens",
+          JSON.stringify(userLogin.access_tokens)
+        );
         setTimeout(() => {
           navigate("/");
         }, 4000);

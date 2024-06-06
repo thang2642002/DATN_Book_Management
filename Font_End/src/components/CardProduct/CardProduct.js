@@ -1,19 +1,20 @@
 import img2 from "../../public/assets/img/cards/card2.jpg";
 import "./CardProduct.scss";
-const CardProduct = () => {
+const CardProduct = (props) => {
+  const { product } = props;
   return (
     <div className="card-product">
       <div className="img-product">
         <img src={img2} alt="img-product" />
       </div>
-      <div className="title-product">Chiến thắng con quỷ trong bạn</div>
+      <div className="title-product">{product.title}</div>
       <div className="special-price">
-        <span>40.120 đ</span>
+        <span>{product.price} đ</span>
         <span>-32%</span>
       </div>
-      <div className="old-price">59.000</div>
+      <div className="old-price">{product.sales}</div>
       <div className="sales">
-        120 <span>Lượt mua</span>
+        {product.quantity} <span>Lượt mua</span>
       </div>
     </div>
   );

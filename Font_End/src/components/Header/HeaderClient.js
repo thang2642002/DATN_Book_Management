@@ -1,4 +1,5 @@
 import Container from "react-bootstrap/Container";
+import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -22,7 +23,9 @@ const HeaderClient = () => {
       <Container>
         <Row>
           <Col sm={2}>
-            <div className="logo">BookStore</div>
+            <Link to="/">
+              <div className="logo">BookStore</div>
+            </Link>
           </Col>
           <Col sm={6}>
             <div className="search">

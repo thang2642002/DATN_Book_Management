@@ -69,7 +69,14 @@ const ModalUpdateUser = (props) => {
       toast.error("Invalid phone");
     }
 
-    let data = await UpdateUser( dataUpdate.id ,userName, address, phone, role, image);
+    let data = await UpdateUser(
+      dataUpdate.id,
+      userName,
+      address,
+      phone,
+      role,
+      image
+    );
     console.log("check data: ", data);
 
     if (data && data.errcode === 0) {

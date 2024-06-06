@@ -1,5 +1,5 @@
 const TableBooks = (props) => {
-  const { listBook } = props;
+  const { listBook, ShowModalDelete } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -36,7 +36,14 @@ const TableBooks = (props) => {
                     >
                       Upadte
                     </button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        ShowModalDelete(book);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );

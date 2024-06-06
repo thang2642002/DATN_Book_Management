@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { FcPlus } from "react-icons/fc";
 import ModalCreateBoook from "./Modals/ModalCreateBooks";
 import ModalUpdateBooks from "./Modals/ModalUpdateBooks";
+import ModalDeleteBooks from "./Modals/ModalDeleteBooks";
 import TableBooks from "./Modals/TableBooks";
 import { getListBooks } from "../../../services/BookService";
 
 const ManagerBooks = () => {
   const [showModalCreateBook, setShowModalCreateBook] = useState(false);
   const [showModalUpdateBook, setShowModalUpdateBook] = useState(false);
+  const [showModalDeleteBook, setShowMoadalBookDelete] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataDelete, setDataDelete] = useState({});
   const [listBook, setListBook] = useState([]);
 
   const fetchListBooks = async () => {
@@ -18,6 +21,11 @@ const ManagerBooks = () => {
       setListBook(dataBooks.data);
     }
     console.log("check list book", listBook);
+  };
+
+  const ShowModalDelete = (book) => {
+    setDataDelete(book);
+    setShowMoadalBookDelete(true);
   };
 
   useEffect(() => {
@@ -47,10 +55,17 @@ const ManagerBooks = () => {
           // fetchListUser={fetchListUser}
           dataUpdate={dataUpdate}
         />
+        <ModalDeleteBooks
+          show={showModalDeleteBook}
+          setShow={setShowMoadalBookDelete}
+          dataDelete={dataDelete}
+          fetchListBooks={fetchListBooks}
+        />
 
         <div className="btn-table-container">
           <TableBooks
             listBook={listBook}
+            ShowModalDelete={ShowModalDelete}
             // handleClickUpdate={handleClickUpdate}
           />
         </div>
