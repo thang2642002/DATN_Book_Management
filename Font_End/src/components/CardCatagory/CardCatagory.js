@@ -58,9 +58,9 @@ const CardCatagory = () => {
   return (
     <>
       <div className="card-catagogy-container">
-        {listCardCatagory.map((item) => {
+        {listCardCatagory.map((item, index) => {
           return (
-            <div className="card-catagogy">
+            <div className="card-catagogy" key={index + 1}>
               <img src={item.img} alt="" />
               <div className="title-product">{item.title}</div>
             </div>

@@ -26,10 +26,10 @@ const Catagory = () => {
   return (
     <div className="catagory-container">
       <div className="catagory-content">
-        {name_catagory.map((item) => {
+        {name_catagory.map((item, index) => {
           return (
             <Link>
-              <div className="catagory-item">
+              <div className="catagory-item" key={index + 1}>
                 <div>
                   <img src={item.img} alt="catagory" />
                 </div>

@@ -2,21 +2,20 @@ import { Row, Col } from "react-bootstrap";
 import ButtonSee from "../../ButonSeeMore/Button";
 import CardProduct from "../../CardProduct/CardProduct";
 import { getListBooks } from "../../../services/BookService";
-
 import "./ContentListProduct.scss";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+
 const ContentListProduct = () => {
   const [listProduct, setListProduct] = useState([]);
 
   const fetchListProduct = async () => {
     const dataProduct = await getListBooks();
-    setListProduct(dataProduct);
+    setListProduct(dataProduct.data);
   };
 
-  useEffect = () => {
+  useEffect(() => {
     fetchListProduct();
-  };
+  }, []);
   return (
     <>
       <Row style={{ padding: "0", margin: "0" }}>
