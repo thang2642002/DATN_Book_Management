@@ -19,4 +19,8 @@ const createPayment = (
   };
   return axios.post("/api/payment/craete-payment", data);
 };
-export { getListPayment, createPayment };
+
+const deletePayment = (id) => {
+  return axios.delete(`/api/payment/delete-payment/${id}`, { data: { id } });
+};
+export { getListPayment, createPayment, deletePayment };

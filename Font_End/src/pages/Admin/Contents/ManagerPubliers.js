@@ -1,6 +1,7 @@
 import React from "react";
 import ModalCreatePubliers from "./Modals/ModalCreatePubliers";
 import ModalUpdatePubliers from "./Modals/ModalUpdatePubliers";
+import ModalDeleteSuppliers from "./Modals/ModalDeleteSuppliers";
 import { useEffect, useState } from "react";
 import { getListPubliers } from "../../../services/publiersService";
 import TablePubliers from "./Modals/TablePubliers";
@@ -10,8 +11,10 @@ import { FcPlus } from "react-icons/fc";
 const ManagerPubliers = () => {
   const [showModalCreatePubliers, setShowModalCreatePubliers] = useState(false);
   const [showModalUpdatePubliers, setShowModalUpdatePubliers] = useState(false);
+  const [showModalDeletePubliers, setShowModalDeletePubliers] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   const [listPubliers, setListPubliers] = useState([]);
+  const [dataDelete, setDataDelete] = useState({});
 
   const fetchListPubliers = async () => {
     let dataPubliers = await getListPubliers();
@@ -23,6 +26,11 @@ const ManagerPubliers = () => {
   useEffect(() => {
     fetchListPubliers();
   }, []);
+
+  const handleShowModalDeleteSubliers = (suppliers) => {
+    setShowModalDeletePubliers(true);
+    setDataDelete(suppliers);
+  };
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -54,9 +62,17 @@ const ManagerPubliers = () => {
           //   dataUpdate={dataUpdate}
         />
 
+        <ModalDeleteSuppliers
+          show={showModalDeletePubliers}
+          setShow={setShowModalDeletePubliers}
+          dataDelete={dataDelete}
+          fetchListPubliers={fetchListPubliers}
+        />
+
         <div className="btn-table-container">
           <TablePubliers
             listPubliers={listPubliers}
+            handleShowModalDeleteSubliers={handleShowModalDeleteSubliers}
             // handleClickUpdate={handleClickUpdate}
           />
         </div>

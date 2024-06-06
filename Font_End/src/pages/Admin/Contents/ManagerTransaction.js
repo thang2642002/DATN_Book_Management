@@ -1,6 +1,7 @@
 import React from "react";
 import ModalCreateTransaction from "./Modals/ModalCreateTransaction";
 import ModalUpdateTransaction from "./Modals/ModalUpdateTransaction";
+import ModalDeleteTransaction from "./Modals/ModalDeleteTransaction";
 import { useEffect, useState } from "react";
 import { getListTransaction } from "../../../services/transactionService";
 import TableTransaction from "./Modals/TableTransaction";
@@ -12,8 +13,11 @@ const ManagerTransaction = () => {
     useState(false);
   const [showModalUpdateTransaction, setShowModalUpdateTransaction] =
     useState(false);
+  const [showModalDeleteTransaction, setShowModalDeleteTransaction] =
+    useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   const [listTransaction, setListTransaction] = useState([]);
+  const [dataDelete, setDataDelete] = useState({});
 
   const fetchListTransaction = async () => {
     let dataTransaction = await getListTransaction();
@@ -26,6 +30,12 @@ const ManagerTransaction = () => {
   useEffect(() => {
     fetchListTransaction();
   }, []);
+
+  const handleShowModalDeleteTransaction = (transaction) => {
+    console.log("transaction", transaction);
+    setShowModalDeleteTransaction(true);
+    setDataDelete(transaction);
+  };
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -56,10 +66,17 @@ const ManagerTransaction = () => {
           //   fetchListUser={fetchListUser}
           //   dataUpdate={dataUpdate}
         />
+        <ModalDeleteTransaction
+          show={showModalDeleteTransaction}
+          setShow={setShowModalDeleteTransaction}
+          dataDelete={dataDelete}
+          fetchListTransaction={fetchListTransaction}
+        />
 
         <div className="btn-table-container">
           <TableTransaction
             listTransaction={listTransaction}
+            handleShowModalDeleteTransaction={handleShowModalDeleteTransaction}
             // handleClickUpdate={handleClickUpdate}
           />
         </div>

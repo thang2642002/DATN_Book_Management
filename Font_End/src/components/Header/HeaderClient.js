@@ -58,9 +58,15 @@ const HeaderClient = () => {
                   <MdAccountCircle className="icon" />
                   Tài Khoản
                   <ul>
-                    <li>Thông tin tài khoản</li>
-                    <li>Đơn hàng</li>
-                    <li>Đăng xuất</li>
+                    <Link>
+                      <li>Thông tin tài khoản</li>
+                    </Link>
+                    <Link>
+                      <li>Đơn hàng</li>
+                    </Link>
+                    <Link>
+                      <li>Đăng xuất</li>
+                    </Link>
                   </ul>
                 </button>
               </div>

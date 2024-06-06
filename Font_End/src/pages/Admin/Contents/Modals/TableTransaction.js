@@ -1,5 +1,5 @@
 const TableTransaction = (props) => {
-  const { listTransaction } = props;
+  const { listTransaction, handleShowModalDeleteTransaction } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -18,7 +18,7 @@ const TableTransaction = (props) => {
           {listTransaction &&
             listTransaction.map((transaction, index) => {
               return (
-                <tr>
+                <tr key={index + 1}>
                   <td>{transaction.id}</td>
                   <td>{transaction.transactionDate}</td>
                   <td>{transaction.transactionType}</td>
@@ -33,7 +33,14 @@ const TableTransaction = (props) => {
                     >
                       Upadte
                     </button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() =>
+                        handleShowModalDeleteTransaction(transaction)
+                      }
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );

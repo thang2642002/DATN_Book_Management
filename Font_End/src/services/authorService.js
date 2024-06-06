@@ -14,4 +14,8 @@ const createAuthor = (name, address, phone, bio) => {
   return axios.post("/api/author/craete-author", data);
 };
 
-export { getListAuthor, createAuthor };
+const deleteAuthor = (id) => {
+  return axios.delete(`/api/author/delete-author/${id}`, { data: { id } });
+};
+
+export { getListAuthor, createAuthor, deleteAuthor };

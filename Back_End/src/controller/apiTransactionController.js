@@ -71,9 +71,12 @@ const updateTransaction = async (req, res) => {
 
 const deleteTransaction = async (req, res) => {
   const transactionId = req.params.id;
-  console.log("transactionId: ", transactionId);
+
   try {
-    let transaction = await transactionService.deleteTransaction(transactionId);
+    const transaction = await transactionService.deleteTransaction(
+      transactionId
+    );
+
     if (transaction) {
       res.status(200).json({
         message: "Transaction deleted successfully",
@@ -81,13 +84,18 @@ const deleteTransaction = async (req, res) => {
         data: transaction,
       });
     } else {
-      res
-        .status(200)
-        .json({ message: "Transaction deleted faild", errcode: 1 });
+      res.status(404).json({
+        message: "Transaction not found",
+        errcode: 1,
+      });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error.message, errcode: -1 });
+    console.error("Error in deleteTransaction controller:", error);
+    res.status(500).json({
+      message: "Failed to delete transaction",
+      errcode: -1,
+      error: error.message,
+    });
   }
 };
 

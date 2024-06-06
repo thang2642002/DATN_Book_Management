@@ -1,6 +1,7 @@
 import React from "react";
 import ModalCreatepayment from "./Modals/ModalCreatePayment";
 import ModalUpdatepayment from "./Modals/ModalUpdatePayment";
+import ModalDeletePayment from "./Modals/ModalDeletePayment";
 import { useEffect, useState } from "react";
 import { getListPayment } from "../../../services/paymentService";
 import TablePayment from "./Modals/TablePayment";
@@ -10,8 +11,10 @@ import { FcPlus } from "react-icons/fc";
 const ManagerPayment = () => {
   const [ShowModalCreatePayment, setShowModalCreatePayment] = useState(false);
   const [showModalUpdatePayment, setShowModalUpdatePayment] = useState(false);
+  const [showModalDeletePayment, setShowModalDeletePayment] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   const [listPayment, setListPayment] = useState([]);
+  const [dataDelete, setDataDelete] = useState({});
 
   const fetchListPayment = async () => {
     let dataPayment = await getListPayment();
@@ -23,6 +26,11 @@ const ManagerPayment = () => {
   useEffect(() => {
     fetchListPayment();
   }, []);
+
+  const handleShowModalDeletePayment = (payment) => {
+    setShowModalDeletePayment(true);
+    setDataDelete(payment);
+  };
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -53,10 +61,17 @@ const ManagerPayment = () => {
           // fetchListPayment={fetchListPayment}
           //   dataUpdate={dataUpdate}
         />
+        <ModalDeletePayment
+          show={showModalDeletePayment}
+          setShow={setShowModalDeletePayment}
+          dataDelete={dataDelete}
+          fetchListPayment={fetchListPayment}
+        />
 
         <div className="btn-table-container">
           <TablePayment
             listPayment={listPayment}
+            handleShowModalDeletePayment={handleShowModalDeletePayment}
             // handleClickUpdate={handleClickUpdate}
           />
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import ModalCreateCarts from "./Modals/ModalCreateCarts";
 import ModalUpdateCarts from "./Modals/ModalUpdateCarts";
+import ModalDeleteCarts from "./Modals/ModalDeleteCarts";
 import { useEffect, useState } from "react";
 import { getListCart } from "../../../services/cartsService";
 import TableCarts from "./Modals/TableCarts";
@@ -10,21 +11,28 @@ import { FcPlus } from "react-icons/fc";
 const ManagerCarts = () => {
   const [showModalCreateCarts, setShowModalCreateCarts] = useState(false);
   const [showModalUpdateCarts, setShowModalUpdateCarts] = useState(false);
+  const [showModalDeleteCarts, setShowModalDeleteCarts] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   const [listCarts, setListCarts] = useState([]);
+  const [dataDelete, setDataDelete] = useState({});
 
   const fetchListCarts = async () => {
     let dataCarts = await getListCart();
     if (dataCarts && dataCarts.errcode === 0) {
       setListCarts(dataCarts.data);
     }
-    console.log("chek cart", dataCarts);
   };
 
   useEffect(() => {
     fetchListCarts();
   }, []);
 
+  const handleShowModalDeleteCarts = (carts) => {
+    setShowModalDeleteCarts(true);
+    setDataDelete(carts);
+    console.log("dataDelete", dataDelete);
+    console.log("carts", carts);
+  };
   // const handleClickUpdate = (user) => {
   //   setShowModalUpdateGenres(true);
   //   setDataUpdate(user);
@@ -55,9 +63,16 @@ const ManagerCarts = () => {
           //   dataUpdate={dataUpdate}
         />
 
+        <ModalDeleteCarts
+          show={showModalDeleteCarts}
+          setShow={setShowModalDeleteCarts}
+          dataDelete={dataDelete}
+          fetchListCarts={fetchListCarts}
+        />
         <div className="btn-table-container">
           <TableCarts
             listCarts={listCarts}
+            handleShowModalDeleteCarts={handleShowModalDeleteCarts}
             // handleClickUpdate={handleClickUpdate}
           />
         </div>

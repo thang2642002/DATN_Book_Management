@@ -90,22 +90,28 @@ const createAuthor = async (req, res) => {
 const deleteAuthor = async (req, res) => {
   const authorId = req.params.id;
   if (!authorId) {
-    return res.status(400).json({ message: "Author ID is required" });
+    return res
+      .status(400)
+      .json({ message: "Author ID is required", errcode: 1 });
   }
 
   try {
     const result = await apiAuthorService.deleteAuthor(authorId);
     console.log(`Service result: `, result);
     if (result) {
-      return res
-        .status(200)
-        .json({ message: "Author deleted successfully", data: result });
+      return res.status(200).json({
+        message: "Author deleted successfully",
+        data: result,
+        errcode: 0,
+      });
     } else {
       return res.status(404).json({ message: "Author not found" });
     }
   } catch (error) {
     console.error("Error deleting Product:", error);
-    return res.status(500).json({ message: "Delete Author Failed" });
+    return res
+      .status(500)
+      .json({ message: "Delete Author Failed", errcode: -1 });
   }
 };
 

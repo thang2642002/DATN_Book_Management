@@ -1,6 +1,7 @@
 import React from "react";
 import ModalCreateAuthor from "./Modals/ModalCreateAuthor";
 import ModalUpdateAuthor from "./Modals/ModalUpdateAuthor";
+import ModalDeleteAuthor from "./Modals/ModalDeleteAuthor";
 import { useEffect, useState } from "react";
 import { getListAuthor } from "../../../services/authorService";
 import TableAuthor from "./Modals/TableAuthor";
@@ -10,14 +11,22 @@ import { FcPlus } from "react-icons/fc";
 const ManagerAuthor = () => {
   const [showModalCreateAuthor, setShowModalCreateAuthor] = useState(false);
   const [showModalUpdateAuthor, setShowModalUpdateAuthor] = useState(false);
+  const [showModalDeleteAuthor, setShowModalDeleteAuthor] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   const [listAuthor, setListAuthor] = useState([]);
+  const [dataDelete, setDataDelete] = useState({});
 
   const fetchListAuthor = async () => {
     let dataAuthor = await getListAuthor();
     if (dataAuthor && dataAuthor.errcode === 0) {
       setListAuthor(dataAuthor.data);
     }
+  };
+
+  const handleShowModalDeleteAuthor = (author) => {
+    setShowModalDeleteAuthor(true);
+    setDataDelete(author);
+    console.log("author check", dataDelete);
   };
 
   useEffect(() => {
@@ -53,11 +62,18 @@ const ManagerAuthor = () => {
           //   fetchListUser={fetchListUser}
           //   dataUpdate={dataUpdate}
         />
+        <ModalDeleteAuthor
+          show={showModalDeleteAuthor}
+          setShow={setShowModalDeleteAuthor}
+          dataDelete={dataDelete}
+          fetchListAuthor={fetchListAuthor}
+        />
 
         <div className="btn-table-container">
           <TableAuthor
             listAuthor={listAuthor}
             // handleClickUpdate={handleClickUpdate}
+            handleShowModalDeleteAuthor={handleShowModalDeleteAuthor}
           />
         </div>
       </div>

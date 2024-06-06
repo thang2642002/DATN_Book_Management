@@ -1,5 +1,5 @@
 const TablePubliers = (props) => {
-  const { listPubliers } = props;
+  const { listPubliers, handleShowModalDeleteSubliers } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -18,7 +18,7 @@ const TablePubliers = (props) => {
           {listPubliers &&
             listPubliers.map((suppliers, index) => {
               return (
-                <tr>
+                <tr key={index + 1}>
                   <td>{suppliers.id}</td>
                   <td>{suppliers.suppliers_name}</td>
                   <td>{suppliers.contact_info}</td>
@@ -33,7 +33,14 @@ const TablePubliers = (props) => {
                     >
                       Upadte
                     </button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        handleShowModalDeleteSubliers(suppliers);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );

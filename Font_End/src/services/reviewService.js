@@ -9,4 +9,8 @@ const createReview = (bookId, userId, rating, comment, reviewDate) => {
   return axios.post("/api/review/create-review", data);
 };
 
-export { getListReview, createReview };
+const deleteReview = (id) => {
+  return axios.delete(`/api/review/delete-review/${id}`, { data: { id } });
+};
+
+export { getListReview, createReview, deleteReview };

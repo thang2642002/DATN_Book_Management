@@ -1,5 +1,5 @@
 const TablePayment = (props) => {
-  const { listPayment } = props;
+  const { listPayment, handleShowModalDeletePayment } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -33,7 +33,12 @@ const TablePayment = (props) => {
                     >
                       Upadte
                     </button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleShowModalDeletePayment(payment)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );

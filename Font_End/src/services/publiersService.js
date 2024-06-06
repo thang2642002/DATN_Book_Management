@@ -22,4 +22,10 @@ const createSuppliers = (
   };
   return axios.post("/api/suppliers/create-suppliers", data);
 };
-export { getListPubliers, createSuppliers };
+
+const deleteSuppliers = (id) => {
+  return axios.delete(`/api/suppliers/delete-suppliers/${id}`, {
+    data: { id },
+  });
+};
+export { getListPubliers, createSuppliers, deleteSuppliers };

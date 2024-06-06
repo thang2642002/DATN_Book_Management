@@ -1,6 +1,7 @@
 import React from "react";
 import ModalCreateReview from "./Modals/ModalCreateReview";
 import ModalUpdateReview from "./Modals/ModalUpdateReview";
+import ModalDeleteReview from "./Modals/ModalDeleteReview";
 import { useEffect, useState } from "react";
 import { getListReview } from "../../../services/reviewService";
 import TableReview from "./Modals/TableReview";
@@ -10,8 +11,10 @@ import { FcPlus } from "react-icons/fc";
 const ManagerReview = () => {
   const [showModalCreateReview, setShowModalCreateReview] = useState(false);
   const [showModalUpdateReview, setShowModalUpdateReview] = useState(false);
+  const [showModalDeleteReview, setShowModalDeleteReview] = useState(false);
   //   const [dataUpdate, setDataUpdate] = useState({});
   const [listReview, setListReview] = useState([]);
+  const [dataDelete, setDataDelete] = useState({});
 
   const fetchListReview = async () => {
     let dataReview = await getListReview();
@@ -23,6 +26,11 @@ const ManagerReview = () => {
   useEffect(() => {
     fetchListReview();
   }, []);
+
+  const handleShowModalDeleteReview = (review) => {
+    setShowModalDeleteReview(true);
+    setDataDelete(review);
+  };
 
   //   const handleClickUpdate = (user) => {
   //     setShowModalUpdateGenres(true);
@@ -54,9 +62,17 @@ const ManagerReview = () => {
           //   dataUpdate={dataUpdate}
         />
 
+        <ModalDeleteReview
+          show={showModalDeleteReview}
+          setShow={setShowModalDeleteReview}
+          dataDelete={dataDelete}
+          fetchListReview={fetchListReview}
+        />
+
         <div className="btn-table-container">
           <TableReview
             listReview={listReview}
+            handleShowModalDeleteReview={handleShowModalDeleteReview}
             // handleClickUpdate={handleClickUpdate}
           />
         </div>

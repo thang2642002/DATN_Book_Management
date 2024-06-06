@@ -15,4 +15,13 @@ const createTransaction = (
   return axios.post("/api/transaction/create-transaction", data);
 };
 
-export { getListTransaction, createTransaction };
+const deleteTransaction = (id) => {
+  return axios.delete(`/api/transaction/delete-transaction/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    // data: { otherData: value }, // Optional data
+  });
+};
+
+export { getListTransaction, createTransaction, deleteTransaction };

@@ -13,4 +13,8 @@ const createCarts = (userId, createDate, quantity, bookIds) => {
   };
   return axios.post("/api/cart/craete-cart", data);
 };
-export { getListCart, createCarts };
+
+const deleteCarts = (id) => {
+  return axios.delete(`/api/cart/delete-cart/${id}`, { data: { id }} );
+};
+export { getListCart, createCarts, deleteCarts };

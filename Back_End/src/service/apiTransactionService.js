@@ -39,21 +39,20 @@ const updateTransaction = async (transactionId, dataTransaction) => {
   }
 };
 
-const deleteTransaction = async (transactionId) => {
+const deleteTransaction = async (id) => {
   try {
     const transaction = await db.Transaction.findOne({
-      where: {
-        id: transactionId,
-      },
+      where: { id: id },
     });
-    console.log("transaction", transaction);
+
     if (!transaction) {
       return null;
     }
+
     await transaction.destroy();
     return transaction;
   } catch (error) {
-    console.error(error);
+    console.error("Error in deleteTransaction service:", error);
     throw new Error("Failed to delete transaction");
   }
 };

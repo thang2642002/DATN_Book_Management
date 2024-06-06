@@ -1,5 +1,5 @@
 const TableAuthor = (props) => {
-  const { listAuthor } = props;
+  const { listAuthor, handleShowModalDeleteAuthor } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -31,7 +31,14 @@ const TableAuthor = (props) => {
                     >
                       Upadte
                     </button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        handleShowModalDeleteAuthor(author);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );

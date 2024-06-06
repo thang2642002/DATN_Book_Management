@@ -147,22 +147,28 @@ const deleteProduct = async (req, res) => {
   const productId = req.params.id;
 
   if (!productId) {
-    return res.status(400).json({ message: "Product ID is required" });
+    return res
+      .status(400)
+      .json({ message: "Product ID is required", errcode: 1 });
   }
 
   try {
     const result = await apiProductService.removeProduct(productId);
     console.log(`Service result: `, result);
     if (result) {
-      return res
-        .status(200)
-        .json({ message: "Product deleted successfully", data: result });
+      return res.status(200).json({
+        message: "Product deleted successfully",
+        data: result,
+        errcode: 0,
+      });
     } else {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: "Product not found", errcode: 1 });
     }
   } catch (error) {
     console.error("Error deleting Product:", error);
-    return res.status(500).json({ message: "Delete Product Failed" });
+    return res
+      .status(500)
+      .json({ message: "Delete Product Failed", errcode: -1 });
   }
 };
 

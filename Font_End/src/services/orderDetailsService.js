@@ -21,4 +21,10 @@ const createOrderDetails = (
   return axios.post("/api/orderdetails/craete-orderDetails", data);
 };
 
-export { createOrderDetails, getListOrderDetails };
+const deleteOrderDetails = (id) => {
+  return axios.delete(`/api/orderdetails/delete-orderDetails/${id}`, {
+    data: { id },
+  });
+};
+
+export { createOrderDetails, getListOrderDetails, deleteOrderDetails };
