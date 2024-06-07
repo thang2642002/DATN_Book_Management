@@ -10,13 +10,24 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../services/userService";
+import { resert } from "../../redux/Slice/userSlice";
 import "./HeaderClient.scss";
 
 const HeaderClient = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state.user);
+  console.log("user", user);
   const handleLoginAccount = () => {
     navigate("/sign-in");
+  };
+
+  const handleLogOut = async () => {
+    await logOut();
+    localStorage.removeItem("acceess_tokens");
+    dispatch(resert());
   };
   return (
     <div className="container-header">
@@ -53,21 +64,25 @@ const HeaderClient = () => {
                   Thông báo
                 </button>
               </div>
-              <div className="cart" onClick={handleLoginAccount}>
+              <div className="cart">
                 <button variant="light" className="btn-header">
                   <MdAccountCircle className="icon" />
-                  Tài Khoản
-                  <ul>
-                    <Link>
-                      <li>Thông tin tài khoản</li>
-                    </Link>
-                    <Link>
-                      <li>Đơn hàng</li>
-                    </Link>
-                    <Link>
-                      <li>Đăng xuất</li>
-                    </Link>
-                  </ul>
+                  {user?.username.length > 0 ? user.username : "Tài Khoản"}
+                  {user?.username.length > 0 ? (
+                    <>
+                      <ul>
+                        <Link>
+                          <li>Thông tin tài khoản</li>
+                        </Link>
+                        <Link>
+                          <li>Đơn hàng</li>
+                        </Link>
+                        <li onClick={handleLogOut}>Đăng xuất</li>
+                      </ul>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </button>
               </div>
               <div className="note">

@@ -17,5 +17,6 @@ router.put("/update-user/:id", apiUserController.updateUser);
 router.delete("/delete-user/:id", apiUserController.deleteUser);
 router.post("/register", apiUserController.handleRegister);
 router.post("/login", apiUserController.handleLogin);
+router.post("/logout", apiUserController.handleLogout);
 
 export default router;

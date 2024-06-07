@@ -10,8 +10,9 @@ import {
 } from "@ant-design/icons";
 
 import img1 from "../../../../public/assets/img/img-productDetail/img1.jpg";
-const ContenProductDetail = () => {
-  const onChange = () => {};
+const ContenProductDetail = (props) => {
+  const { dataProduct } = props;
+
   return (
     <div className="product-detail-conten">
       <Row>
@@ -38,9 +39,7 @@ const ContenProductDetail = () => {
         </Col>
         <Col lg={8}>
           <div className="info-detailproduct">
-            <div className="title-product">
-              One Piece - Tập 98: “Phút Huy Hoàng Của Những Trung Thần”
-            </div>
+            <div className="title-product">{dataProduct?.data?.title}</div>
             <div>
               <StarFilled
                 style={{
@@ -71,20 +70,28 @@ const ContenProductDetail = () => {
                 }}
               />
               <span className="assess-product">
-                ( Xem và đánh giá ) | Đã bán 100
+                ( Xem và đánh giá ) | Đã bán {dataProduct?.data?.sales}
               </span>
             </div>
             <div style={{ display: "flex" }}>
               <div className="suppliers-product">
-                Nhà cung cấp: <span className="name-suppliers">Kim Đồng</span>
+                Nhà cung cấp:
+                <span className="name-suppliers">
+                  {dataProduct?.data?.Suppliers[0]?.suppliers_name}
+                </span>
               </div>
               <div className="author-product">
-                Tác giả <span className="name-author">Kim Đồng</span>
+                Tác giả
+                <span className="name-author">
+                  {dataProduct?.data?.Author?.author_name}
+                </span>
               </div>
             </div>
             <div className="price-product">
-              <div className="price">95.000 đ</div>
-              <span className="original-price">100.000 đ</span>
+              <div className="price">{dataProduct?.data?.price}</div>
+              <span className="original-price">
+                {dataProduct?.data?.sales} đ
+              </span>
               <span className="discount-value">5%</span>
             </div>
 

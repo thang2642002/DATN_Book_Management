@@ -32,15 +32,16 @@ const createUser = (email, password, username, address, phone, role, image) => {
 const updateUser = (id, username, address, phone, role, image) => {
   const dataUser = new FormData();
   dataUser.append("username", username);
-  dataUser.append("address", address);
   dataUser.append("phone", phone);
+  dataUser.append("address", address);
   dataUser.append("role", role);
   dataUser.append("avatar", image);
 
   console.log("check userdata:", dataUser);
+  console.log("check userdata id:", id);
 
   return axios.put(`/api/users/update-user/${id}`, {
-    data: { id, ...dataUser },
+    data: { id, dataUser },
   });
 };
 
@@ -52,6 +53,13 @@ const getListUser = () => {
   return axios.get("/api/users/get-all-user");
 };
 
+const getUserById = (id) => {
+  return axios.get(`/api/users/get-user-by-id/${id}`, { data: { id } });
+};
+const logOut = () => {
+  return axios.post("/api/users/logout");
+};
+
 export {
   registerNewUser,
   Login,
@@ -59,4 +67,6 @@ export {
   getListUser,
   updateUser,
   deleteUser,
+  getUserById,
+  logOut,
 };

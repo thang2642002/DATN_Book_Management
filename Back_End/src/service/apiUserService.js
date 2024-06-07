@@ -1,5 +1,6 @@
 const db = require("../models/index");
-
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const getAllUser = async () => {
   try {
     const listUser = await db.User.findAll();
@@ -80,14 +81,33 @@ const createUser = async (
   }
 };
 
-const updateUserService = async (userId, dataUser) => {
-  console.log("Data", dataUser);
+const updateUserService = async (
+  userId,
+  email,
+  password,
+  username,
+  address,
+  phone,
+  role,
+  avatar
+) => {
   try {
     const user = await db.User.findByPk(userId);
     if (!user) {
       return null;
     }
-    await user.update(dataUser);
+    console.log("user", user);
+    await user.update(
+      userId,
+      email,
+      password,
+      username,
+      address,
+      phone,
+      role,
+      avatar
+    );
+    console.log("User: ", user);
     return user;
   } catch (error) {
     console.error("Error updating user:", error);
@@ -131,49 +151,16 @@ const handleRegister = async (email, userName, phone, address, password) => {
   }
 };
 
-// const access_tokens = process.env.ACCESS_TOKENS;
-// const refresh_tokens = process.env.REFRESH_TOKENS;
-
-// const handleLogin = async (email, password) => {
-//   try {
-//     let login = await db.User.findOne({
-//       where: { email: email, password: password },
-//     });
-
-//     if (login) {
-//       const accessToken = jwt.sign(
-//         { id: login.id, email: login.email },
-//         access_tokens,
-//         { expiresIn: "1h" }
-//       );
-//       const refreshTokenSecret = jwt.sign(
-//         { id: login.id, email: login.email },
-//         refresh_tokens,
-//         { expiresIn: "7d" }
-//       );
-//       console.log("check: ", accessToken, refreshTokenSecret);
-
-//       return { login, accessToken, refreshTokenSecret };
-//     } else {
-//       return null;
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
 const accessTokenSecret = process.env.ACCESS_TOKENS;
 const refreshTokenSecret = process.env.REFRESH_TOKENS;
-console.log('accessTokenSecret', refreshTokenSecret)
-console.log('accessTokenSecret', accessTokenSecret)
+console.log("accessTokenSecret", refreshTokenSecret);
+console.log("accessTokenSecret", accessTokenSecret);
 const handleLogin = async (email, password) => {
   try {
     let login = await db.User.findOne({
       where: { email: email, password: password },
     });
     if (login) {
-      
       const accessToken = jwt.sign(
         { id: login.id, email: login.email },
         accessTokenSecret,
@@ -185,6 +172,8 @@ const handleLogin = async (email, password) => {
         refreshTokenSecret,
         { expiresIn: "7d" }
       );
+
+   
       console.log("first", accessToken, refreshToken);
       return { login, accessToken, refreshToken };
     }

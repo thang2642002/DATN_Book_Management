@@ -31,6 +31,8 @@ const ManagerUser = () => {
   const handleClickUpdate = (user) => {
     setShowModalUpdateUser(true);
     setDataUpdate(user);
+    console.log("check user", user);
+    console.log("check update user: ", dataUpdate);
   };
 
   const handleShowDelete = (user) => {

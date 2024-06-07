@@ -113,13 +113,19 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const userId = req.params.id;
-  const dataUser = req.body;
-  console.log("data user:", dataUser);
+  const avatar = req.file;
+  let { email, password, username, address, phone, role } = req.body;
 
   try {
     const updatedUser = await apiUserService.updateUserService(
       userId,
-      dataUser
+      email,
+      password,
+      username,
+      address,
+      phone,
+      role,
+      req.body.base64Image
     );
     if (updatedUser) {
       res.status(200).json({
@@ -127,6 +133,7 @@ const updateUser = async (req, res) => {
         errcode: 0,
         data: updatedUser,
       });
+      console.log("updatedUser", updateUser);
     } else {
       res.status(404).json({ message: "User not found", errcode: 1 });
     }
@@ -217,6 +224,18 @@ const handleLogin = async (req, res) => {
     let login = await apiUserService.handleLogin(email, password);
     console.log("login", login);
 
+    res.cookie("accessToken", login.accessToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+    });
+
+    res.cookie("refreshToken", login.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 604800000,
+    });
+
     if (login !== null) {
       return res.status(200).json({
         message: "Login The Success",
@@ -227,7 +246,7 @@ const handleLogin = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: "Login The Error",
+        message: "Login The faild",
         errcode: 0,
       });
     }
@@ -240,6 +259,18 @@ const handleLogin = async (req, res) => {
   }
 };
 
+const handleLogout = (req, res) => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Logout failed" });
+  }
+};
+
 module.exports = {
   createUser,
   updateUser,
@@ -249,4 +280,5 @@ module.exports = {
   handleRegister,
   handleLogin,
   getPage,
+  handleLogout,
 };

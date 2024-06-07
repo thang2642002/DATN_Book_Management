@@ -2,10 +2,15 @@ import "./SignInPage.scss";
 import { Row, Col } from "react-bootstrap";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 import background from "../../public/assets/img/signin/background.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../../services/userService";
+import { getUserById } from "../../services/userService";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../../redux/Slice/userSlice";
+
 const SignInPage = () => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -16,6 +21,8 @@ const SignInPage = () => {
     isValidPassword: true,
   });
   const [objCheckValid, setObjCheckValid] = useState(defaultvalid);
+
+  const dispatch = useDispatch();
   const handleClick = (e) => {
     e.preventDefault();
   };
@@ -58,15 +65,27 @@ const SignInPage = () => {
           "acceess_tokens",
           JSON.stringify(userLogin.access_tokens)
         );
+
+        if (userLogin?.access_tokens) {
+          const decoded = jwtDecode(userLogin?.access_tokens);
+          fetchUserById(decoded?.id);
+          console.log("decoded", decoded);
+        }
         setTimeout(() => {
           navigate("/");
-        }, 4000);
+        }, 2000);
       } else {
         setTimeout(() => {
           navigate("/sign-in");
         }, 4000);
       }
     }
+  };
+
+  const fetchUserById = async (id) => {
+    const dataUser = await getUserById(id);
+    console.log("dataUser:", dataUser);
+    dispatch(updateUser(dataUser?.data));
   };
 
   const handleCreateAccount = () => {

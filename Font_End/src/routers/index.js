@@ -31,7 +31,7 @@ export const routers = [
       { path: "", element: <Home /> },
       { path: "type", element: <TypeProductPage /> },
       {
-        path: "product-detail",
+        path: "product-detail/:id",
         element: <ProductDetail />,
         isShowHeader: true,
       },

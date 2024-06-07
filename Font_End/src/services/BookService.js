@@ -8,4 +8,8 @@ const deleteBook = (id) => {
   return axios.delete(`/api/products/delete-product/${id}`, { data: { id } });
 };
 
-export { getListBooks, deleteBook };
+const getBookById = (id) => {
+  return axios.get(`/api/products/get-product-by-id/${id}`, { data: { id } });
+};
+
+export { getListBooks, deleteBook, getBookById };

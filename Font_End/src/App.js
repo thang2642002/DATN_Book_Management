@@ -1,9 +1,36 @@
 // src/App.js
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { routers } from "./routers/index";
 import "./App.scss";
+import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+import { getUserById } from "./services/userService";
+import { useDispatch } from "react-redux";
+import { updateUser } from "./redux/Slice/userSlice";
 
 function App() {
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
+    let storageData = localStorage.getItem("acceess_tokens");
+    console.log("stote", storageData);
+    if (storageData) {
+      const decode = jwtDecode(storageData);
+      if (decode?.id) {
+        handleGetDetailUser(decode?.id, storageData);
+      }
+    }
+  });
+
+  const handleGetDetailUser = async (id) => {
+    const dataUser = await getUserById(id);
+    dispatch(updateUser(dataUser?.data));
+  };
   return (
     <div className="app-container">
       <div className="header-container">
