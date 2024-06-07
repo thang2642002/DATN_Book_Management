@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
-import { UpdateUser } from "../../../../services/userService";
+import { updateUser } from "../../../../services/userService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
@@ -57,7 +57,8 @@ const ModalUpdateUser = (props) => {
   };
 
   const handleSubmitUpdateUsers = async () => {
-    console.log("check upadte data", dataUpdate);
+    console.log("check upadate data", dataUpdate);
+    console.log("check upadate data id", dataUpdate.id);
 
     if (!userName) {
       toast.error("Invalid username");
@@ -69,7 +70,7 @@ const ModalUpdateUser = (props) => {
       toast.error("Invalid phone");
     }
 
-    let data = await UpdateUser(
+    let data = await updateUser(
       dataUpdate.id,
       userName,
       address,

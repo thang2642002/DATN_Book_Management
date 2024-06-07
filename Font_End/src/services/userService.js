@@ -29,7 +29,7 @@ const createUser = (email, password, username, address, phone, role, image) => {
   return axios.post("/api/users/create-user", dataUser);
 };
 
-const UpdateUser = (id, username, address, phone, role, image) => {
+const updateUser = (id, username, address, phone, role, image) => {
   const dataUser = new FormData();
   dataUser.append("username", username);
   dataUser.append("address", address);
@@ -39,20 +39,9 @@ const UpdateUser = (id, username, address, phone, role, image) => {
 
   console.log("check userdata:", dataUser);
 
-  return axios
-    .put(
-      `http://localhost:5000/api/users/update-user/${id}`,
-      { data: { id, ...dataUser } }
-
-      // {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // }
-    )
-    .then((user) => {
-      console.log("user", user);
-    });
+  return axios.put(`/api/users/update-user/${id}`, {
+    data: { id, ...dataUser },
+  });
 };
 
 const deleteUser = (id) => {
@@ -68,6 +57,6 @@ export {
   Login,
   createUser,
   getListUser,
-  UpdateUser,
+  updateUser,
   deleteUser,
 };
