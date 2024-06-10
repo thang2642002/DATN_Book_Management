@@ -1,5 +1,8 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import ModalCreateUser from "./Modals/ModalCreateUser";
 import ModalUpdateUser from "./Modals/ModalUpdateUser";
 import ModalDeleteUser from "./Modals/ModalDeleteUser";
@@ -65,14 +68,28 @@ const ManagerUser = () => {
     <div className="manager-user-container">
       <div className="title">Manager User</div>
       <div className="user-contents">
-        <div className="btn-add-new">
-          <button
-            className="btn btn-primary "
-            onClick={() => setShowModalCreateUser(true)}
-          >
-            <FcPlus />
-            Add new user
-          </button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div className="btn-add-new">
+            <button
+              className="btn btn-primary "
+              onClick={() => setShowModalCreateUser(true)}
+            >
+              <FcPlus />
+              Add new user
+            </button>
+          </div>
+          <div className="search" style={{ marginRight: "28px" }}>
+            <InputGroup className="mb-3" size="md">
+              <Form.Control
+                placeholder="Enter your input"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+              />
+              <Button variant="primary" id="button-addon2">
+                Search
+              </Button>
+            </InputGroup>
+          </div>
         </div>
         <ModalCreateUser
           show={showModalCreateUser}

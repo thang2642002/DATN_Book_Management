@@ -62,6 +62,10 @@ const getPage = (page, pageSize) => {
   return axios.get(`/api/users/get-page?page=${page}&pageSize=${pageSize}`);
 };
 
+const getByName = () => {
+  return axios.get(`/api/users/findByUserName`);
+};
+
 export {
   registerNewUser,
   Login,
