@@ -3,14 +3,13 @@ import apiUserService from "../service/apiUserService";
 const getPaginatedUsers = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
-  console.log("page:", page);
-  console.log("pageSize:", pageSize);
-  console.log("query:", req.query);
-  console.log("body:", req.body);
+  const username = req.query.username;
+  console.log("username", username);
   try {
     const { totalItems, data } = await apiUserService.fetchPaginatedUsers(
       page,
-      pageSize
+      pageSize,
+      username
     );
     res.status(200).json({
       message: "PaginatedUsers success",

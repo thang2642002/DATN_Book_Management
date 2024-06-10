@@ -7,7 +7,7 @@ import ModalCreateUser from "./Modals/ModalCreateUser";
 import ModalUpdateUser from "./Modals/ModalUpdateUser";
 import ModalDeleteUser from "./Modals/ModalDeleteUser";
 import { useEffect, useState } from "react";
-import { getListUser, getPage } from "../../../services/userService";
+import { getListUser, getPage, getByName } from "../../../services/userService";
 import TableUser from "./Modals/TableUser";
 import { FcPlus } from "react-icons/fc";
 
@@ -18,7 +18,10 @@ const ManagerUser = () => {
   const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
   const [dataDelete, setDataDelete] = useState({});
+  const [userName, setUserName] = useState("thang");
   const [listUser, setListUser] = useState([]);
+
+  const [checkSearch, setCheckSearch] = useState(false);
 
   const pageSize = 8;
   const [totalPage, setTotalPage] = useState(0);
@@ -31,18 +34,18 @@ const ManagerUser = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchListUser();
-  // }, []);
-
   useEffect(() => {
-    fechPage();
-    console.log("limit", limit);
-  }, [limit]);
+    if (listUser && checkSearch === true) {
+      fechUserByName();
+      console.log(1);
+    } else {
+      fechPage();
+      console.log(2);
+    }
+  }, [limit, checkSearch]);
 
   const fechPage = async () => {
-    const data = await getPage(limit, pageSize);
-    console.log("data", data);
+    const data = await getPage(limit, pageSize, userName);
     setListUser(data.data);
     setTotalPage(data.totalItems);
   };
@@ -50,8 +53,6 @@ const ManagerUser = () => {
   const handleClickUpdate = (user) => {
     setShowModalUpdateUser(true);
     setDataUpdate(user);
-    console.log("check user", user);
-    console.log("check update user: ", dataUpdate);
   };
 
   const handleShowDelete = (user) => {
@@ -62,6 +63,18 @@ const ManagerUser = () => {
   const handlePageClick = (event) => {
     console.log("evt", event);
     setLimit(event.selected + 1);
+  };
+
+  const fechUserByName = async () => {
+    const user = await getByName(userName);
+    setListUser(user.data);
+    setCheckSearch(true);
+    console.log("seach", user.data);
+    console.log("userName", user);
+  };
+
+  const handleFindByName = () => {
+    fechUserByName();
   };
 
   return (
@@ -84,8 +97,14 @@ const ManagerUser = () => {
                 placeholder="Enter your input"
                 aria-label="Recipient's username"
                 aria-describedby="basic-addon2"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
               />
-              <Button variant="primary" id="button-addon2">
+              <Button
+                variant="primary"
+                id="button-addon2"
+                onClick={handleFindByName}
+              >
                 Search
               </Button>
             </InputGroup>

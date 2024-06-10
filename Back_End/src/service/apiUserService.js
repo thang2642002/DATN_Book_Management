@@ -2,8 +2,9 @@ const db = require("../models/index");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 import { Op } from "sequelize";
-const fetchPaginatedUsers = async (page, pageSize) => {
+const fetchPaginatedUsers = async (page, pageSize, username) => {
   try {
+    console.log("username", username);
     const totalUser = await db.User.count();
     console.log("totalUser", totalUser);
     const listUser = await db.User.findAll({
