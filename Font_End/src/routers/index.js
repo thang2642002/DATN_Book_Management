@@ -3,6 +3,7 @@ import DefaultHeader from "../components/DefaultHeader/DefaultHeader";
 import Home from "../pages/Home/home";
 import TypeProductPage from "../pages/Home/TypeProductPage/TypeProductPage";
 import ProductDetail from "../pages/Home/ProductDetail/ProductDetail";
+import Carts from "../pages/Home/Carts/Carts";
 //import router root
 import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
@@ -35,6 +36,7 @@ export const routers = [
         element: <ProductDetail />,
         isShowHeader: true,
       },
+      { path: "carts", element: <Carts /> },
     ],
   },
   {
