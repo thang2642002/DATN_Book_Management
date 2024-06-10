@@ -52,7 +52,6 @@ export const routers = [
       { path: "managerPayments", element: <ManagerPayment /> },
       { path: "managerOrder", element: <ManagerOrder /> },
       { path: "managerOrderDetails", element: <ManagerOrderDetails /> },
-
       { path: "managerReviews", element: <ManagerReview /> },
       // Add more admin routes here
     ],

@@ -1,5 +1,30 @@
 import apiUserService from "../service/apiUserService";
 
+const getPaginatedUsers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  console.log("page: ", page);
+  console.log("pageSize", pageSize);
+  try {
+    const { totalItems, data } = await getPaginatedUsers(page, pageSize);
+    const totalPages = Math.ceil(totalItems / pageSize);
+    res.status(200).json({
+      message: "PaginatedUsers success",
+      errcode: 0,
+      data: data,
+      totalItems: totalItems,
+      totalPages: totalPages,
+      currentPage: page,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      message: "PaginatedUsers error",
+      errcode: -1,
+    });
+  }
+};
+
 const getPage = (req, res) => {
   const page = parseInt(req.query.page);
   const pageSize = parseInt(req.query.pageSize);
@@ -272,6 +297,7 @@ const handleLogout = (req, res) => {
 };
 
 module.exports = {
+  getPaginatedUsers,
   createUser,
   updateUser,
   deleteUser,

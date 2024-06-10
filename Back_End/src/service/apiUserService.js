@@ -1,6 +1,27 @@
 const db = require("../models/index");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+
+const getPaginatedUsers = async (page, pageSize) => {
+  const limit = pageSize;
+  //10
+  const offset = (page - 1) * pageSize;
+  //40
+
+  try {
+    const { count, rows } = await User.findAndCountAll({
+      limit: limit,
+      offset: offset,
+    });
+    console.log("count: ", count);
+    console.log("rows: ", rows);
+    return { totalItems: count, data: rows };
+  } catch (error) {
+    console.error("Error fetching paginated users:", error);
+    throw error;
+  }
+};
+
 const getAllUser = async () => {
   try {
     const listUser = await db.User.findAll();
@@ -173,7 +194,6 @@ const handleLogin = async (email, password) => {
         { expiresIn: "7d" }
       );
 
-   
       console.log("first", accessToken, refreshToken);
       return { login, accessToken, refreshToken };
     }
@@ -182,6 +202,7 @@ const handleLogin = async (email, password) => {
   }
 };
 module.exports = {
+  getPaginatedUsers,
   createUser,
   updateUserService,
   deleteUserService,
