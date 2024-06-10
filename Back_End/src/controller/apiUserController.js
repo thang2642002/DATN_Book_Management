@@ -3,24 +3,54 @@ import apiUserService from "../service/apiUserService";
 const getPaginatedUsers = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
-  console.log("page: ", page);
-  console.log("pageSize", pageSize);
+  console.log("page:", page);
+  console.log("pageSize:", pageSize);
+  console.log("query:", req.query);
+  console.log("body:", req.body);
   try {
-    const { totalItems, data } = await getPaginatedUsers(page, pageSize);
-    const totalPages = Math.ceil(totalItems / pageSize);
+    const { totalItems, data } = await apiUserService.fetchPaginatedUsers(
+      page,
+      pageSize
+    );
     res.status(200).json({
       message: "PaginatedUsers success",
       errcode: 0,
       data: data,
       totalItems: totalItems,
-      totalPages: totalPages,
-      currentPage: page,
     });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({
       message: "PaginatedUsers error",
       errcode: -1,
+    });
+  }
+};
+
+const findByName = async (req, res) => {
+  const { username } = req.query;
+  console.log("check user name:", username);
+
+  try {
+    const data = await apiUserService.findByName(username);
+    if (data) {
+      return res.status(200).json({
+        message: "Find Name is the success",
+        errCode: 0,
+        data: data,
+      });
+    } else {
+      return res.status(200).json({
+        message: "Find Name is the faild",
+        errCode: 1,
+        data: data,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: "Find Name is the error",
+      errCode: -1,
     });
   }
 };
@@ -140,7 +170,7 @@ const updateUser = async (req, res) => {
   const userId = req.params.id;
   const avatar = req.file;
   let { email, password, username, address, phone, role } = req.body;
-
+  console.log("check data", req.body);
   try {
     const updatedUser = await apiUserService.updateUserService(
       userId,
@@ -298,6 +328,7 @@ const handleLogout = (req, res) => {
 
 module.exports = {
   getPaginatedUsers,
+  findByName,
   createUser,
   updateUser,
   deleteUser,

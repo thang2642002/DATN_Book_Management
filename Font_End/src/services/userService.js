@@ -40,9 +40,7 @@ const updateUser = (id, username, address, phone, role, image) => {
   console.log("check userdata:", dataUser);
   console.log("check userdata id:", id);
 
-  return axios.put(`/api/users/update-user/${id}`, {
-    data: { id, dataUser },
-  });
+  return axios.put(`/api/users/update-user/${id}`, dataUser);
 };
 
 const deleteUser = (id) => {
@@ -60,6 +58,10 @@ const logOut = () => {
   return axios.post("/api/users/logout");
 };
 
+const getPage = (page, pageSize) => {
+  return axios.get(`/api/users/get-page?page=${page}&pageSize=${pageSize}`);
+};
+
 export {
   registerNewUser,
   Login,
@@ -69,4 +71,5 @@ export {
   deleteUser,
   getUserById,
   logOut,
+  getPage,
 };

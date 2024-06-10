@@ -10,9 +10,10 @@ import {
 } from "@ant-design/icons";
 
 import img1 from "../../../../public/assets/img/img-productDetail/img1.jpg";
+import { useState } from "react";
 const ContenProductDetail = (props) => {
   const { dataProduct } = props;
-
+  const [quantity, setQuantity] = useState(0);
   return (
     <div className="product-detail-conten">
       <Row>
@@ -103,18 +104,26 @@ const ContenProductDetail = (props) => {
             <div className="quantity-product">
               <span>Số lượng</span>
               <div className="count-product">
-                <span className="plus">
+                <span
+                  className="plus"
+                  onClick={() => setQuantity(quantity + 1)}
+                >
                   <PlusOutlined />
                 </span>
                 <input
-                  value={3}
+                  value={quantity}
                   style={{
                     width: "50px",
                     border: "1px solid #ccc",
                     paddingLeft: "15px",
                   }}
                 />
-                <span className="minus">
+                <span
+                  className="minus"
+                  onClick={() =>
+                    quantity > 0 ? setQuantity(quantity - 1) : setQuantity(0)
+                  }
+                >
                   <MinusOutlined />
                 </span>
               </div>

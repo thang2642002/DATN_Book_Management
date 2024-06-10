@@ -1,24 +1,38 @@
 const db = require("../models/index");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-
-const getPaginatedUsers = async (page, pageSize) => {
-  const limit = pageSize;
-  //10
-  const offset = (page - 1) * pageSize;
-  //40
-
+import { Op } from "sequelize";
+const fetchPaginatedUsers = async (page, pageSize) => {
   try {
-    const { count, rows } = await User.findAndCountAll({
-      limit: limit,
-      offset: offset,
+    const totalUser = await db.User.count();
+    console.log("totalUser", totalUser);
+    const listUser = await db.User.findAll({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
     });
-    console.log("count: ", count);
-    console.log("rows: ", rows);
-    return { totalItems: count, data: rows };
+    const total = Math.ceil(totalUser / pageSize);
+    return { totalItems: total, data: listUser };
   } catch (error) {
     console.error("Error fetching paginated users:", error);
     throw error;
+  }
+};
+
+const findByName = async (username) => {
+  try {
+    const data = await db.User.findAll({
+      where: {
+        username: {
+          [Op.like]: `%${username}%`,
+        },
+      },
+    });
+    if (!data) {
+      return null;
+    }
+    return data;
+  } catch (error) {
+    console.log(e);
   }
 };
 
@@ -118,7 +132,7 @@ const updateUserService = async (
       return null;
     }
     console.log("user", user);
-    await user.update(
+    const userUpdate = {
       userId,
       email,
       password,
@@ -126,8 +140,9 @@ const updateUserService = async (
       address,
       phone,
       role,
-      avatar
-    );
+      avatar,
+    };
+    await user.update(userUpdate);
     console.log("User: ", user);
     return user;
   } catch (error) {
@@ -202,7 +217,7 @@ const handleLogin = async (email, password) => {
   }
 };
 module.exports = {
-  getPaginatedUsers,
+  fetchPaginatedUsers,
   createUser,
   updateUserService,
   deleteUserService,
@@ -210,4 +225,5 @@ module.exports = {
   getUserById,
   handleRegister,
   handleLogin,
+  findByName,
 };

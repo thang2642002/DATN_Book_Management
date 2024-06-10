@@ -3,7 +3,7 @@ import apiUserController from "../controller/apiUserController";
 import express from "express";
 
 const router = express.Router();
-
+router.get("/findByUserName", apiUserController.findByName);
 router.get("/get-page", apiUserController.getPaginatedUsers);
 router.get("/get-all-user", apiUserController.getAllUser);
 router.get("/get-user-by-id/:id", apiUserController.getUserById);
@@ -13,7 +13,11 @@ router.post(
   uploadImage,
   apiUserController.createUser
 );
-router.put("/update-user/:id", apiUserController.updateUser);
+router.put(
+  "/update-user/:id",
+  upload.single("avatar"),
+  apiUserController.updateUser
+);
 router.delete("/delete-user/:id", apiUserController.deleteUser);
 router.post("/register", apiUserController.handleRegister);
 router.post("/login", apiUserController.handleLogin);
