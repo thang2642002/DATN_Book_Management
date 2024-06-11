@@ -12,7 +12,7 @@ const ManagerPayment = () => {
   const [ShowModalCreatePayment, setShowModalCreatePayment] = useState(false);
   const [showModalUpdatePayment, setShowModalUpdatePayment] = useState(false);
   const [showModalDeletePayment, setShowModalDeletePayment] = useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listPayment, setListPayment] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -32,10 +32,11 @@ const ManagerPayment = () => {
     setDataDelete(payment);
   };
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  const handleClickUpdate = (payment) => {
+    setShowModalUpdatePayment(true);
+    setDataUpdate(payment);
+    console.log("payment", payment);
+  };
 
   return (
     <div className="manager-user-container">
@@ -58,8 +59,8 @@ const ManagerPayment = () => {
         <ModalUpdatepayment
           show={showModalUpdatePayment}
           setShow={setShowModalUpdatePayment}
-          // fetchListPayment={fetchListPayment}
-          //   dataUpdate={dataUpdate}
+          fetchListPayment={fetchListPayment}
+          dataUpdate={dataUpdate}
         />
         <ModalDeletePayment
           show={showModalDeletePayment}
@@ -72,7 +73,7 @@ const ManagerPayment = () => {
           <TablePayment
             listPayment={listPayment}
             handleShowModalDeletePayment={handleShowModalDeletePayment}
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

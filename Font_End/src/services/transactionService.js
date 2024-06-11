@@ -15,6 +15,13 @@ const createTransaction = (
   return axios.post("/api/transaction/create-transaction", data);
 };
 
+const updateTransaction = (id, dataTransaction) => {
+  return axios.put(
+    `/api/transaction/update-transaction/${id}`,
+    dataTransaction
+  );
+};
+
 const deleteTransaction = (id) => {
   return axios.delete(`/api/transaction/delete-transaction/${id}`, {
     headers: {
@@ -24,4 +31,9 @@ const deleteTransaction = (id) => {
   });
 };
 
-export { getListTransaction, createTransaction, deleteTransaction };
+export {
+  getListTransaction,
+  createTransaction,
+  deleteTransaction,
+  updateTransaction,
+};

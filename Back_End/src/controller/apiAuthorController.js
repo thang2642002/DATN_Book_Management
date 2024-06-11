@@ -126,11 +126,13 @@ const updateAuthor = async (req, res) => {
     if (updateAuthor) {
       res.status(200).json({
         message: "Upadate Author is the success",
+        errcode: 0,
         data: updateAuthor,
       });
     } else {
       res.status(200).json({
         message: "Upadate Author is the faild",
+        errcode: 1,
         data: [],
       });
     }
@@ -138,7 +140,7 @@ const updateAuthor = async (req, res) => {
     console.log(error);
     res.status(500).json({
       message: "Upadate Author is the faild",
-      data: [],
+      errcode: -1,
     });
   }
 };

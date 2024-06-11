@@ -15,7 +15,7 @@ const ManagerOrderDetails = () => {
     useState(false);
   const [showModalDeleteOrderDetails, setShowModalDeleteOrderDetails] =
     useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listOrderDetails, setListOrderDetails] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -35,10 +35,11 @@ const ManagerOrderDetails = () => {
     setDataDelete(orderDetails);
   };
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  const handleClickUpdate = (orderDetails) => {
+    setShowModalUpdateOrderDetails(true);
+    setDataUpdate(orderDetails);
+    console.log("orderdetails", orderDetails);
+  };
 
   return (
     <div className="manager-user-container">
@@ -61,8 +62,8 @@ const ManagerOrderDetails = () => {
         <ModalUpdateOrderDetails
           show={showModalUpdateOrderDetails}
           setShow={setShowModalUpdateOrderDetails}
-          //   fetchListUser={fetchListUser}
-          //   dataUpdate={dataUpdate}
+          fetchListOrderDetails={fetchListOrderDetails}
+          dataUpdate={dataUpdate}
         />
         <ModalDeleteOrderDetails
           show={showModalDeleteOrderDetails}
@@ -77,7 +78,7 @@ const ManagerOrderDetails = () => {
             handleShowModalDeleteOrderDetails={
               handleShowModalDeleteOrderDetails
             }
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

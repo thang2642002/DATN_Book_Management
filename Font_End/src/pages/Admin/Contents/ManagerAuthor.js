@@ -12,7 +12,7 @@ const ManagerAuthor = () => {
   const [showModalCreateAuthor, setShowModalCreateAuthor] = useState(false);
   const [showModalUpdateAuthor, setShowModalUpdateAuthor] = useState(false);
   const [showModalDeleteAuthor, setShowModalDeleteAuthor] = useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listAuthor, setListAuthor] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -26,17 +26,17 @@ const ManagerAuthor = () => {
   const handleShowModalDeleteAuthor = (author) => {
     setShowModalDeleteAuthor(true);
     setDataDelete(author);
-    console.log("author check", dataDelete);
   };
 
   useEffect(() => {
     fetchListAuthor();
   }, []);
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  const handleClickUpdate = (author) => {
+    setShowModalUpdateAuthor(true);
+    setDataUpdate(author);
+    console.log("author", author);
+  };
 
   return (
     <div className="manager-user-container">
@@ -59,8 +59,8 @@ const ManagerAuthor = () => {
         <ModalUpdateAuthor
           show={showModalUpdateAuthor}
           setShow={setShowModalUpdateAuthor}
-          //   fetchListUser={fetchListUser}
-          //   dataUpdate={dataUpdate}
+          dataUpdate={dataUpdate}
+          fetchListAuthor={fetchListAuthor}
         />
         <ModalDeleteAuthor
           show={showModalDeleteAuthor}
@@ -72,7 +72,7 @@ const ManagerAuthor = () => {
         <div className="btn-table-container">
           <TableAuthor
             listAuthor={listAuthor}
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
             handleShowModalDeleteAuthor={handleShowModalDeleteAuthor}
           />
         </div>

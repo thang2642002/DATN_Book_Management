@@ -14,8 +14,12 @@ const createOrder = (orderDate, description, totalPrice, userId) => {
   return axios.post("/api/orderbook/create-order", data);
 };
 
+const updateOrder = (id, updatedData) => {
+  return axios.put(`/api/orderbook/update-order/${id}`, updatedData);
+};
+
 const deleteOrder = (id) => {
   return axios.delete(`/api/orderbook/delete-order/${id}`, { data: { id } });
 };
 
-export { getListOrder, createOrder, deleteOrder };
+export { getListOrder, createOrder, deleteOrder, updateOrder };

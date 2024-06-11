@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { UpdateUser } from "../../../../services/userService";
+import { updateOrderDetails } from "../../../../services/orderDetailsService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
 const ModalUpdateOrderDetails = (props) => {
-  const { show, setShow, fetchListUser, dataUpdate } = props;
+  const { show, setShow, fetchListOrderDetails, dataUpdate } = props;
   const handleClose = () => {
     setShow(false);
     setQuantity("");
@@ -22,52 +22,41 @@ const ModalUpdateOrderDetails = (props) => {
   const [orderId, setOrderId] = useState("");
   const [bookId, setBookId] = useState("");
 
-  //   useEffect(() => {
-  //     if (!_.isEmpty(dataUpdate)) {
-  //       setEmail(dataUpdate.email);
-  //       setAddress(dataUpdate.address);
-  //       setUserName(dataUpdate.username);
-  //       setPhone(dataUpdate.phone);
-  //       setRole(dataUpdate.role);
-  //       setImage("");
-  //       setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
-  //     }
-  //   }, [dataUpdate]);
-
-  // const handleImageChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const base64String = await readFileAsBase64(file);
-  //     setAvatar(base64String); // Lưu chuỗi base64 vào state
-  //   }
-  // };
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      setQuantity(dataUpdate.quantity);
+      setUnitPrice(dataUpdate.unit_price);
+      setDescription(dataUpdate.description);
+      setOrderId(dataUpdate.orderId);
+      setBookId(dataUpdate.bookId);
+    }
+  }, [dataUpdate]);
 
   const handleSubmitUpdateUsers = async () => {
     if (!quantity) {
-      toast.error("Invalid username");
+      toast.error("Invalid quantity");
     }
     if (!unitPrice) {
-      toast.error("Invalid address");
-    }
-    if (!orderId) {
-      toast.error("Invalid phone");
+      toast.error("Invalid unitPrice");
     }
 
-    if (!bookId) {
-      toast.error("Invalid bio");
+    let data = await updateOrderDetails(dataUpdate.id, {
+      quantity,
+      description,
+      orderId,
+      bookId,
+      unit_price: unitPrice,
+    });
+    console.log("check data: ", data);
+
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListOrderDetails();
     }
-
-    // let data = await UpdateUser(userName, address, phone, role, image);
-    // console.log("check data: ", data);
-
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
@@ -94,7 +83,6 @@ const ModalUpdateOrderDetails = (props) => {
                 type="text"
                 className="form-control"
                 value={quantity}
-                disabled
                 onChange={(e) => setQuantity(e.target.value)}
               />
             </div>
@@ -104,36 +92,34 @@ const ModalUpdateOrderDetails = (props) => {
                 type="text"
                 className="form-control"
                 value={unitPrice}
-                disabled
                 onChange={(e) => setUnitPrice(e.target.value)}
               />
             </div>
-            <div className="col-12">
+            <div className="col-6">
               <label className="form-label">Description</label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="User Name"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-            <div className="col-12">
+            <div className="col-6">
               <label className="form-label">Order ID</label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Address"
+                disabled
                 value={orderId}
                 onChange={(e) => setOrderId(e.target.value)}
               />
             </div>
-            <div className="col-12">
+            <div className="col-6">
               <label className="form-label">Book ID</label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Address"
+                disabled
                 value={bookId}
                 onChange={(e) => setBookId(e.target.value)}
               />

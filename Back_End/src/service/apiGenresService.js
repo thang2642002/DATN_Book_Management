@@ -49,6 +49,8 @@ const updateGenres = async (genresName, description, genresId) => {
       where: { id: genresId },
     });
 
+    console.log("check get", getGenres);
+
     if (!getGenres) {
       return null;
     }
@@ -57,6 +59,8 @@ const updateGenres = async (genresName, description, genresId) => {
       genres_name: genresName,
       description: description,
     });
+
+    console.log("check get 2: ", getGenres);
     return getGenres;
   } catch (error) {
     console.log(error);

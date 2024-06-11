@@ -20,7 +20,11 @@ const createPayment = (
   return axios.post("/api/payment/craete-payment", data);
 };
 
+const updatePayment = (id, dataPayment) => {
+  return axios.put(`/api/payment/update-payment/${id}`, dataPayment);
+};
+
 const deletePayment = (id) => {
   return axios.delete(`/api/payment/delete-payment/${id}`, { data: { id } });
 };
-export { getListPayment, createPayment, deletePayment };
+export { getListPayment, createPayment, deletePayment, updatePayment };

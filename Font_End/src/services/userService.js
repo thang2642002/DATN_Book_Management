@@ -37,9 +37,6 @@ const updateUser = (id, username, address, phone, role, image) => {
   dataUser.append("role", role);
   dataUser.append("avatar", image);
 
-  console.log("check userdata:", dataUser);
-  console.log("check userdata id:", id);
-
   return axios.put(`/api/users/update-user/${id}`, dataUser);
 };
 

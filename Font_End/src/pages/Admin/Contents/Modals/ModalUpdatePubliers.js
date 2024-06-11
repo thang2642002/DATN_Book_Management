@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { UpdateUser } from "../../../../services/userService";
+import { updateSuppliers } from "../../../../services/publiersService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
 const ModalUpdatePubliers = (props) => {
-  const { show, setShow, fetchListUser, dataUpdate } = props;
+  const { show, setShow, fetchListPubliers, dataUpdate } = props;
   const handleClose = () => {
     setShow(false);
     setName("");
@@ -22,25 +22,15 @@ const ModalUpdatePubliers = (props) => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  //   useEffect(() => {
-  //     if (!_.isEmpty(dataUpdate)) {
-  //       setEmail(dataUpdate.email);
-  //       setAddress(dataUpdate.address);
-  //       setUserName(dataUpdate.username);
-  //       setPhone(dataUpdate.phone);
-  //       setRole(dataUpdate.role);
-  //       setImage("");
-  //       setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
-  //     }
-  //   }, [dataUpdate]);
-
-  // const handleImageChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const base64String = await readFileAsBase64(file);
-  //     setAvatar(base64String); // Lưu chuỗi base64 vào state
-  //   }
-  // };
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      setName(dataUpdate.suppliers_name);
+      setContactInfo(dataUpdate.contact_info);
+      setDescription(dataUpdate.description);
+      setPhone(dataUpdate.phone);
+      setEmail(dataUpdate.email);
+    }
+  }, [dataUpdate]);
 
   const handleSubmitUpdateUsers = async () => {
     if (!name) {
@@ -57,17 +47,23 @@ const ModalUpdatePubliers = (props) => {
       toast.error("Invalid email");
     }
 
-    // let data = await UpdateUser(userName, address, phone, role, image);
-    // console.log("check data: ", data);
+    let data = await updateSuppliers(dataUpdate.id, {
+      suppliers_name: name,
+      contact_info: contactInfo,
+      description,
+      phone,
+      email,
+    });
+    console.log("check data: ", data);
 
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListPubliers();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
@@ -94,17 +90,15 @@ const ModalUpdatePubliers = (props) => {
                 type="email"
                 className="form-control"
                 value={name}
-                disabled
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="col-md-6">
               <label className="form-label">Contact Info</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={contactInfo}
-                disabled
                 onChange={(e) => setContactInfo(e.target.value)}
               />
             </div>

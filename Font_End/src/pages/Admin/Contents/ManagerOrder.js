@@ -12,7 +12,7 @@ const ManagerOrder = () => {
   const [showModalCreateOrder, setShowModalCreateOrder] = useState(false);
   const [showModalUpdateOrder, setShowModalUpdateOrder] = useState(false);
   const [showModalDeleteOrder, setShowModalDeleteOrder] = useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listOrder, setListOrder] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -32,10 +32,11 @@ const ManagerOrder = () => {
     setDataDelete(order);
   };
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  const handleClickUpdate = (order) => {
+    setShowModalUpdateOrder(true);
+    setDataUpdate(order);
+    console.log("order: ", order);
+  };
 
   return (
     <div className="manager-user-container">
@@ -58,8 +59,8 @@ const ManagerOrder = () => {
         <ModalUpdateOrder
           show={showModalUpdateOrder}
           setShow={setShowModalUpdateOrder}
-          //   fetchListUser={fetchListUser}
-          //   dataUpdate={dataUpdate}
+          fetchListOrder={fetchListOrder}
+          dataUpdate={dataUpdate}
         />
         <ModalDeleteOrder
           show={showModalDeleteOrder}
@@ -72,7 +73,7 @@ const ManagerOrder = () => {
           <TableOrder
             listOrder={listOrder}
             handleShowModalDeleteOrder={handleShowModalDeleteOrder}
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

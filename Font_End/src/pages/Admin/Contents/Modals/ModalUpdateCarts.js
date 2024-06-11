@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { UpdateUser } from "../../../../services/userService";
+import { updateCarts } from "../../../../services/cartsService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
 const ModalUpdateCarts = (props) => {
-  const { show, setShow, fetchListUser, dataUpdate } = props;
+  const { show, setShow, fetchListCarts, dataUpdate } = props;
   const handleClose = () => {
     setShow(false);
     setUserId("");
@@ -18,56 +18,44 @@ const ModalUpdateCarts = (props) => {
   const [createDate, setCreateDate] = useState("");
   const [quantity, setQuantity] = useState("");
 
-  //   useEffect(() => {
-  //     if (!_.isEmpty(dataUpdate)) {
-  //       setEmail(dataUpdate.email);
-  //       setAddress(dataUpdate.address);
-  //       setUserName(dataUpdate.username);
-  //       setPhone(dataUpdate.phone);
-  //       setRole(dataUpdate.role);
-  //       setImage("");
-  //       setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
-  //     }
-  //   }, [dataUpdate]);
-
-  // const handleImageChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const base64String = await readFileAsBase64(file);
-  //     setAvatar(base64String); // Lưu chuỗi base64 vào state
-  //   }
-  // };
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      setUserId(dataUpdate.userId);
+      setCreateDate(dataUpdate.createDate);
+      setQuantity(dataUpdate.quantity);
+    }
+  }, [dataUpdate]);
 
   const handleSubmitUpdateUsers = async () => {
     if (!userId) {
       toast.error("Invalid username");
     }
     if (!createDate) {
-      toast.error("Invalid address");
+      toast.error("Invalid date");
     }
     if (!quantity) {
-      toast.error("Invalid phone");
+      toast.error("Invalid quantity");
     }
 
-    // let data = await UpdateUser(userName, address, phone, role, image);
-    // console.log("check data: ", data);
+    let data = await updateCarts(dataUpdate.id, {
+      userId,
+      createDate,
+      quantity,
+    });
+    console.log("check data: ", data);
 
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListCarts();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -83,7 +71,7 @@ const ModalUpdateCarts = (props) => {
             <div className="col-md-6">
               <label className="form-label">User ID</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 value={userId}
                 disabled
@@ -93,10 +81,9 @@ const ModalUpdateCarts = (props) => {
             <div className="col-md-6">
               <label className="form-label">createDate</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={createDate}
-                disabled
                 onChange={(e) => setCreateDate(e.target.value)}
               />
             </div>

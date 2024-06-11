@@ -15,7 +15,7 @@ const ManagerTransaction = () => {
     useState(false);
   const [showModalDeleteTransaction, setShowModalDeleteTransaction] =
     useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listTransaction, setListTransaction] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -37,10 +37,11 @@ const ManagerTransaction = () => {
     setDataDelete(transaction);
   };
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  const handleClickUpdate = (transaction) => {
+    setShowModalUpdateTransaction(true);
+    setDataUpdate(transaction);
+    console.log("transaction", transaction);
+  };
 
   return (
     <div className="manager-user-container">
@@ -63,8 +64,8 @@ const ManagerTransaction = () => {
         <ModalUpdateTransaction
           show={showModalUpdateTransaction}
           setShow={setShowModalUpdateTransaction}
-          //   fetchListUser={fetchListUser}
-          //   dataUpdate={dataUpdate}
+          fetchListTransaction={fetchListTransaction}
+          dataUpdate={dataUpdate}
         />
         <ModalDeleteTransaction
           show={showModalDeleteTransaction}
@@ -77,7 +78,7 @@ const ManagerTransaction = () => {
           <TableTransaction
             listTransaction={listTransaction}
             handleShowModalDeleteTransaction={handleShowModalDeleteTransaction}
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

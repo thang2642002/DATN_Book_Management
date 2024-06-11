@@ -9,8 +9,12 @@ const createReview = (bookId, userId, rating, comment, reviewDate) => {
   return axios.post("/api/review/create-review", data);
 };
 
+const updateReview = (id, dataUpdate) => {
+  return axios.put(`/api/review/update-review/${id}`, dataUpdate);
+};
+
 const deleteReview = (id) => {
   return axios.delete(`/api/review/delete-review/${id}`, { data: { id } });
 };
 
-export { getListReview, createReview, deleteReview };
+export { getListReview, createReview, deleteReview, updateReview };

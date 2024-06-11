@@ -1,0 +1,32 @@
+.sidebar-info-user {
+  .pro-sidebar-inner {
+    background: transparent !important;
+    color: #000;
+
+    .pro-inner-item {
+      &:hover {
+        background-color: rgb(235, 235, 240);
+      }
+      &:hover .pro-item-content {
+        color: #000;
+      }
+    }
+  }
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+    }
+    .info-user {
+      .title-account {
+      }
+      .username-user {
+      }
+    }
+  }
+}

@@ -4,11 +4,13 @@ import Home from "../pages/Home/home";
 import TypeProductPage from "../pages/Home/TypeProductPage/TypeProductPage";
 import ProductDetail from "../pages/Home/ProductDetail/ProductDetail";
 import Carts from "../pages/Home/Carts/Carts";
+import InfoUser from "../pages/Home/InfoUser/InfoUser";
 //import router root
 import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import User from "../pages/Home/user";
+
 // import router Admin
 import Admin from "../pages/Admin/Admin";
 import Dashboard from "../pages/Admin/Contents/Dashboard";
@@ -37,6 +39,7 @@ export const routers = [
         isShowHeader: true,
       },
       { path: "carts", element: <Carts /> },
+      { path: "/info-user", element: <InfoUser /> },
     ],
   },
   {

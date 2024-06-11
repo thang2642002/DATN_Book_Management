@@ -23,9 +23,13 @@ const createSuppliers = (
   return axios.post("/api/suppliers/create-suppliers", data);
 };
 
+const updateSuppliers = (id, dataUpdate) => {
+  return axios.put(`/api/suppliers/update-suppliers/${id}`, dataUpdate);
+};
+
 const deleteSuppliers = (id) => {
   return axios.delete(`/api/suppliers/delete-suppliers/${id}`, {
     data: { id },
   });
 };
-export { getListPubliers, createSuppliers, deleteSuppliers };
+export { getListPubliers, createSuppliers, deleteSuppliers, updateSuppliers };

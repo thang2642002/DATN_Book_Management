@@ -12,7 +12,7 @@ const ManagerPubliers = () => {
   const [showModalCreatePubliers, setShowModalCreatePubliers] = useState(false);
   const [showModalUpdatePubliers, setShowModalUpdatePubliers] = useState(false);
   const [showModalDeletePubliers, setShowModalDeletePubliers] = useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listPubliers, setListPubliers] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -32,10 +32,11 @@ const ManagerPubliers = () => {
     setDataDelete(suppliers);
   };
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  const handleClickUpdate = (suppliers) => {
+    setShowModalUpdatePubliers(true);
+    setDataUpdate(suppliers);
+    console.log("suppliers", suppliers);
+  };
 
   return (
     <div className="manager-user-container">
@@ -53,13 +54,13 @@ const ManagerPubliers = () => {
         <ModalCreatePubliers
           show={showModalCreatePubliers}
           setShow={setShowModalCreatePubliers}
-          //   fetchListUser={fetchListUser}
+          fetchListPubliers={fetchListPubliers}
         />
         <ModalUpdatePubliers
           show={showModalUpdatePubliers}
           setShow={setShowModalUpdatePubliers}
           fetchListPubliers={fetchListPubliers}
-          //   dataUpdate={dataUpdate}
+          dataUpdate={dataUpdate}
         />
 
         <ModalDeleteSuppliers
@@ -73,7 +74,7 @@ const ManagerPubliers = () => {
           <TablePubliers
             listPubliers={listPubliers}
             handleShowModalDeleteSubliers={handleShowModalDeleteSubliers}
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

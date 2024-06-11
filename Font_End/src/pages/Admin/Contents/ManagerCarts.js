@@ -12,7 +12,7 @@ const ManagerCarts = () => {
   const [showModalCreateCarts, setShowModalCreateCarts] = useState(false);
   const [showModalUpdateCarts, setShowModalUpdateCarts] = useState(false);
   const [showModalDeleteCarts, setShowModalDeleteCarts] = useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listCarts, setListCarts] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -33,10 +33,11 @@ const ManagerCarts = () => {
     console.log("dataDelete", dataDelete);
     console.log("carts", carts);
   };
-  // const handleClickUpdate = (user) => {
-  //   setShowModalUpdateGenres(true);
-  //   setDataUpdate(user);
-  // };
+  const handleClickUpdate = (carts) => {
+    setShowModalUpdateCarts(true);
+    setDataUpdate(carts);
+    console.log("carts", carts);
+  };
 
   return (
     <div className="manager-user-container">
@@ -59,8 +60,8 @@ const ManagerCarts = () => {
         <ModalUpdateCarts
           show={showModalUpdateCarts}
           setShow={setShowModalUpdateCarts}
-          //   fetchListUser={fetchListUser}
-          //   dataUpdate={dataUpdate}
+          fetchListCarts={fetchListCarts}
+          dataUpdate={dataUpdate}
         />
 
         <ModalDeleteCarts
@@ -73,7 +74,7 @@ const ManagerCarts = () => {
           <TableCarts
             listCarts={listCarts}
             handleShowModalDeleteCarts={handleShowModalDeleteCarts}
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

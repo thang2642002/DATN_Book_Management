@@ -1,5 +1,6 @@
 const TablePayment = (props) => {
-  const { listPayment, handleShowModalDeletePayment } = props;
+  const { listPayment, handleShowModalDeletePayment, handleClickUpdate } =
+    props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -29,7 +30,7 @@ const TablePayment = (props) => {
                     <button className="btn btn-secondary">View</button>
                     <button
                       className="btn btn-warning mx-3"
-                      // onClick={() => handleClickUpdate(user)}
+                      onClick={() => handleClickUpdate(payment)}
                     >
                       Upadte
                     </button>

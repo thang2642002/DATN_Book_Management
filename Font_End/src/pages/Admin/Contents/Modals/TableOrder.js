@@ -1,5 +1,5 @@
 const TableOrder = (props) => {
-  const { listOrder, handleShowModalDeleteOrder } = props;
+  const { listOrder, handleShowModalDeleteOrder, handleClickUpdate } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -27,7 +27,7 @@ const TableOrder = (props) => {
                     <button className="btn btn-secondary">View</button>
                     <button
                       className="btn btn-warning mx-3"
-                      // onClick={() => handleClickUpdate(user)}
+                      onClick={() => handleClickUpdate(order)}
                     >
                       Upadte
                     </button>

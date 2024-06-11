@@ -1,5 +1,5 @@
 const TablePubliers = (props) => {
-  const { listCarts, handleShowModalDeleteCarts } = props;
+  const { listCarts, handleShowModalDeleteCarts, handleClickUpdate } = props;
   return (
     <div className="table-user-container px-4 mt-4">
       <table class="table table-striped table-hover table-bordered">
@@ -25,7 +25,7 @@ const TablePubliers = (props) => {
                     <button className="btn btn-secondary">View</button>
                     <button
                       className="btn btn-warning mx-3"
-                      // onClick={() => handleClickUpdate(user)}
+                      onClick={() => handleClickUpdate(carts)}
                     >
                       Upadate
                     </button>

@@ -12,7 +12,7 @@ const ManagerReview = () => {
   const [showModalCreateReview, setShowModalCreateReview] = useState(false);
   const [showModalUpdateReview, setShowModalUpdateReview] = useState(false);
   const [showModalDeleteReview, setShowModalDeleteReview] = useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listReview, setListReview] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -32,10 +32,11 @@ const ManagerReview = () => {
     setDataDelete(review);
   };
 
-  //   const handleClickUpdate = (user) => {
-  //     setShowModalUpdateGenres(true);
-  //     setDataUpdate(user);
-  //   };
+  const handleClickUpdate = (review) => {
+    setShowModalUpdateReview(true);
+    setDataUpdate(review);
+    console.log("review: ", review);
+  };
 
   return (
     <div className="manager-user-container">
@@ -58,8 +59,8 @@ const ManagerReview = () => {
         <ModalUpdateReview
           show={showModalUpdateReview}
           setShow={setShowModalUpdateReview}
-          //   fetchListUser={fetchListUser}
-          //   dataUpdate={dataUpdate}
+          fetchListReview={fetchListReview}
+          dataUpdate={dataUpdate}
         />
 
         <ModalDeleteReview
@@ -73,7 +74,7 @@ const ManagerReview = () => {
           <TableReview
             listReview={listReview}
             handleShowModalDeleteReview={handleShowModalDeleteReview}
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>

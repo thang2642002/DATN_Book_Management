@@ -9,10 +9,11 @@ const createGenres = (name, description) => {
   return axios.post("/api/genres/create-genres", data);
 };
 
-const updateGenres = (id, genresName, description) => {
-  const data = { genresName, description };
+const updateGenres = (genresName, description, id) => {
   return axios.put(`/api/genres/update-genres/${id}`, {
-    data: { genresId: id, data },
+    genresName,
+    description,
+    genresId: id,
   });
 };
 

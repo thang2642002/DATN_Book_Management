@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-// import { UpdateUser } from "../../../../services/userService";
+import { updateReview } from "../../../../services/reviewService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
 const ModalUpdateReview = (props) => {
-  const { show, setShow, fetchListUser, dataUpdate } = props;
+  const { show, setShow, fetchListReview, dataUpdate } = props;
   const handleClose = () => {
     setShow(false);
     setBookId("");
@@ -22,25 +22,15 @@ const ModalUpdateReview = (props) => {
   const [comment, setComment] = useState("");
   const [reviewDate, setReviewDate] = useState("");
 
-  //   useEffect(() => {
-  //     if (!_.isEmpty(dataUpdate)) {
-  //       setEmail(dataUpdate.email);
-  //       setAddress(dataUpdate.address);
-  //       setUserName(dataUpdate.username);
-  //       setPhone(dataUpdate.phone);
-  //       setRole(dataUpdate.role);
-  //       setImage("");
-  //       setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
-  //     }
-  //   }, [dataUpdate]);
-
-  // const handleImageChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const base64String = await readFileAsBase64(file);
-  //     setAvatar(base64String); // Lưu chuỗi base64 vào state
-  //   }
-  // };
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      setBookId(dataUpdate.bookId);
+      setUserId(dataUpdate.userId);
+      setRating(dataUpdate.rating);
+      setComment(dataUpdate.comment);
+      setReviewDate(dataUpdate.reviewDate);
+    }
+  }, [dataUpdate]);
 
   const handleSubmitUpdateUsers = async () => {
     if (!bookId) {
@@ -61,17 +51,23 @@ const ModalUpdateReview = (props) => {
       toast.error("Invalid Review Date");
     }
 
-    // let data = await UpdateUser(userName, address, phone, role, image);
-    // console.log("check data: ", data);
+    let data = await updateReview(dataUpdate.id, {
+      bookId,
+      userId,
+      rating,
+      comment,
+      reviewDate,
+    });
+    console.log("check data: ", data);
 
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListReview();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (

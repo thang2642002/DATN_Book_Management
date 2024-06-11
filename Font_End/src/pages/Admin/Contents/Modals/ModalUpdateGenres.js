@@ -7,7 +7,7 @@ import _ from "lodash";
 import "./ModalCreateUser.scss";
 
 const ModalUpdateGenres = (props) => {
-  const { show, setShow } = props;
+  const { show, setShow, dataUpdate, fetchListGenres } = props;
   const handleClose = () => {
     setShow(false);
     setName("");
@@ -15,6 +15,13 @@ const ModalUpdateGenres = (props) => {
   };
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      setName(dataUpdate.genres_name);
+      setDescription(dataUpdate.description);
+    }
+  }, [dataUpdate]);
 
   const handleSubmitUpdateUsers = async () => {
     if (!name) {
@@ -25,13 +32,13 @@ const ModalUpdateGenres = (props) => {
       toast.error("Invalid description");
     }
 
-    let data = await updateGenres(name, description);
+    let data = await updateGenres(name, description, dataUpdate.id);
     console.log("check data: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();
-      // await fetchListUser();
+      await fetchListGenres();
     }
     if (data && data.errcode !== 0) {
       toast.error(data.message);
@@ -40,10 +47,6 @@ const ModalUpdateGenres = (props) => {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -68,7 +71,7 @@ const ModalUpdateGenres = (props) => {
             <div className="col-md-6">
               <label className="form-label">Description</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}

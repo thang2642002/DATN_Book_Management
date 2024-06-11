@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { UpdateUser } from "../../../../services/userService";
+import { updateOrder } from "../../../../services/orderService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
 const ModalUpdateOrder = (props) => {
-  const { show, setShow, fetchListUser, dataUpdate } = props;
+  const { show, setShow, fetchListOrder, dataUpdate } = props;
   const handleClose = () => {
     setShow(false);
     setOrderDate("");
@@ -20,25 +20,14 @@ const ModalUpdateOrder = (props) => {
   const [totalPrice, setTotalPrice] = useState("");
   const [userId, setUserId] = useState("");
 
-  //   useEffect(() => {
-  //     if (!_.isEmpty(dataUpdate)) {
-  //       setEmail(dataUpdate.email);
-  //       setAddress(dataUpdate.address);
-  //       setUserName(dataUpdate.username);
-  //       setPhone(dataUpdate.phone);
-  //       setRole(dataUpdate.role);
-  //       setImage("");
-  //       setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
-  //     }
-  //   }, [dataUpdate]);
-
-  // const handleImageChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const base64String = await readFileAsBase64(file);
-  //     setAvatar(base64String); // Lưu chuỗi base64 vào state
-  //   }
-  // };
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      setOrderDate(dataUpdate.order_date);
+      setDescription(dataUpdate.description);
+      setTotalPrice(dataUpdate.totalPrice);
+      setUserId(dataUpdate.userId);
+    }
+  }, [dataUpdate]);
 
   const handleSubmitUpdateUsers = async () => {
     if (!orderDate) {
@@ -55,25 +44,26 @@ const ModalUpdateOrder = (props) => {
       toast.error("Invalid bio");
     }
 
-    // let data = await UpdateUser(userName, address, phone, role, image);
-    // console.log("check data: ", data);
+    let data = await updateOrder(dataUpdate.id, {
+      order_date: orderDate,
+      description,
+      totalPrice,
+      userId,
+    });
+    console.log("check data: ", data);
 
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListOrder();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -87,22 +77,21 @@ const ModalUpdateOrder = (props) => {
         <Modal.Body>
           <form className="row g-3">
             <div className="col-md-6">
-              <label className="form-label">Order Date</label>
+              <label className="form-label">User ID</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
-                value={orderDate}
+                value={userId}
                 disabled
-                onChange={(e) => setOrderDate(e.target.value)}
+                onChange={(e) => setUserId(e.target.value)}
               />
             </div>
             <div className="col-md-6">
               <label className="form-label">Description</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={description}
-                disabled
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
@@ -117,13 +106,12 @@ const ModalUpdateOrder = (props) => {
               />
             </div>
             <div className="col-12">
-              <label className="form-label">User ID</label>
+              <label className="form-label">Order Date</label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Address"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
+                value={orderDate}
+                onChange={(e) => setOrderDate(e.target.value)}
               />
             </div>
           </form>

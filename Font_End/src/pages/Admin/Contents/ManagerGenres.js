@@ -12,7 +12,7 @@ const ManagerGenres = () => {
   const [showModalCreateGenres, setShowModalCreateGenres] = useState(false);
   const [showModalUpdateGenres, setShowModalUpdateGenres] = useState(false);
   const [showModalDeleteGenres, setShowModalDeleteGenres] = useState(false);
-  //   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listGenres, setListGenres] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
@@ -34,7 +34,8 @@ const ManagerGenres = () => {
 
   const handleClickUpdate = (genres) => {
     setShowModalUpdateGenres(true);
-    // setDataUpdate(user);
+    setDataUpdate(genres);
+    console.log(genres);
   };
 
   return (
@@ -64,6 +65,8 @@ const ManagerGenres = () => {
         <ModalUpdateGenres
           show={showModalUpdateGenres}
           setShow={setShowModalUpdateGenres}
+          dataUpdate={dataUpdate}
+          fetchListGenres={fetchListGenres}
         />
 
         <div className="btn-table-container">
