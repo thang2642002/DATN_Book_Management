@@ -80,7 +80,7 @@ const createProduct = async (req, res) => {
       sales,
       supplierIds
     );
-    console.log(dataProduct);
+    console.log(" check data", dataProduct);
     if (dataProduct) {
       return res.status(200).json({
         message: "Create product is the success",
