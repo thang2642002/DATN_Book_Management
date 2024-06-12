@@ -49,7 +49,7 @@ const getAllProductById = async (id) => {
 
 const createProduct = async (
   title,
-  img_book,
+  img_book = req.body.base64Image,
   authorId,
   genresId,
   price,
@@ -65,10 +65,15 @@ const createProduct = async (
       return false;
     }
 
+    let base64Avatar = null;
+    if (img_book) {
+      base64Avatar = img_book.toString("base64");
+    }
+
     let dataProduct = await db.Books.create(
       {
         title,
-        img_book,
+        img_book: base64Avatar,
         authorId,
         genresId,
         price,

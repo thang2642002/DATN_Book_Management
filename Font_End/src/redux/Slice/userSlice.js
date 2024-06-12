@@ -7,7 +7,7 @@ const initialState = {
   address: "",
   phone: "",
   avatar: "",
-  _id: "",
+  id: "",
   isAdmin: false,
   refreshToken: "",
 };
@@ -24,8 +24,8 @@ const userSlice = createSlice({
         address = "",
         phone = "",
         avatar = "",
-        _id = "",
-        isAdmin,
+        id = "",
+        role = "",
         refreshToken = "",
       } = action.payload;
       state.username = username ? username : state.username;
@@ -33,9 +33,9 @@ const userSlice = createSlice({
       state.address = address ? address : state.address;
       state.phone = phone ? phone : state.phone;
       state.avatar = avatar ? avatar : state.avatar;
-      state.id = _id ? _id : state.id;
+      state.id = id ? id : state.id;
       state.access_token = access_token ? access_token : state.access_token;
-      state.isAdmin = isAdmin ? isAdmin : state.isAdmin;
+      state.role = role ? role : state.role;
       state.refreshToken = refreshToken ? refreshToken : state.refreshToken;
       console.log("acctions:", action);
     },
@@ -47,7 +47,7 @@ const userSlice = createSlice({
       state.avatar = "";
       state.id = "";
       state.access_token = "";
-      state.isAdmin = "";
+      state.role = "";
       state.refreshToken = "";
     },
   },

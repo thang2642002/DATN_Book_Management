@@ -50,26 +50,10 @@ const getAllProductById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  const {
-    title,
-    img_book,
-    authorId,
-    genresId,
-    price,
-    quantity,
-    sales,
-    supplierIds,
-  } = req.body;
-  console.log(
-    title,
-    img_book,
-    authorId,
-    genresId,
-    price,
-    quantity,
-    sales,
-    supplierIds
-  );
+  const img_book = req.file;
+  const { title, authorId, genresId, price, quantity, sales, supplierIds } =
+    req.body;
+  console.log("img_book", img_book);
 
   try {
     if (
@@ -88,7 +72,7 @@ const createProduct = async (req, res) => {
 
     const dataProduct = await apiProductService.createProduct(
       title,
-      img_book,
+      req.body.base64Image,
       authorId,
       genresId,
       price,

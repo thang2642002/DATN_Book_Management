@@ -80,11 +80,13 @@ const createUser = async (
       };
     }
 
+    // Chuyển đổi avatar thành base64 nếu nó tồn tại
     let base64Avatar = null;
     if (avatar) {
-      // Chuyển đổi avatar thành base64 nếu nó tồn tại
       base64Avatar = avatar.toString("base64");
     }
+
+    console.log("check all:", email, password, username, address, phone, role);
 
     const user = await db.User.create({
       email,
@@ -96,6 +98,7 @@ const createUser = async (
       avatar: base64Avatar, // Lưu base64Avatar vào cơ sở dữ liệu
     });
     console.log("user", user);
+
     if (user) {
       return {
         status: 200,
@@ -199,13 +202,13 @@ const handleLogin = async (email, password) => {
     });
     if (login) {
       const accessToken = jwt.sign(
-        { id: login.id, email: login.email },
+        { id: login.id, role: login.role },
         accessTokenSecret,
         { expiresIn: "1h" }
       );
 
       const refreshToken = jwt.sign(
-        { id: login.id, email: login.email },
+        { id: login.id, role: login.role },
         refreshTokenSecret,
         { expiresIn: "7d" }
       );

@@ -53,8 +53,13 @@ const getAllCartById = async (req, res) => {
 
 const createCart = async (req, res) => {
   const { userId, createDate, quantity, bookIds } = req.body;
+  console.log("userId: ", userId);
+  console.log("createDate: ", createDate);
+  console.log("quantity: ", quantity);
+  console.log("bookIds: ", bookIds);
   try {
     if (!userId || !createDate || !quantity || !bookIds) {
+      console.log("checkkkkkkkkkkkkkk");
       return res.status(400).json({
         message: "Input is required",
         errcode: 1,

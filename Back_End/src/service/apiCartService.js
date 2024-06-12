@@ -5,6 +5,7 @@ const getAllCart = async () => {
     const carts = await db.Carts.findAll({
       include: [{ model: db.User }, { model: db.Books }],
     });
+    console.log("carrts", carts);
     return carts;
   } catch (error) {
     console.log(error);
@@ -27,9 +28,12 @@ const getAllCartById = async (id) => {
 const createCart = async (userId, createDate, quantity, bookIds) => {
   try {
     const cart = await db.Carts.create({ userId, createDate, quantity });
+    console.log("card1", cart);
+    console.log("bookIds", bookIds);
     if (bookIds && bookIds.length > 0) {
       await cart.setBooks(bookIds);
     }
+    console.log("card", cart);
     return cart;
   } catch (error) {
     console.log(error);

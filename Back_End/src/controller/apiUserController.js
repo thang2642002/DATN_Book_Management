@@ -141,6 +141,7 @@ const createUser = async (req, res) => {
       role,
       req.body.base64Image
     );
+    console.log(" check user", createUser);
 
     console.log("check", email, password, username, address, phone, role);
 

@@ -3,9 +3,22 @@ import { Row, Col } from "react-bootstrap";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import "./ContentsCarts.scss";
 import img from "../../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
-import { useState } from "react";
+import { getListCart } from "../../../../services/cartsService";
+import { useEffect, useState } from "react";
 const ContentsCarts = () => {
   const [quantity, setQuantity] = useState(0);
+  const [listCarts, setListCarts] = useState([]);
+
+  const ListCart = async () => {
+    const data = await getListCart();
+    console.log("data", data.data);
+    setListCarts(data.data);
+  };
+  console.log("dataList", listCarts);
+
+  useEffect(() => {
+    ListCart();
+  }, []);
   return (
     <div className="contents-carts-container">
       <div className="title-carts">Giỏ hàng</div>

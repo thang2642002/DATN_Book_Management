@@ -25,8 +25,10 @@ const ModalUpdateOrder = (props) => {
       setOrderDate(dataUpdate.order_date);
       setDescription(dataUpdate.description);
       setTotalPrice(dataUpdate.totalPrice);
-      // setUserId(dataUpdate.User.id ? dataUpdate.User.id : "");
-      setUserId(dataUpdate.userId);
+      setUserId(
+        dataUpdate?.User?.id ? dataUpdate?.User?.id : dataUpdate.userId
+      );
+      // setUserId(dataUpdate.userId);
     }
   }, [dataUpdate]);
 

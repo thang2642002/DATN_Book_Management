@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
-// import { createUser } from "../../../../services/userService";
+import { createBook } from "../../../../services/BookService";
 // import "./ModalCreateBook.scss";
 
 const ModalCreateBook = (props) => {
@@ -52,28 +52,26 @@ const ModalCreateBook = (props) => {
       toast.error("Invalid salse");
     }
 
-    // let data = await createUser(
-    //   email,
-    //   password,
-    //   username,
-    //   address,
-    //   phone,
-    //   role,
-    //   image
-    // );
+    let data = await createBook(
+      title,
+      img_book,
+      authorId,
+      genresId,
+      price,
+      quantity,
+      salse
+    );
 
-    // console.log("check data: ", data);
+    console.log("check data: ", data);
 
-    // if (data && data.errcode === 0) {
-    //   toast.success(data.message);
-    //   handleClose();
-    //   await fetchListUser();
-    // }
-    // if (data && data.errcode !== 0) {
-    //   toast.error(data.message);
-    // }
-
-    // console.log("check res: ", res.data);
+    if (data && data.errcode === 0) {
+      toast.success(data.message);
+      handleClose();
+      await fetchListUser();
+    }
+    if (data && data.errcode !== 0) {
+      toast.error(data.message);
+    }
   };
 
   return (
@@ -97,7 +95,7 @@ const ModalCreateBook = (props) => {
             <div className="col-md-6">
               <label className="form-label">Title</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -106,7 +104,7 @@ const ModalCreateBook = (props) => {
             <div className="col-md-6">
               <label className="form-label">AuthorId</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
                 value={authorId}
                 onChange={(e) => setAuthordId(e.target.value)}

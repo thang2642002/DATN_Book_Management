@@ -67,18 +67,38 @@ const HeaderClient = () => {
               <div className="cart">
                 <button variant="light" className="btn-header">
                   <MdAccountCircle className="icon" />
-                  {user?.username.length > 0 ? user.username : "Tài Khoản"}
+                  {user?.username.length > 0 ? (
+                    user.username
+                  ) : (
+                    <span onClick={handleLoginAccount}>Tài Khoản</span>
+                  )}
                   {user?.username.length > 0 ? (
                     <>
-                      <ul>
-                        <Link>
-                          <li>Thông tin tài khoản</li>
-                        </Link>
-                        <Link>
-                          <li>Đơn hàng</li>
-                        </Link>
-                        <li onClick={handleLogOut}>Đăng xuất</li>
-                      </ul>
+                      {user.role === "ADMIN" ? (
+                        <>
+                          <ul>
+                            <Link>
+                              <li>Thông tin tài khoản</li>
+                            </Link>
+                            <Link to="/admin">
+                              <li>Quản lý trang</li>
+                            </Link>
+                            <li onClick={handleLogOut}>Đăng xuất</li>
+                          </ul>
+                        </>
+                      ) : (
+                        <>
+                          <ul>
+                            <Link>
+                              <li>Thông tin tài khoản</li>
+                            </Link>
+                            <Link>
+                              <li>Đơn hàng</li>
+                            </Link>
+                            <li onClick={handleLogOut}>Đăng xuất</li>
+                          </ul>
+                        </>
+                      )}
                     </>
                   ) : (
                     <></>

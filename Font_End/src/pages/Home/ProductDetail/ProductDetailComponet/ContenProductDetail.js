@@ -1,6 +1,7 @@
 import "./ContenProductDetail.scss";
 import { Row, Col } from "react-bootstrap";
 import { Image } from "antd";
+import { createCarts } from "../../../../services/cartsService";
 
 import {
   StarFilled,
@@ -11,9 +12,27 @@ import {
 
 import img1 from "../../../../public/assets/img/img-productDetail/img1.jpg";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
 const ContenProductDetail = (props) => {
   const { dataProduct } = props;
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [createDate, setCreateDate] = useState(Date);
+  const user = useSelector((state) => state.user);
+
+  const handleAddCarts = async () => {
+    console.log(createDate);
+    const addCart = await createCarts(
+      user.id,
+      createDate,
+      quantity,
+      dataProduct.data.id
+    );
+    console.log("user", user);
+    console.log("addCart", addCart);
+    console.log("check dataPr", dataProduct);
+  };
+
   return (
     <div className="product-detail-conten">
       <Row>
@@ -130,7 +149,7 @@ const ContenProductDetail = (props) => {
             </div>
 
             <div className="purchase">
-              <div className="add-to-cart">
+              <div className="add-to-cart" onClick={handleAddCarts}>
                 <ShoppingCartOutlined
                   style={{ fontSize: "28px", marginRight: "10px" }}
                 />

@@ -70,7 +70,7 @@ const SignUpPage = () => {
         password
       );
       console.log("check dataUser: ", dataUser);
-      toast.success(dataUser.data.message);
+      toast.success(dataUser.message);
       setTimeout(() => {
         navigate("/sign-in");
       }, 4000);
