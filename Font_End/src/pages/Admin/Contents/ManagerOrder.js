@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getListOrder } from "../../../services/orderService";
 import TableOrder from "./Modals/TableOrder";
 import { FcPlus } from "react-icons/fc";
+import { getListUser } from "../../../services/userService";
 
 // import "./ManagerOrder.scss";
 const ManagerOrder = () => {
@@ -16,6 +17,7 @@ const ManagerOrder = () => {
   const [listOrder, setListOrder] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
 
+
   const fetchListOrder = async () => {
     let dataOrder = await getListOrder();
     if (dataOrder && dataOrder.errcode === 0) {
@@ -25,6 +27,7 @@ const ManagerOrder = () => {
 
   useEffect(() => {
     fetchListOrder();
+
   }, []);
 
   const handleShowModalDeleteOrder = (order) => {
@@ -37,6 +40,8 @@ const ManagerOrder = () => {
     setDataUpdate(order);
     console.log("order: ", order);
   };
+
+
 
   return (
     <div className="manager-user-container">

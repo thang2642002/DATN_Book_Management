@@ -5,6 +5,7 @@ import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { createBook } from "../../../../services/BookService";
 import { getListGenres } from "../../../../services/genresService";
+import { getListAuthor } from "../../../../services/authorService";
 // import "./ModalCreateBook.scss";
 
 const ModalCreateBook = (props) => {
@@ -30,11 +31,18 @@ const ModalCreateBook = (props) => {
   const [previewImage, setPreviewImage] = useState("");
 
   const [nameGenres, setNameGenres] = useState([]);
+  const [nameAuthor, setNameAuthor] = useState([]);
   const handleUploadImage = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {
       setPreviewImage(URL.createObjectURL(e.target.files[0]));
       setImgBook(e.target.files[0]);
     }
+  };
+
+  const getAllAuthor = async () => {
+    const dataAuthor = await getListAuthor();
+    console.log("author", dataAuthor.data);
+    setNameAuthor(dataAuthor.data);
   };
 
   const getAllGenres = async () => {
@@ -45,6 +53,7 @@ const ModalCreateBook = (props) => {
 
   useEffect(() => {
     getAllGenres();
+    getAllAuthor();
   }, []);
 
   const handleSubmitCreateUsers = async () => {
@@ -116,12 +125,20 @@ const ModalCreateBook = (props) => {
             </div>
             <div className="col-md-6">
               <label className="form-label">AuthorId</label>
-              <input
-                type="text"
-                className="form-control"
+              <select
+                className="form-select"
                 value={authorId}
                 onChange={(e) => setAuthordId(e.target.value)}
-              />
+              >
+                {nameAuthor &&
+                  nameAuthor.map((nameAuthor, index) => {
+                    return (
+                      <option value={nameAuthor.id} key={index + 1}>
+                        {nameAuthor.author_name}
+                      </option>
+                    );
+                  })}
+              </select>
             </div>
             <div className="col-12">
               <label className="form-label">GenresId</label>

@@ -2,7 +2,7 @@ const TablePubliers = (props) => {
   const { listCarts, handleShowModalDeleteCarts, handleClickUpdate } = props;
   return (
     <div className="table-user-container px-4 mt-4">
-      <table class="table table-striped table-hover table-bordered">
+      <table className="table table-striped table-hover table-bordered">
         <thead>
           <tr>
             <th scope="col">ID</th>

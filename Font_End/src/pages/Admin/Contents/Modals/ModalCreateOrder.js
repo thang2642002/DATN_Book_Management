@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { createOrder } from "../../../../services/orderService";
+import { getListUser } from "../../../../services/userService";
+
 // import "./ModalCreateOrder.scss";
 
 const ModalCreateOrder = (props) => {
@@ -18,6 +20,7 @@ const ModalCreateOrder = (props) => {
   const [description, setDescription] = useState("");
   const [totalPrice, setTotalPrice] = useState("");
   const [userId, setUserId] = useState("");
+  const [nameUser, setNameUser] = useState([]);
 
   const handleSubmitCreateOrder = async () => {
     if (!orderDate) {
@@ -51,6 +54,16 @@ const ModalCreateOrder = (props) => {
     if (data && data.errcode !== 0) {
       toast.error(data.message);
     }
+  };
+
+  useEffect(() => {
+    fectchListUser();
+  }, []);
+
+  const fectchListUser = async () => {
+    const dataUser = await getListUser();
+    console.log("check data user", dataUser.data);
+    setNameUser(dataUser.data);
   };
 
   return (
@@ -100,12 +113,20 @@ const ModalCreateOrder = (props) => {
             </div>
             <div className="col-md-6">
               <label className="form-label">User ID</label>
-              <input
-                type="text"
-                className="form-control"
+              <select
+                className="form-select"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
-              />
+              >
+                {nameUser &&
+                  nameUser.map((name, index) => {
+                    return (
+                      <option value={name.id} key={index + 1}>
+                        {name.username}
+                      </option>
+                    );
+                  })}
+              </select>
             </div>
           </form>
         </Modal.Body>
