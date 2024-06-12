@@ -47,7 +47,7 @@ const ManagerBooks = () => {
         <ModalCreateBoook
           show={showModalCreateBook}
           setShow={setShowModalCreateBook}
-          // fetchListUser={fetchListUser}
+          fetchListBooks={fetchListBooks}
         />
         <ModalUpdateBooks
           show={showModalUpdateBook}

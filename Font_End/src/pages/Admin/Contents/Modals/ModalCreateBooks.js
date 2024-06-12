@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { createBook } from "../../../../services/BookService";
+import { getListGenres } from "../../../../services/genresService";
 // import "./ModalCreateBook.scss";
 
 const ModalCreateBook = (props) => {
-  const { show, setShow, fetchListUser } = props;
+  const { show, setShow, fetchListBooks } = props;
   const handleClose = () => {
     setShow(false);
     setTitle("");
@@ -27,12 +28,24 @@ const ModalCreateBook = (props) => {
   const [quantity, setQuantity] = useState("");
   const [salse, setSalse] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+
+  const [nameGenres, setNameGenres] = useState([]);
   const handleUploadImage = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {
       setPreviewImage(URL.createObjectURL(e.target.files[0]));
       setImgBook(e.target.files[0]);
     }
   };
+
+  const getAllGenres = async () => {
+    const dataGenres = await getListGenres();
+    setNameGenres(dataGenres.data);
+    console.log("dataGenres1111", dataGenres.data);
+  };
+
+  useEffect(() => {
+    getAllGenres();
+  }, []);
 
   const handleSubmitCreateUsers = async () => {
     if (!title) {
@@ -67,7 +80,7 @@ const ModalCreateBook = (props) => {
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();
-      await fetchListUser();
+      await fetchListBooks();
     }
     if (data && data.errcode !== 0) {
       toast.error(data.message);
@@ -112,13 +125,20 @@ const ModalCreateBook = (props) => {
             </div>
             <div className="col-12">
               <label className="form-label">GenresId</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="User Name"
+              <select
+                className="form-select"
                 value={genresId}
                 onChange={(e) => setGenresId(e.target.value)}
-              />
+              >
+                {nameGenres &&
+                  nameGenres.map((genresname, index) => {
+                    return (
+                      <option value={genresname.id} key={index + 1}>
+                        {genresname.genres_name}
+                      </option>
+                    );
+                  })}
+              </select>
             </div>
             <div className="col-12">
               <label className="form-label">Price</label>

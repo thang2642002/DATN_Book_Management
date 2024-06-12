@@ -61,7 +61,7 @@ const createProduct = async (
   try {
     transaction = await db.sequelize.transaction();
     const genres = await db.Genres.findByPk(genresId);
-    console.log("genres: ", genres);
+    console.log('genres', genres)
     if (!genres) {
       return false;
     }
@@ -70,9 +70,6 @@ const createProduct = async (
     if (img_book) {
       base64Avatar = img_book.toString("base64");
     }
-
-    console.log("img_book: ", img_book);
-
     let dataProduct = await db.Books.create(
       {
         title,
@@ -85,7 +82,6 @@ const createProduct = async (
       },
       { transaction }
     );
-    console.log("dataProduct", dataProduct);
     if (supplierIds && supplierIds.length > 0) {
       await dataProduct.addSuppliers(supplierIds, { transaction });
     }

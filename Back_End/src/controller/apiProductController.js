@@ -53,7 +53,6 @@ const createProduct = async (req, res) => {
   const img_book = req.file;
   const { title, authorId, genresId, price, quantity, sales, supplierIds } =
     req.body;
-  console.log("img_book", img_book);
 
   try {
     if (
@@ -67,6 +66,7 @@ const createProduct = async (req, res) => {
     ) {
       return res.status(200).json({
         message: "Input is the required",
+        errcode: 1,
       });
     }
 
@@ -80,21 +80,24 @@ const createProduct = async (req, res) => {
       sales,
       supplierIds
     );
-    console.log(" check data", dataProduct);
+
     if (dataProduct) {
       return res.status(200).json({
         message: "Create product is the success",
+        errcode: 0,
         data: dataProduct,
       });
     } else {
       return res.status(200).json({
         message: "Create product is the faidle",
+        errcode: 1,
         data: [],
       });
     }
   } catch (error) {
     return res.status(500).json({
       message: "Create product is the error",
+      errcode: -1,
     });
   }
 };
