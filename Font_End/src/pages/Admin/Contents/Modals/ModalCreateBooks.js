@@ -42,7 +42,7 @@ const ModalCreateBook = (props) => {
   const getAllAuthor = async () => {
     const dataAuthor = await getListAuthor();
     setNameAuthor(dataAuthor?.data);
-    console.log("dataAuthor", dataAuthor?.data);
+    console.log("dataAuthor", dataAuthor?.data[0]);
   };
 
   const getAllGenres = async () => {

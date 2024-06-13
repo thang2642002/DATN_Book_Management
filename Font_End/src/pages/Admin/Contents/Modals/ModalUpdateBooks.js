@@ -4,6 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { updateBook } from "../../../../services/BookService";
+import { getListGenres } from "../../../../services/genresService";
+import { getListAuthor } from "../../../../services/authorService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
@@ -27,17 +29,38 @@ const ModalUpdateBook = (props) => {
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [salse, setSalse] = useState(0);
+  const [nameAuthor, setNameAuthor] = useState("");
+  const [nameGenres, setNameGenres] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+  const [listGenres, setListGenres] = useState([]);
+  const [lisAuthor, setListAuthor] = useState([]);
+
+  const fechAllGenres = async () => {
+    let data = await getListGenres();
+    setListGenres(data.data);
+  };
+
+  const fetchAllAuthor = async () => {
+    let data = await getListAuthor();
+    setListAuthor(data.data);
+  };
+
+  useEffect(() => {
+    fechAllGenres();
+    fetchAllAuthor();
+  }, []);
 
   useEffect(() => {
     if (!_.isEmpty(dataUpdate)) {
       setTitle(dataUpdate.title);
       setImgBook(dataUpdate.img_book);
-      setAuthordId(dataUpdate.Author.author_name);
-      setGenresId(dataUpdate.Genre.genres_name);
+      setAuthordId(dataUpdate?.Author?.id);
+      setGenresId(dataUpdate?.Genre?.id);
       setPrice(dataUpdate.price);
       setQuantity(dataUpdate.quantity);
       setSalse(dataUpdate.sales);
+      setNameAuthor(dataUpdate.Author.author_name);
+      setNameGenres(dataUpdate.Genre.genres_name);
       console.log("dataUpdate", dataUpdate);
     }
   }, [dataUpdate]);
@@ -53,11 +76,9 @@ const ModalUpdateBook = (props) => {
     if (!title) {
       toast.error("Invalid title");
     }
-    if (!img_book) {
-      toast.error("Invalid address");
-    }
+
     if (!price) {
-      toast.error("Invalid img_book");
+      toast.error("Invalid price");
     }
 
     if (!quantity) {
@@ -67,22 +88,18 @@ const ModalUpdateBook = (props) => {
       toast.error("Invalid salse");
     }
 
-    let data = await updateBook();
+    let data = await updateBook(
+      dataUpdate.id,
+      title,
+      img_book,
+      authorId,
+      genresId,
+      price,
+      quantity,
+      salse
+    );
     console.log("check data: ", data);
 
-    if (data && data.errcode === 0) {
-      toast.success(data.message);
-      handleClose();
-      await updateBook(dataUpdate.id, {
-        title,
-        img_book,
-        authorId,
-        genresId,
-        price,
-        quantity,
-        salse,
-      });
-    }
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();
@@ -122,23 +139,36 @@ const ModalUpdateBook = (props) => {
             </div>
             <div className="col-md-6">
               <label className="form-label">AuthorId</label>
-              <input
-                type="text"
-                className="form-control"
+              <select
+                className="form-select"
                 value={authorId}
-                disabled
                 onChange={(e) => setAuthordId(e.target.value)}
-              />
+              >
+                {lisAuthor.map((author, index) => {
+                  console.log(author);
+                  return (
+                    <option value={author.id} key={`author ${index}`}>
+                      {author.author_name}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div className="col-12">
               <label className="form-label">GenresId</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="User Name"
+              <select
+                className="form-select"
                 value={genresId}
                 onChange={(e) => setGenresId(e.target.value)}
-              />
+              >
+                {listGenres.map((genres, index) => {
+                  return (
+                    <option value={genres.id} key={index + 1}>
+                      {genres.genres_name}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div className="col-12">
               <label className="form-label">Price</label>

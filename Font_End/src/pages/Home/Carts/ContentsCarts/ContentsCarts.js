@@ -5,20 +5,29 @@ import "./ContentsCarts.scss";
 import img from "../../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
 import { getListCart } from "../../../../services/cartsService";
 import { useEffect, useState } from "react";
-const ContentsCarts = () => {
-  const [quantity, setQuantity] = useState(0);
-  const [listCarts, setListCarts] = useState([]);
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateProduct } from "../../../../redux/Slice/productSlice";
 
+const ContentsCarts = () => {
+  const [quantity, setQuantity] = useState();
+  const [listCarts, setListCarts] = useState([]);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  let totalQuantity = 0;
+  const [countquantity, setCountQuantity] = useState(0);
   const ListCart = async () => {
     const data = await getListCart();
     console.log("data", data.data);
     setListCarts(data.data);
   };
-  console.log("dataList", listCarts);
 
   useEffect(() => {
     ListCart();
-  }, []);
+    dispatch(updateProduct(countquantity));
+    console.log("listCarts", listCarts);
+  }, [countquantity]);
+
   return (
     <div className="contents-carts-container">
       <div className="title-carts">Giỏ hàng</div>
@@ -34,47 +43,56 @@ const ContentsCarts = () => {
               </div>
               <div className="product-carts">
                 <div className="title">Sản phẩm</div>
-                <div className="info-product">
-                  <Form.Check inline label="" />
+                {listCarts.map((product, index) => {
+                  if (product.userId === user.id) {
+                    totalQuantity += product?.quantity;
+                    setCountQuantity(totalQuantity);
+                    // console.log("totalQuantity", totalQuantity);
+                    return (
+                      <div className="info-product">
+                        <Form.Check inline />
+                        <div className="title-product">
+                          <img src={img} alt="product" />
+                          <div>{product?.Books[0]?.title}</div>
+                        </div>
+                        <div className="price-product">
+                          {product?.Books[0]?.price} đ
+                        </div>
+                        <div className="count-product">
+                          <span
+                            className="minus"
+                            onClick={() =>
+                              quantity > 0
+                                ? setQuantity(quantity - 1)
+                                : setQuantity(0)
+                            }
+                          >
+                            <MinusOutlined />
+                          </span>
+                          <input
+                            value={product.quantity}
+                            style={{
+                              width: "40px",
+                              height: "34px",
+                              border: "1px solid #ccc",
+                              paddingLeft: "15px",
+                            }}
+                          />
 
-                  <div className="title-product">
-                    <img src={img} alt="product" />
-                    <div>
-                      Điện thoại Xiaomi Redmi Note 13 (6GB/128GB) - Hàng chính
-                      hãng - Xanh
-                    </div>
-                  </div>
-                  <div className="price-product">4.090.000 đ</div>
-                  <div className="count-product">
-                    <span
-                      className="minus"
-                      onClick={() =>
-                        quantity > 0
-                          ? setQuantity(quantity - 1)
-                          : setQuantity(0)
-                      }
-                    >
-                      <MinusOutlined />
-                    </span>
-                    <input
-                      value={quantity}
-                      style={{
-                        width: "40px",
-                        height: "34px",
-                        border: "1px solid #ccc",
-                        paddingLeft: "15px",
-                      }}
-                    />
-
-                    <span
-                      className="plus"
-                      onClick={() => setQuantity(quantity + 1)}
-                    >
-                      <PlusOutlined />
-                    </span>
-                  </div>
-                  <div className="total-price-product">4.090.000 đ</div>
-                </div>
+                          <span
+                            className="plus"
+                            onClick={() => setQuantity(quantity + 1)}
+                          >
+                            <PlusOutlined />
+                          </span>
+                        </div>
+                        <div className="total-price-product">
+                          {product?.Books[0]?.price * product?.quantity} đ
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
               </div>
             </div>
           </Col>

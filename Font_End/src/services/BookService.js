@@ -53,7 +53,8 @@ const updateBook = (
   dataBook.append("price", price);
   dataBook.append("quantity", quantity);
   dataBook.append("sales", sales);
-  return axios.post(`/update-product/${id}`, dataBook);
+  console.log("dataBook", dataBook);
+  return axios.put(`/api/products/update-product/${id}`, dataBook);
 };
 
 const deleteBook = (id) => {

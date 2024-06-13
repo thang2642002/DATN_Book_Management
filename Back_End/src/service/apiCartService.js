@@ -30,7 +30,7 @@ const createCart = async (userId, createDate, quantity, bookIds) => {
     const cart = await db.Carts.create({ userId, createDate, quantity });
     console.log("card1", cart);
     console.log("bookIds", bookIds);
-    if (bookIds && bookIds.length > 0) {
+    if (bookIds) {
       await cart.setBooks(bookIds);
     }
     console.log("card", cart);

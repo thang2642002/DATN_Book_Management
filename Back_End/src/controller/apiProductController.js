@@ -114,11 +114,13 @@ const updateProduct = async (req, res) => {
     if (updateProduct) {
       return res.status(200).json({
         message: "Update Product was successful",
+        errcode: 0,
         data: updateProduct,
       });
     } else {
       return res.status(404).json({
         message: "Update Product failed: Product not found",
+        errcode: 1,
         data: [],
       });
     }
@@ -126,6 +128,7 @@ const updateProduct = async (req, res) => {
     console.error(error);
     return res.status(500).json({
       message: "An error occurred while updating the product",
+      errcode: -1,
     });
   }
 };
