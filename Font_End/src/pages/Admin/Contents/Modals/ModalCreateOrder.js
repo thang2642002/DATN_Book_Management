@@ -19,7 +19,7 @@ const ModalCreateOrder = (props) => {
   const [orderDate, setOrderDate] = useState(Date);
   const [description, setDescription] = useState("");
   const [totalPrice, setTotalPrice] = useState("");
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState(1);
   const [nameUser, setNameUser] = useState([]);
 
   const handleSubmitCreateOrder = async () => {
