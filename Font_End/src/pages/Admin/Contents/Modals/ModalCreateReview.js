@@ -48,8 +48,6 @@ const ModalCreateReview = (props) => {
 
     let data = await createReview(bookId, userId, rating, comment, reviewDate);
 
-    console.log("check data: ", data);
-
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();

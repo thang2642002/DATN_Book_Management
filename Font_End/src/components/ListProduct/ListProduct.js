@@ -9,7 +9,6 @@ const ListProduct = () => {
   const fetchListProduct = async () => {
     const dataProduct = await getListBooks();
     setListProductBlock(dataProduct.data);
-    console.log("check listproductblock", dataProduct.data);
   };
 
   useEffect(() => {

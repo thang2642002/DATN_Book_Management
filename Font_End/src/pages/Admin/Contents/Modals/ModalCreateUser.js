@@ -70,8 +70,6 @@ const ModalCreateUser = (props) => {
       image
     );
 
-    console.log("check data: ", data);
-
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();
@@ -80,16 +78,10 @@ const ModalCreateUser = (props) => {
     if (data && data.errcode !== 0) {
       toast.error(data.message);
     }
-
-    // console.log("check res: ", res.data);
   };
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}

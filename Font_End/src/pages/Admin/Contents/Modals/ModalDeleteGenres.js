@@ -8,8 +8,6 @@ const ModalDeleteUser = (props) => {
   const handleClose = () => setShow(false);
 
   const ModalDeleteGenres = async () => {
-    console.log("check data: ", dataDelete);
-
     const data = await deleteGenres(dataDelete.id);
     if (data && data.errcode === 0) {
       toast.success(data.message);

@@ -55,8 +55,6 @@ const ModalCreatePubliers = (props) => {
       bookIds
     );
 
-    console.log("check data: ", data);
-
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();

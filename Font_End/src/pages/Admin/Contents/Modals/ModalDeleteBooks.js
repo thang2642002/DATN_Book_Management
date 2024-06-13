@@ -8,8 +8,6 @@ const ModalDeleteBooks = (props) => {
   const handleClose = () => setShow(false);
 
   const handleSubmitDeleteUser = async () => {
-    console.log("check data: ", dataDelete.id);
-
     const data = await deleteBook(dataDelete.id);
     if (data && data.errcode === 0) {
       toast.success(data.message);

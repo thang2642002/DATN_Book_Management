@@ -1,9 +1,13 @@
 import Form from "react-bootstrap/Form";
 import { Row, Col } from "react-bootstrap";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { MdDelete } from "react-icons/md";
 import "./ContentsCarts.scss";
 import img from "../../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
-import { getListCart } from "../../../../services/cartsService";
+import {
+  getListCartItem,
+  deleteProductCart,
+} from "../../../../services/cartItemService";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -11,22 +15,42 @@ import { updateProduct } from "../../../../redux/Slice/productSlice";
 
 const ContentsCarts = () => {
   const [quantity, setQuantity] = useState();
-  const [listCarts, setListCarts] = useState([]);
+  const [listCartsItem, setListCartsItem] = useState([]);
+
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  let totalQuantity = 0;
-  const [countquantity, setCountQuantity] = useState(0);
+  // const dispatch = useDispatch();
+  // let totalQuantity = 0;
+  // const [countquantity, setCountQuantity] = useState(0);
   const ListCart = async () => {
-    const data = await getListCart();
+    const data = await getListCartItem();
     console.log("data", data.data);
-    setListCarts(data.data);
+    setListCartsItem(data.data);
   };
 
   useEffect(() => {
     ListCart();
-    dispatch(updateProduct(countquantity));
-    console.log("listCarts", listCarts);
-  }, [countquantity]);
+    // dispatch(updateProduct(totalQuantity));
+    // console.log("listCarts", listCartsItem);
+  }, []);
+
+  const handleQuantityChange = (index, newQuantity) => {
+    const updatedList = [...listCartsItem];
+    updatedList[index].quantity = newQuantity;
+    setListCartsItem(updatedList);
+  };
+
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    listCartsItem.forEach((product) => {
+      const price = product?.Book?.price || 0;
+      const quantity = product?.quantity || 0;
+      const productTotal = price * quantity;
+      totalPrice += productTotal;
+    });
+
+    return totalPrice;
+  };
+  const totalPrice = calculateTotalPrice();
 
   return (
     <div className="contents-carts-container">
@@ -40,58 +64,65 @@ const ContentsCarts = () => {
                 <div className="title-price">Đơn giá</div>
                 <div className="title-quantity">Số lượng</div>
                 <div className="title-total-price">Thành tiền</div>
+                <div className="delete">
+                  <MdDelete />
+                </div>
               </div>
               <div className="product-carts">
                 <div className="title">Sản phẩm</div>
-                {listCarts.map((product, index) => {
-                  if (product.userId === user.id) {
-                    totalQuantity += product?.quantity;
-                    setCountQuantity(totalQuantity);
-                    // console.log("totalQuantity", totalQuantity);
-                    return (
-                      <div className="info-product">
-                        <Form.Check inline />
-                        <div className="title-product">
-                          <img src={img} alt="product" />
-                          <div>{product?.Books[0]?.title}</div>
-                        </div>
-                        <div className="price-product">
-                          {product?.Books[0]?.price} đ
-                        </div>
-                        <div className="count-product">
-                          <span
-                            className="minus"
-                            onClick={() =>
-                              quantity > 0
-                                ? setQuantity(quantity - 1)
-                                : setQuantity(0)
-                            }
-                          >
-                            <MinusOutlined />
-                          </span>
-                          <input
-                            value={product.quantity}
-                            style={{
-                              width: "40px",
-                              height: "34px",
-                              border: "1px solid #ccc",
-                              paddingLeft: "15px",
-                            }}
-                          />
 
-                          <span
-                            className="plus"
-                            onClick={() => setQuantity(quantity + 1)}
-                          >
-                            <PlusOutlined />
-                          </span>
-                        </div>
-                        <div className="total-price-product">
-                          {product?.Books[0]?.price * product?.quantity} đ
-                        </div>
+                {listCartsItem.map((product, index) => {
+                  /* if (product.userId === user.id) {
+                    console.log("product", product);
+                  }*/
+                  return (
+                    <div className="info-product">
+                      <Form.Check inline />
+                      <div className="title-product">
+                        <img src={img} alt="product" />
+                        <div>{product?.Book?.title}</div>
                       </div>
-                    );
-                  }
+                      <div className="price-product">
+                        {product?.Book?.price} đ
+                      </div>
+                      <div className="count-product">
+                        <span
+                          className="minus"
+                          onClick={() =>
+                            handleQuantityChange(
+                              index,
+                              product.quantity > 0 ? product.quantity - 1 : 0
+                            )
+                          }
+                        >
+                          <MinusOutlined />
+                        </span>
+                        <input
+                          value={product?.quantity}
+                          style={{
+                            width: "40px",
+                            height: "34px",
+                            border: "1px solid #ccc",
+                            paddingLeft: "15px",
+                          }}
+                        />
+                        <span
+                          className="plus"
+                          onClick={() =>
+                            handleQuantityChange(index, product.quantity + 1)
+                          }
+                        >
+                          <PlusOutlined />
+                        </span>
+                      </div>
+                      <div className="total-price-product">
+                        {product?.Book?.price * product?.quantity}
+                      </div>
+                      <div className="delete">
+                        <MdDelete />
+                      </div>
+                    </div>
+                  );
                 })}
               </div>
             </div>
@@ -101,11 +132,11 @@ const ContentsCarts = () => {
               <div className="total-price">
                 <div className="provisional">
                   <div className="title">Tạm tính</div>
-                  <div className="price">0 đ</div>
+                  <div className="price">{totalPrice} đ</div>
                 </div>
                 <div className="sum-price">
-                  <div className="title">Tạm tính</div>
-                  <div className="price">0 đ</div>
+                  <div className="title">Tổng tiền</div>
+                  <div className="price">{totalPrice} đ</div>
                 </div>
               </div>
               <button className="btn">Thanh Toán</button>

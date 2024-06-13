@@ -21,16 +21,12 @@ const ContenProductDetail = (props) => {
   const user = useSelector((state) => state.user);
 
   const handleAddCarts = async () => {
-    console.log(createDate);
     const addCart = await createCarts(
       user.id,
       createDate,
       quantity,
       dataProduct.data.id
     );
-    console.log("user", user);
-    console.log("addCart", addCart);
-    console.log("check dataPr", dataProduct);
   };
 
   return (

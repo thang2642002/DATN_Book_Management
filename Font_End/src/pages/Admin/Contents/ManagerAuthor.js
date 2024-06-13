@@ -35,7 +35,7 @@ const ManagerAuthor = () => {
   const handleClickUpdate = (author) => {
     setShowModalUpdateAuthor(true);
     setDataUpdate(author);
-    console.log("author", author);
+
   };
 
   return (

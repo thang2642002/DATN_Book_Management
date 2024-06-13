@@ -56,9 +56,7 @@ const SignInPage = () => {
   const handleLogin = async () => {
     if (checkInputLogin()) {
       let userLogin = await Login(email, password);
-      console.log("check login: ", userLogin);
       toast(userLogin.message);
-      console.log("check tokens", userLogin.access_tokens);
 
       if (userLogin.data) {
         localStorage.setItem(
@@ -69,7 +67,6 @@ const SignInPage = () => {
         if (userLogin?.access_tokens) {
           const decoded = jwtDecode(userLogin?.access_tokens);
           fetchUserById(decoded?.id);
-          console.log("decoded", decoded);
         }
         setTimeout(() => {
           navigate("/");
@@ -84,7 +81,6 @@ const SignInPage = () => {
 
   const fetchUserById = async (id) => {
     const dataUser = await getUserById(id);
-    console.log("dataUser:", dataUser);
     dispatch(updateUser(dataUser?.data));
   };
 

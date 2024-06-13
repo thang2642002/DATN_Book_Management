@@ -58,7 +58,6 @@ const ModalUpdateReview = (props) => {
       comment,
       reviewDate,
     });
-    console.log("check data: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);

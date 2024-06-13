@@ -9,7 +9,6 @@ const ModalDeleteCarts = (props) => {
 
   const handleSubmitDeleteCarts = async () => {
     const data = await deleteCarts(dataDelete.id);
-    console.log("data:", data);
     if (data && data.errcode === 0) {
       toast.success(data.message);
       await fetchListCarts();

@@ -24,7 +24,6 @@ const ManagerTransaction = () => {
     if (dataTransaction && dataTransaction.errcode === 0) {
       setListTransaction(dataTransaction.data);
     }
-    console.log("check tran", dataTransaction);
   };
 
   useEffect(() => {
@@ -32,7 +31,6 @@ const ManagerTransaction = () => {
   }, []);
 
   const handleShowModalDeleteTransaction = (transaction) => {
-    console.log("transaction", transaction);
     setShowModalDeleteTransaction(true);
     setDataDelete(transaction);
   };
@@ -40,7 +38,6 @@ const ManagerTransaction = () => {
   const handleClickUpdate = (transaction) => {
     setShowModalUpdateTransaction(true);
     setDataUpdate(transaction);
-    console.log("transaction", transaction);
   };
 
   return (

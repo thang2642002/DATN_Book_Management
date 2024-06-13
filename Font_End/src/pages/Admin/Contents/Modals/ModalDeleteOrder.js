@@ -8,9 +8,8 @@ const ModalDeleteOrder = (props) => {
   const handleClose = () => setShow(false);
 
   const handleSubmitDeleteOrder = async () => {
-    console.log("dataDelete: ", dataDelete);
     const data = await deleteOrder(dataDelete.id);
-    console.log("data:", data);
+
     if (data && data.errcode === 0) {
       toast.success(data.message);
       await fetchListOrder();

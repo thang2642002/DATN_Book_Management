@@ -35,7 +35,7 @@ const ManagerPubliers = () => {
   const handleClickUpdate = (suppliers) => {
     setShowModalUpdatePubliers(true);
     setDataUpdate(suppliers);
-    console.log("suppliers", suppliers);
+   
   };
 
   return (

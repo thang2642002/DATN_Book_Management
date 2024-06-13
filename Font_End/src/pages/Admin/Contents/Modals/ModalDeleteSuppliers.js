@@ -9,7 +9,6 @@ const ModalDeleteSuppliers = (props) => {
 
   const handleSubmitDeleteSuppliers = async () => {
     const data = await deleteSuppliers(dataDelete.id);
-    console.log("data:", data);
     if (data && data.errcode === 0) {
       toast.success(data.message);
       await fetchListPubliers();

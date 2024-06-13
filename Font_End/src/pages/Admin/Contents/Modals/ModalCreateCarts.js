@@ -40,8 +40,6 @@ const ModalCreateCarts = (props) => {
 
     let data = await createCarts(userId, createDate, quantity, bookIds);
 
-    console.log("check data: ", data);
-
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();

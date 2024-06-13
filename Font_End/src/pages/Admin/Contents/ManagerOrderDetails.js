@@ -38,7 +38,7 @@ const ManagerOrderDetails = () => {
   const handleClickUpdate = (orderDetails) => {
     setShowModalUpdateOrderDetails(true);
     setDataUpdate(orderDetails);
-    console.log("orderdetails", orderDetails);
+ 
   };
 
   return (

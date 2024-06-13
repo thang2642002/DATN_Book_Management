@@ -47,7 +47,6 @@ const ModalUpdateOrderDetails = (props) => {
       bookId,
       unit_price: unitPrice,
     });
-    console.log("check data: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);

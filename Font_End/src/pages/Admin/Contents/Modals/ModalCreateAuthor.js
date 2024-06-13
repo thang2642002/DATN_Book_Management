@@ -41,8 +41,6 @@ const ModalCreateAuthor = (props) => {
 
     let data = await createAuthor(name, address, phone, bio);
 
-    console.log("check data: ", data);
-
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();

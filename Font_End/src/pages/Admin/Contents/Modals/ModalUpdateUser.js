@@ -75,7 +75,6 @@ const ModalUpdateUser = (props) => {
       role,
       image
     );
-    console.log("check data sau update: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);

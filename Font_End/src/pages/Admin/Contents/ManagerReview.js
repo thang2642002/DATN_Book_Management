@@ -35,7 +35,7 @@ const ManagerReview = () => {
   const handleClickUpdate = (review) => {
     setShowModalUpdateReview(true);
     setDataUpdate(review);
-    console.log("review: ", review);
+  
   };
 
   return (

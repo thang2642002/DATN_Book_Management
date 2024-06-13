@@ -8,9 +8,7 @@ const ModalDeletePayment = (props) => {
   const handleClose = () => setShow(false);
 
   const handleSubmitDeletePayment = async () => {
-    console.log("dataDelete: ", dataDelete);
     const data = await deletePayment(dataDelete.id);
-    console.log("data:", data);
     if (data && data.errcode === 0) {
       toast.success(data.message);
       await fetchListPayment();

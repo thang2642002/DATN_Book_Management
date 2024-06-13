@@ -35,7 +35,7 @@ const ManagerGenres = () => {
   const handleClickUpdate = (genres) => {
     setShowModalUpdateGenres(true);
     setDataUpdate(genres);
-    console.log(genres);
+   
   };
 
   return (

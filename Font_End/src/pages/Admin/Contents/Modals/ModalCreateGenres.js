@@ -22,8 +22,6 @@ const ModalCreateGenres = (props) => {
     }
     let data = await createGenres(name, description);
 
-    console.log("check data: ", data);
-
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();

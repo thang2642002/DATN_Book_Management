@@ -37,10 +37,8 @@ const ManagerUser = () => {
   useEffect(() => {
     if (listUser && checkSearch === true) {
       fechUserByName();
-      console.log(1);
     } else {
       fechPage();
-      console.log(2);
     }
   }, [limit, checkSearch]);
 
@@ -61,7 +59,6 @@ const ManagerUser = () => {
   };
 
   const handlePageClick = (event) => {
-    console.log("evt", event);
     setLimit(event.selected + 1);
   };
 
@@ -69,8 +66,6 @@ const ManagerUser = () => {
     const user = await getByName(userName);
     setListUser(user.data);
     setCheckSearch(true);
-    console.log("seach", user.data);
-    console.log("userName", user);
   };
 
   const handleFindByName = () => {

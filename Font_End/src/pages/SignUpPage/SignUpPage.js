@@ -69,7 +69,7 @@ const SignUpPage = () => {
         address,
         password
       );
-      console.log("check dataUser: ", dataUser);
+
       toast.success(dataUser.message);
       setTimeout(() => {
         navigate("/sign-in");

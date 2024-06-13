@@ -9,7 +9,6 @@ const ModalDeleteAuthor = (props) => {
 
   const handleSubmitDeleteAuthor = async () => {
     const data = await deleteAuthor(dataDelete.id);
-    console.log("data:", data);
     if (data && data.errcode === 0) {
       toast.success(data.message);
       await fetchListAuthor();

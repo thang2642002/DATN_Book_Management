@@ -9,7 +9,6 @@ const ModalDeleteReview = (props) => {
 
   const handleSubmitDeleteReview = async () => {
     const data = await deleteReview(dataDelete.id);
-    console.log("data:", data);
     if (data && data.errcode === 0) {
       toast.success(data.message);
       await fetchListReview();

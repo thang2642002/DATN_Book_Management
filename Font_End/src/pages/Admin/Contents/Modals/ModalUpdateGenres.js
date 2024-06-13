@@ -33,7 +33,6 @@ const ModalUpdateGenres = (props) => {
     }
 
     let data = await updateGenres(name, description, dataUpdate.id);
-    console.log("check data: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);

@@ -19,7 +19,7 @@ const HeaderClient = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  console.log("user", user);
+
   const handleLoginAccount = () => {
     navigate("/sign-in");
   };

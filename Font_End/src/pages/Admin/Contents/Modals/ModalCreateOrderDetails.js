@@ -49,8 +49,6 @@ const ModalCreateOrderDetails = (props) => {
       bookId
     );
 
-    console.log("check data: ", data);
-
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();

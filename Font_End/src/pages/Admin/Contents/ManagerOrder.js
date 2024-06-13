@@ -38,7 +38,7 @@ const ManagerOrder = () => {
   const handleClickUpdate = (order) => {
     setShowModalUpdateOrder(true);
     setDataUpdate(order);
-    console.log("order: ", order);
+  
   };
 
 

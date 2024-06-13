@@ -20,7 +20,7 @@ const ManagerBooks = () => {
     if (dataBooks && dataBooks.errcode === 0) {
       setListBook(dataBooks.data);
     }
-    console.log("check list book", listBook);
+
   };
 
   const ShowModalDelete = (book) => {
@@ -30,7 +30,7 @@ const ManagerBooks = () => {
   const handleClickUpdate = (book) => {
     setShowModalUpdateBook(true);
     setDataUpdate(book);
-    console.log("check book", book);
+
   };
 
   useEffect(() => {

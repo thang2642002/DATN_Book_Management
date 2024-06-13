@@ -44,8 +44,6 @@ const ModalCreateOrder = (props) => {
 
     let data = await createOrder(orderDate, description, totalPrice, userId);
 
-    console.log("check data: ", data);
-
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();
@@ -62,7 +60,6 @@ const ModalCreateOrder = (props) => {
 
   const fectchListUser = async () => {
     const dataUser = await getListUser();
-    console.log("check data user", dataUser.data);
     setNameUser(dataUser.data);
   };
 

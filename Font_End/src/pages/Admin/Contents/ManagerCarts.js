@@ -30,13 +30,12 @@ const ManagerCarts = () => {
   const handleShowModalDeleteCarts = (carts) => {
     setShowModalDeleteCarts(true);
     setDataDelete(carts);
-    console.log("dataDelete", dataDelete);
-    console.log("carts", carts);
+
   };
   const handleClickUpdate = (carts) => {
     setShowModalUpdateCarts(true);
     setDataUpdate(carts);
-    console.log("carts", carts);
+
   };
 
   return (

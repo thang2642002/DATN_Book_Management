@@ -13,14 +13,12 @@ const ProductDetail = () => {
   const fetchProuctById = async (id) => {
     const data = await getBookById(id);
     setDataProduct(data);
-    console.log("check data: ", dataProduct);
   };
 
   useEffect(() => {
     fetchProuctById(productId.id);
   }, dataProduct);
 
-  console.log("check product id:", productId);
   return (
     <div className="product-detai-container">
       <Container>

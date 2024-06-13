@@ -42,7 +42,6 @@ const ModalUpdateCarts = (props) => {
       createDate,
       quantity,
     });
-    console.log("check data: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);

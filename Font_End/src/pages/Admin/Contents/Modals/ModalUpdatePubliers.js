@@ -54,7 +54,6 @@ const ModalUpdatePubliers = (props) => {
       phone,
       email,
     });
-    console.log("check data: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);

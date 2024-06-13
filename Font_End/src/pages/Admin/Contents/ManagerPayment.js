@@ -35,7 +35,7 @@ const ManagerPayment = () => {
   const handleClickUpdate = (payment) => {
     setShowModalUpdatePayment(true);
     setDataUpdate(payment);
-    console.log("payment", payment);
+  
   };
 
   return (

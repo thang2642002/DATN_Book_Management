@@ -26,6 +26,10 @@
         .title-total-price {
           flex: 1;
         }
+        .delete {
+          font-size: 25px;
+          margin-right: 30px;
+        }
       }
       .product-carts {
         margin-top: 10px;
@@ -77,6 +81,11 @@
             flex: 1;
             color: rgb(255, 66, 78);
             font-weight: 600;
+          }
+          .delete {
+            font-size: 25px;
+            margin-right: 10px;
+            cursor: pointer;
           }
         }
       }

@@ -95,14 +95,14 @@ const createCart = async (req, res) => {
 
 const updateCart = async (req, res) => {
   const id = req.params.id;
-  const { userId, createDate, quantity, bookIds } = req.body;
+  const { userId, createDate, quantity, bookId } = req.body;
 
   try {
     const carts = await apiCartService.updateCart(id, {
       userId,
       createDate,
       quantity,
-      bookIds,
+      bookId,
     });
     if (carts) {
       return res.status(200).json({

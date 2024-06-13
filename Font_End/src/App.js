@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     let storageData = localStorage.getItem("acceess_tokens");
-    console.log("stote", storageData);
+
     if (storageData) {
       const decode = jwtDecode(storageData);
       if (decode?.id) {

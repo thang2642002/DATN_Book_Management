@@ -61,7 +61,6 @@ const ModalUpdateBook = (props) => {
       setSalse(dataUpdate.sales);
       setNameAuthor(dataUpdate.Author.author_name);
       setNameGenres(dataUpdate.Genre.genres_name);
-      console.log("dataUpdate", dataUpdate);
     }
   }, [dataUpdate]);
 
@@ -98,7 +97,6 @@ const ModalUpdateBook = (props) => {
       quantity,
       salse
     );
-    console.log("check data: ", data);
 
     if (data && data.errcode === 0) {
       toast.success(data.message);
@@ -145,7 +143,6 @@ const ModalUpdateBook = (props) => {
                 onChange={(e) => setAuthordId(e.target.value)}
               >
                 {lisAuthor.map((author, index) => {
-                  console.log(author);
                   return (
                     <option value={author.id} key={`author ${index}`}>
                       {author.author_name}
