@@ -5,22 +5,22 @@ import "./CardProduct.scss";
 const CardProduct = (props) => {
   const { product } = props;
   return (
-    <Link to={`/product-detail/${product.id}`}>
-      <div className="card-product">
-        <div className="img-product">
-          <img src={img2} alt="img-product" />
-        </div>
-        <div className="title-product">{product.title}</div>
-        <div className="special-price">
-          <span>{product.price} đ</span>
-          <span>-32%</span>
-        </div>
-        <div className="old-price">{product.sales}</div>
-        <div className="sales">
-          {product.quantity} <span>Lượt mua</span>
-        </div>
+    // <Link to={`/product-detail/${product.id}`}>
+    <div className="card-product">
+      <div className="img-product">
+        <img src={img2} alt="img-product" />
       </div>
-    </Link>
+      <div className="title-product">title</div>
+      <div className="special-price">
+        <span>1000 đ</span>
+        <span>-32%</span>
+      </div>
+      <div className="old-price">1000</div>
+      <div className="sales">
+        10 <span>Lượt mua</span>
+      </div>
+    </div>
+    // </Link>
   );
 };
 

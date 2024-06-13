@@ -80,10 +80,32 @@ const deleteGenres = async (id) => {
   }
 };
 
+const getNameGenres = async (nameGenres) => {
+  try {
+    if (!nameGenres) {
+      return null;
+    }
+    const data = await db.Genres.findAll({
+      where: {
+        genres_name: nameGenres,
+      },
+    });
+
+    if (!data) {
+      return null;
+    } else {
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createGenres,
   getGenresById,
   getAllGenres,
   updateGenres,
   deleteGenres,
+  getNameGenres,
 };

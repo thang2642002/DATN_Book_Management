@@ -1,3 +1,4 @@
+import { cls } from "sequelize";
 import apiGenresService from "../service/apiGenresService";
 const getAllGenres = async (req, res) => {
   try {
@@ -148,10 +149,43 @@ const deleteGenres = async (req, res) => {
   }
 };
 
+const getNameGenres = async (req, res) => {
+  let nameGenres = req.query.nameGenres;
+  console.log("namegenres", nameGenres);
+
+  try {
+    if (!nameGenres) {
+      return res.status(404).json({
+        message: "Get All Name Genres is the faild",
+        errcode: 1,
+      });
+    }
+    const data = await apiGenresService.getNameGenres(nameGenres);
+    if (data) {
+      return res.status(200).json({
+        message: "Get All Name Genres is the sucesss",
+        errcode: 0,
+        data: data,
+      });
+    } else {
+      return res.status(404).json({
+        message: "Get All Name Genres is the faild",
+        errcode: 1,
+        data: [],
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json({
+      message: "Get All Name Genres is the error",
+      errcode: -1,
+    });
+  }
+};
 module.exports = {
   getAllGenres,
   getGenresById,
-  getGenresById,
+  getNameGenres,
   createGenres,
   UpdateGenres,
   deleteGenres,

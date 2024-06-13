@@ -3,6 +3,7 @@ import apiGenresController from "../controller/apiGenresController";
 
 const router = express.Router();
 
+router.get("/get-name-genres", apiGenresController.getNameGenres);
 router.get("/get-all-genres", apiGenresController.getAllGenres);
 router.get("/get-genres-by-id/:id", apiGenresController.getGenresById);
 router.post("/create-genres", apiGenresController.createGenres);
