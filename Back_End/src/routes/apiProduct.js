@@ -11,7 +11,12 @@ router.post(
   uploadImage,
   apiProductController.createProduct
 );
-router.put("/update-product/:id", apiProductController.updateProduct);
+router.put(
+  "/update-product/:id",
+  upload.single("img_book"),
+  uploadImage,
+  apiProductController.updateProduct
+);
 router.delete("/delete-product/:id", apiProductController.deleteProduct);
 
 export default router;

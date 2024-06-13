@@ -5,17 +5,17 @@ import CardProduct from "../../CardProduct/CardProduct";
 import "./ContentListProduct.scss";
 import { useState, useEffect } from "react";
 
-const ContentListProduct = () => {
+const ContentListProduct = (props) => {
   // const [listProduct, setListProduct] = useState([]);
-
+  const { books } = props;
   return (
     <>
       <Row style={{ padding: "0", margin: "0" }}>
-        return (
-        <Col lg={2}>
-          <CardProduct />
-        </Col>
-        );
+        {books.map((book, index) => (
+          <Col key={index} lg={2}>
+            <CardProduct product={book} />
+          </Col>
+        ))}
       </Row>
       <div className="btn-more">
         <ButtonSee />

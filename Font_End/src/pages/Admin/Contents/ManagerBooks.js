@@ -27,6 +27,11 @@ const ManagerBooks = () => {
     setDataDelete(book);
     setShowMoadalBookDelete(true);
   };
+  const handleClickUpdate = (book) => {
+    setShowModalUpdateBook(true);
+    setDataUpdate(book);
+    console.log("check book", book);
+  };
 
   useEffect(() => {
     fetchListBooks();
@@ -52,7 +57,7 @@ const ManagerBooks = () => {
         <ModalUpdateBooks
           show={showModalUpdateBook}
           setShow={setShowModalUpdateBook}
-          // fetchListUser={fetchListUser}
+          fetchListBooks={fetchListBooks}
           dataUpdate={dataUpdate}
         />
         <ModalDeleteBooks
@@ -66,7 +71,7 @@ const ManagerBooks = () => {
           <TableBooks
             listBook={listBook}
             ShowModalDelete={ShowModalDelete}
-            // handleClickUpdate={handleClickUpdate}
+            handleClickUpdate={handleClickUpdate}
           />
         </div>
       </div>
