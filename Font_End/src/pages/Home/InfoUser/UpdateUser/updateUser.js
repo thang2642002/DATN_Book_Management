@@ -5,10 +5,9 @@ import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { updateUser } from "../../../../services/userService";
 import _ from "lodash";
-import "./ModalCreateUser.scss";
 
-const ModalUpdateUser = (props) => {
-  const { show, setShow, fetchListUser, dataUpdate } = props;
+const UpdateInfoUser = (props) => {
+  const { show, setShow, users } = props;
   const handleClose = () => {
     setShow(false);
     setEmail("");
@@ -29,26 +28,6 @@ const ModalUpdateUser = (props) => {
   const [image, setImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
 
-  useEffect(() => {
-    if (!_.isEmpty(dataUpdate)) {
-      setEmail(dataUpdate.email);
-      setAddress(dataUpdate.address);
-      setUserName(dataUpdate.username);
-      setPhone(dataUpdate.phone);
-      setRole(dataUpdate.role);
-      setImage("");
-      setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
-    }
-  }, [dataUpdate]);
-
-  // const handleImageChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const base64String = await readFileAsBase64(file);
-  //     setAvatar(base64String); // Lưu chuỗi base64 vào state
-  //   }
-  // };
-
   const handleUploadImage = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {
       setPreviewImage(URL.createObjectURL(e.target.files[0]));
@@ -56,7 +35,19 @@ const ModalUpdateUser = (props) => {
     }
   };
 
-  const handleSubmitUpdateUsers = async () => {
+  useEffect(() => {
+    if (!_.isEmpty(users)) {
+      setEmail(users.email);
+      setAddress(users.address);
+      setUserName(users.username);
+      setPhone(users.phone);
+      setRole(users.role);
+      setImage("");
+      setPreviewImage(`data:image/png;base64,${users.avatar}`);
+    }
+  }, [users]);
+
+  const handlUpdateUser = async () => {
     if (!userName) {
       toast.error("Invalid username");
     }
@@ -68,7 +59,7 @@ const ModalUpdateUser = (props) => {
     }
 
     let data = await updateUser(
-      dataUpdate.id,
+      users.id,
       userName,
       address,
       phone,
@@ -80,7 +71,7 @@ const ModalUpdateUser = (props) => {
     if (data && data.errcode === 0) {
       toast.success(data.message);
       handleClose();
-      await fetchListUser();
+      window.history.go(0);
     }
     if (data && data.errcode !== 0) {
       toast.error(data.message);
@@ -89,10 +80,6 @@ const ModalUpdateUser = (props) => {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -111,7 +98,6 @@ const ModalUpdateUser = (props) => {
                 type="email"
                 className="form-control"
                 value={email}
-                disabled
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -157,6 +143,7 @@ const ModalUpdateUser = (props) => {
             <div className="col-md-4">
               <label className="form-label">Role</label>
               <select
+                disabled
                 className="form-select"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
@@ -190,7 +177,7 @@ const ModalUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitUpdateUsers()}>
+          <Button variant="primary" onClick={handlUpdateUser}>
             Save
           </Button>
         </Modal.Footer>
@@ -199,4 +186,4 @@ const ModalUpdateUser = (props) => {
   );
 };
 
-export default ModalUpdateUser;
+export default UpdateInfoUser;

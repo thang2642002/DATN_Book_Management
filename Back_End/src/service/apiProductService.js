@@ -61,10 +61,16 @@ const createProduct = async (
   try {
     transaction = await db.sequelize.transaction();
     const genres = await db.Genres.findByPk(genresId);
-    console.log('genres', genres)
+    console.log("genres", genres);
     if (!genres) {
       return false;
     }
+
+    // const author = await db.Author.findByPk(authorId);
+    // console.log("authorId", authorId);
+    // if (!author) {
+    //   return false;
+    // }
 
     let base64Avatar = null;
     if (img_book) {

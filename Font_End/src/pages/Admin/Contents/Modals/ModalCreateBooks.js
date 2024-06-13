@@ -14,7 +14,7 @@ const ModalCreateBook = (props) => {
     setShow(false);
     setTitle("");
     setImgBook("");
-    setAuthordId("");
+    setAuthorId("");
     setGenresId("");
     setPrice("");
     setQuantity("");
@@ -23,8 +23,8 @@ const ModalCreateBook = (props) => {
   };
   const [title, setTitle] = useState("");
   const [img_book, setImgBook] = useState("");
-  const [authorId, setAuthordId] = useState("");
-  const [genresId, setGenresId] = useState("");
+  const [authorId, setAuthorId] = useState(1);
+  const [genresId, setGenresId] = useState(1);
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [salse, setSalse] = useState("");
@@ -41,14 +41,13 @@ const ModalCreateBook = (props) => {
 
   const getAllAuthor = async () => {
     const dataAuthor = await getListAuthor();
-    console.log("author", dataAuthor.data);
-    setNameAuthor(dataAuthor.data);
+    setNameAuthor(dataAuthor?.data);
+    console.log("dataAuthor", dataAuthor?.data);
   };
 
   const getAllGenres = async () => {
     const dataGenres = await getListGenres();
     setNameGenres(dataGenres.data);
-    console.log("dataGenres1111", dataGenres.data);
   };
 
   useEffect(() => {
@@ -128,16 +127,13 @@ const ModalCreateBook = (props) => {
               <select
                 className="form-select"
                 value={authorId}
-                onChange={(e) => setAuthordId(e.target.value)}
+                onChange={(e) => setAuthorId(e.target.value)}
               >
-                {nameAuthor &&
-                  nameAuthor.map((nameAuthor, index) => {
-                    return (
-                      <option value={nameAuthor.id} key={index + 1}>
-                        {nameAuthor.author_name}
-                      </option>
-                    );
-                  })}
+                {nameAuthor.map((author, index) => (
+                  <option value={author.id} key={index}>
+                    {author.author_name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="col-12">

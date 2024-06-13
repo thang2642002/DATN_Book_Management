@@ -1,6 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import SideBarInfoUser from "./SideBarInfoUser/SideBarInfoUser";
 import ContentsInfoUser from "./ContentsInfoUser/ContentsInfoUser";
+
 const InfoUser = () => {
   return (
     <div
