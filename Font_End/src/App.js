@@ -48,8 +48,6 @@ function App() {
           ))}
         </Routes>
       </div>
-      <div className="sliderbar_container"></div>
-      <div className="content-container"></div>
     </div>
   );
 }

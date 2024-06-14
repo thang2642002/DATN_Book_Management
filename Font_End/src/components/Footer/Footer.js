@@ -67,7 +67,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-lg-12">
             <p className="footer-copyright">
-              &copy; {new Date().getFullYear()} Công ty mua bán sách. All Rights
+              &copy; {new Date().getFullYear()} Website mua bán sách. All Rights
               Reserved.
             </p>
           </div>

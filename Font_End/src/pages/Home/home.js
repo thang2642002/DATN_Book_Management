@@ -22,7 +22,7 @@ const Home = () => {
           </Container>
         </div>
 
-        <div className="content-container">
+        <div className="content-container" style={{ paddingBottom: "10px" }}>
           <Container>
             <CatagoryProduct />
             <ListProduct />
