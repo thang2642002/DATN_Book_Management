@@ -3,9 +3,13 @@ import axios from "../utils/axiosCustommize";
 const getListReview = () => {
   return axios.get("/api/review/get-all-review");
 };
+const getListReviewById = (id) => {
+  return axios.get(`/api/review/get-review-by-id/${id}`, { data: { id } });
+};
 
-const createReview = (bookId, userId, rating, comment, reviewDate) => {
-  const data = { bookId, userId, rating, comment, reviewDate };
+const createReview = (bookId, userId, comment) => {
+  // const data = { bookId, userId, rating, comment, reviewDate };
+  const data = { bookId, userId, comment };
   return axios.post("/api/review/create-review", data);
 };
 
@@ -17,4 +21,10 @@ const deleteReview = (id) => {
   return axios.delete(`/api/review/delete-review/${id}`, { data: { id } });
 };
 
-export { getListReview, createReview, deleteReview, updateReview };
+export {
+  getListReview,
+  createReview,
+  deleteReview,
+  updateReview,
+  getListReviewById,
+};

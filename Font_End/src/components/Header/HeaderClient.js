@@ -93,7 +93,9 @@ const HeaderClient = () => {
                               <li>Thông tin tài khoản</li>
                             </Link>
                             <Link>
-                              <li>Đơn hàng</li>
+                              <li>
+                                <Link to="/carts">Đơn hàng</Link>
+                              </li>
                             </Link>
                             <li onClick={handleLogOut}>Đăng xuất</li>
                           </ul>

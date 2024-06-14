@@ -2,6 +2,7 @@ import Form from "react-bootstrap/Form";
 import { Row, Col } from "react-bootstrap";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { MdDelete } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
 import "./ContentsCarts.scss";
 import img from "../../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
 import {
@@ -16,6 +17,7 @@ import { updateProduct } from "../../../../redux/Slice/productSlice";
 const ContentsCarts = () => {
   const [quantity, setQuantity] = useState();
   const [listCartsItem, setListCartsItem] = useState([]);
+  const [dataDeleteCart, setDataDeleteCart] = useState([]);
 
   const user = useSelector((state) => state.user);
   // const dispatch = useDispatch();
@@ -23,14 +25,39 @@ const ContentsCarts = () => {
   // const [countquantity, setCountQuantity] = useState(0);
   const ListCart = async () => {
     const data = await getListCartItem();
-    console.log("data", data.data);
+    console.log("data", data.data.length);
     setListCartsItem(data.data);
+    console.log();
+  };
+
+  const handleDeleteCartProduct = async () => {
+    const cartIdsAndBookIds = listCartsItem.map((item) => {
+      return { cartId: item.cartId, bookId: item.bookId };
+    });
+
+    for (const item of cartIdsAndBookIds) {
+      try {
+        const dataDeleteProductCart = await deleteProductCart(
+          item.cartId,
+          item.bookId
+        );
+        console.log("dataDeleteProductCart", dataDeleteProductCart);
+        // if (dataDeleteProductCart && dataDeleteProductCart.errCode === 0) {
+        //   console.log("dataDeleteProductCart", dataDeleteProductCart);
+        //   toast.success(dataDeleteProductCart.message);
+        //   window.location.reload();
+        // } else {
+        //   toast.error(dataDeleteProductCart.message);
+        // }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   useEffect(() => {
     ListCart();
     // dispatch(updateProduct(totalQuantity));
-    // console.log("listCarts", listCartsItem);
   }, []);
 
   const handleQuantityChange = (index, newQuantity) => {
@@ -118,7 +145,7 @@ const ContentsCarts = () => {
                       <div className="total-price-product">
                         {product?.Book?.price * product?.quantity}
                       </div>
-                      <div className="delete">
+                      <div className="delete" onClick={handleDeleteCartProduct}>
                         <MdDelete />
                       </div>
                     </div>
@@ -144,6 +171,18 @@ const ContentsCarts = () => {
           </Col>
         </Row>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

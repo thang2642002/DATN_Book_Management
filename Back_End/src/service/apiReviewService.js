@@ -5,7 +5,7 @@ const getAllReviews = async () => {
     const reviews = await db.Review.findAll({
       include: [
         { model: db.Books, attributes: ["title"] },
-        { model: db.User, attributes: ["username"] },
+        { model: db.User, attributes: ["username", "avatar"] },
       ],
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
@@ -33,9 +33,17 @@ const getReviewById = async (id) => {
   }
 };
 
-const createReview = async (reviewData) => {
+const createReview = async ({ bookId, userId, rating, comment }) => {
   try {
-    const newReview = await db.Review.create(reviewData);
+    const reviewDate = new Date().toISOString();
+    const newReview = await db.Review.create({
+      bookId: bookId,
+      userId: userId,
+      rating: rating,
+      comment: comment,
+      reviewDate: reviewDate,
+    });
+    console.log("newReview", newReview);
     return newReview;
   } catch (error) {
     console.error("Error creating review:", error);

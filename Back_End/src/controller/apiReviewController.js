@@ -53,10 +53,13 @@ const getReviewById = async (req, res) => {
 };
 
 const createReview = async (req, res) => {
-  const { bookId, userId, rating, comment, reviewDate } = req.body;
+  const { bookId, userId, rating, comment } = req.body;
+  console.log("bookId", bookId);
+  console.log("userId", userId);
+  console.log("comment", comment);
 
   try {
-    if (!bookId || !userId || !rating || !comment || !reviewDate) {
+    if (!bookId || !userId || !comment) {
       return res.status(400).json({
         message: "All fields are required",
         errcode: 1,
@@ -68,7 +71,6 @@ const createReview = async (req, res) => {
       userId,
       rating,
       comment,
-      reviewDate,
     });
 
     if (newReview) {

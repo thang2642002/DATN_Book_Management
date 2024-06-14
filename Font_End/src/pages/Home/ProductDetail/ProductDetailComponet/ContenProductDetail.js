@@ -2,7 +2,12 @@ import "./ContenProductDetail.scss";
 import { Row, Col } from "react-bootstrap";
 import { Image } from "antd";
 import { createCarts } from "../../../../services/cartsService";
-
+import {
+  createReview,
+  getListReview,
+  deleteReview,
+} from "../../../../services/reviewService";
+import { ToastContainer, toast } from "react-toastify";
 import {
   StarFilled,
   MinusOutlined,
@@ -11,13 +16,18 @@ import {
 } from "@ant-design/icons";
 
 import img1 from "../../../../public/assets/img/img-productDetail/img1.jpg";
-import { useState } from "react";
+import imguser from "../../../../public/assets/img/avatar.png";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const ContenProductDetail = (props) => {
   const { dataProduct } = props;
   const [quantity, setQuantity] = useState(1);
-  const [createDate, setCreateDate] = useState(Date);
+  const [createDate] = useState(new Date());
+  const [comment, setComment] = useState("");
+  const [listReview, setListReview] = useState([]);
+  const [showDescription, setShowDescription] = useState(false);
+  const [checkDataReview, setCheckDataReview] = useState(false);
   const user = useSelector((state) => state.user);
 
   const handleAddCarts = async () => {
@@ -27,7 +37,91 @@ const ContenProductDetail = (props) => {
       quantity,
       dataProduct.data.id
     );
+    console.log("addCart", addCart);
+    if (addCart && addCart.errcode === 0) {
+      toast.success(addCart.message);
+      setQuantity(1);
+    } else {
+      toast.error(addCart.message);
+    }
   };
+
+  const fetchListReview = async () => {
+    try {
+      const dataListReview = await getListReview();
+      const dataReview = dataListReview.data;
+      const idproduct = dataProduct.data.id;
+
+      const filteredReviews = dataReview.filter(
+        (item) => item.bookId === idproduct
+      );
+      setListReview(filteredReviews);
+      const hasReviewed = dataReview.some((item) => item.userId === user.id);
+      setCheckDataReview(hasReviewed);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
+
+  const addReview = async () => {
+    try {
+      const dataReview = await createReview(
+        dataProduct.data.id,
+        user.id,
+        comment
+      );
+      console.log("comment", comment);
+      if (dataReview && dataReview.errcode === 0) {
+        toast.success(dataReview.message);
+        fetchListReview();
+        setComment("");
+      } else {
+        toast.error(dataReview.message);
+      }
+    } catch (error) {
+      console.error("Error adding review:", error);
+    }
+  };
+
+  const handleDeleteReview = async (review) => {
+    console.log("reviewid", review);
+    const dataDeleteReview = await deleteReview(review.id);
+    if (dataDeleteReview && dataDeleteReview.errcode === 0) {
+      toast.success(dataDeleteReview.message);
+      fetchListReview();
+    } else {
+      toast.success(dataDeleteReview.message);
+    }
+  };
+
+  // const checkRoleReview = (user) => {
+  //   let check;
+  //   const checkData = listReview.filter((item) => item.userId === user.id);
+  //   if (checkData.length > 0) {
+  //     console.log("ddd", checkData);
+  //     check = true;
+  //   } else {
+  //     console.log("ssss", checkData);
+  //     check = false;
+  //     return false;
+  //   }
+  //   setCheckDataReview(check);
+  //   console.log("check", check);
+  //   console.log("checkDataReview", checkDataReview);
+  // };
+  const checkRoleReview = () => {
+    const hasReviewed = listReview.some((item) => item.userId === user.id);
+    setCheckDataReview(hasReviewed);
+    console.log("checkDataReview", hasReviewed);
+  };
+
+  useEffect(() => {
+    fetchListReview();
+  }, [dataProduct]);
+
+  useEffect(() => {
+    checkRoleReview();
+  }, [listReview]);
 
   return (
     <div className="product-detail-conten">
@@ -112,18 +206,19 @@ const ContenProductDetail = (props) => {
             </div>
 
             <div className="delivery-address">
-              <span>Giao đến</span>
-              <div className="address">Quận 1 Thành phố Hồ Chí Minh</div>
-              <div className="change-address">Thay đổi địa chỉ</div>
+              <span>Địa chỉ giao hàng</span>
+              <div className="address">{user.address}</div>
             </div>
             <div className="quantity-product">
               <span>Số lượng</span>
               <div className="count-product">
                 <span
-                  className="plus"
-                  onClick={() => setQuantity(quantity + 1)}
+                  className="minus"
+                  onClick={() =>
+                    quantity > 0 ? setQuantity(quantity - 1) : setQuantity(0)
+                  }
                 >
-                  <PlusOutlined />
+                  <MinusOutlined />
                 </span>
                 <input
                   value={quantity}
@@ -134,12 +229,10 @@ const ContenProductDetail = (props) => {
                   }}
                 />
                 <span
-                  className="minus"
-                  onClick={() =>
-                    quantity > 0 ? setQuantity(quantity - 1) : setQuantity(0)
-                  }
+                  className="plus"
+                  onClick={() => setQuantity(quantity + 1)}
                 >
-                  <MinusOutlined />
+                  <PlusOutlined />
                 </span>
               </div>
             </div>
@@ -158,8 +251,12 @@ const ContenProductDetail = (props) => {
       </Row>
 
       <div className="info_product">
-        <div className="title-info-product"> Thông tin chi tiết sản phẩm</div>
-        <div className="content-info-product">
+        <div className="title-info-product "> Thông tin chi tiết sản phẩm</div>
+        <div
+          className={`content-info-product ${
+            showDescription ? "show-full" : ""
+          }`}
+        >
           Giá sản phẩm trên Fahasa.com đã bao gồm thuế theo luật hiện hành. Bên
           cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có
           thể phát sinh thêm chi phí khác như Phụ phí đóng gói, phí vận chuyển,
@@ -191,7 +288,64 @@ const ContenProductDetail = (props) => {
           thiên tài tuy trong lòng thích nhau lắm rồi nhưng vẫn ngày ngày bày
           mưu tính kế cầm cưa, bắt đối phương phải tỏ tình trước.
         </div>
+        <div className="custom-btn">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => setShowDescription(!showDescription)}
+          >
+            {showDescription ? "Thu gọn" : "Xem thêm "}
+          </button>
+        </div>
       </div>
+
+      <div className="review-container">
+        <div className="title">Đánh giá sản phẩm</div>
+        <div className="input-comment">
+          <img src={imguser} alt="img" />
+          <input value={comment} onChange={(e) => setComment(e.target.value)} />
+          <button type="button" className="btn btn-primary" onClick={addReview}>
+            Thêm
+          </button>
+        </div>
+        <div className="title-view-comment">Lượt đánh giá</div>
+        {listReview.map((review) => (
+          <>
+            <div key={review.id} className="content-comment">
+              <div className="img-user">
+                <img src={imguser} alt="img" />
+              </div>
+              <div className="content-user">
+                <div className="name-user">{review?.User?.username}</div>
+                <div className="comment">{review?.comment}</div>
+              </div>
+            </div>
+            {checkDataReview && (
+              <div className="edit-delete">
+                <div className="edit">Chỉnh sửa</div>
+                <div
+                  className="delete"
+                  onClick={() => handleDeleteReview(review)}
+                >
+                  Xóa
+                </div>
+              </div>
+            )}
+          </>
+        ))}
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
