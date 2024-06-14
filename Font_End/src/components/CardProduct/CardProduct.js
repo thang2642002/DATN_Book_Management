@@ -4,7 +4,10 @@ import "./CardProduct.scss";
 
 const CardProduct = ({ product }) => {
   return (
-    <Link to={`/product-detail/${product.id}`}>
+    <Link
+      to={`/product-detail/${product.id}`}
+      style={{ textDecoration: "none" }}
+    >
       <div className="card-product">
         <div className="img-product">
           <img src={img2} alt="img-product" />

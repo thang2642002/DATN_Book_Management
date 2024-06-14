@@ -1,4 +1,5 @@
 import HeaderClient from "../Header/HeaderClient";
+import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
 
 function DefaultHeader() {
@@ -6,6 +7,7 @@ function DefaultHeader() {
     <div>
       <HeaderClient />
       <Outlet />
+      <Footer />
     </div>
   );
 }

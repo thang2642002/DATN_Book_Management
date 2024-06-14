@@ -56,8 +56,6 @@ const ContenProductDetail = (props) => {
         (item) => item.bookId === idproduct
       );
       setListReview(filteredReviews);
-      const hasReviewed = dataReview.some((item) => item.userId === user.id);
-      setCheckDataReview(hasReviewed);
     } catch (error) {
       console.error("Error fetching reviews:", error);
     }
@@ -109,19 +107,19 @@ const ContenProductDetail = (props) => {
   //   console.log("check", check);
   //   console.log("checkDataReview", checkDataReview);
   // };
-  const checkRoleReview = () => {
-    const hasReviewed = listReview.some((item) => item.userId === user.id);
-    setCheckDataReview(hasReviewed);
-    console.log("checkDataReview", hasReviewed);
-  };
+  // const checkRoleReview = () => {
+  //   const hasReviewed = listReview.some((item) => item.userId === user.id);
+  //   setCheckDataReview(hasReviewed);
+  //   console.log("checkDataReview", hasReviewed);
+  // };
 
   useEffect(() => {
     fetchListReview();
   }, [dataProduct]);
 
-  useEffect(() => {
-    checkRoleReview();
-  }, [listReview]);
+  // useEffect(() => {
+  //   checkRoleReview();
+  // }, [listReview]);
 
   return (
     <div className="product-detail-conten">
@@ -320,17 +318,18 @@ const ContenProductDetail = (props) => {
                 <div className="comment">{review?.comment}</div>
               </div>
             </div>
-            {checkDataReview && (
-              <div className="edit-delete">
-                <div className="edit">Chỉnh sửa</div>
-                <div
-                  className="delete"
-                  onClick={() => handleDeleteReview(review)}
-                >
-                  Xóa
-                </div>
+            <div className="edit-delete">
+              <div className="edit">Chỉnh sửa</div>
+              <div
+                className="delete"
+                onClick={() => handleDeleteReview(review)}
+              >
+                Xóa
               </div>
-            )}
+            </div>
+            {/*{checkDataReview && (
+              
+            )}*/}
           </>
         ))}
       </div>

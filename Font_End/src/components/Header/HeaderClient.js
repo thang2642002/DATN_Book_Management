@@ -93,7 +93,12 @@ const HeaderClient = () => {
                               <li>Thông tin tài khoản</li>
                             </Link>
                             <Link>
-                              <li>
+                              <li
+                                style={{
+                                  textDecoration: "none",
+                                  color: "#fff",
+                                }}
+                              >
                                 <Link to="/carts">Đơn hàng</Link>
                               </li>
                             </Link>
@@ -110,7 +115,13 @@ const HeaderClient = () => {
               <div className="note">
                 <button variant="light" className="btn-header">
                   <FaShoppingCart className="icon" />
-                  Giỏ hàng
+                  <Link
+                    to="/carts"
+                    style={{ textDecoration: "none", color: "#fff" }}
+                  >
+                    {" "}
+                    Giỏ hàng
+                  </Link>
                 </button>
               </div>
               <div className="cart">
