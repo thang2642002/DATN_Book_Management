@@ -17,7 +17,8 @@ import { updateProduct } from "../../../../redux/Slice/productSlice";
 const ContentsCarts = () => {
   const [quantity, setQuantity] = useState();
   const [listCartsItem, setListCartsItem] = useState([]);
-  const [dataDeleteCart, setDataDeleteCart] = useState([]);
+  const [checkAllBox, setCheckAllBox] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
 
   const user = useSelector((state) => state.user);
   // const dispatch = useDispatch();
@@ -25,39 +26,34 @@ const ContentsCarts = () => {
   // const [countquantity, setCountQuantity] = useState(0);
   const ListCart = async () => {
     const data = await getListCartItem();
-    console.log("data", data.data.length);
+    console.log("data", data.data);
     setListCartsItem(data.data);
-    console.log();
+    console.log("listCartsItem", data.data);
   };
-
-  const handleDeleteCartProduct = async () => {
-    const cartIdsAndBookIds = listCartsItem.map((item) => {
-      return { cartId: item.cartId, bookId: item.bookId };
-    });
-
-    for (const item of cartIdsAndBookIds) {
-      try {
-        const dataDeleteProductCart = await deleteProductCart(
-          item.cartId,
-          item.bookId
-        );
-        console.log("dataDeleteProductCart", dataDeleteProductCart);
-        // if (dataDeleteProductCart && dataDeleteProductCart.errCode === 0) {
-        //   console.log("dataDeleteProductCart", dataDeleteProductCart);
-        //   toast.success(dataDeleteProductCart.message);
-        //   window.location.reload();
-        // } else {
-        //   toast.error(dataDeleteProductCart.message);
-        // }
-      } catch (error) {
-        console.log(error);
-      }
+  const handleCheck = e =>{
+    const { id, checked } = e.target;
+    console.log('e.target', e.target)
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter(item => item !== id));
     }
+  }
+  const handleDeleteCart = async (cartId, bookId) => {
+    const dataDelete = await deleteProductCart(cartId, bookId);
+    if (dataDelete && dataDelete.errCode === 0) {
+      toast.success(dataDelete.message);
+      ListCart();
+    } else {
+      toast.error(dataDelete.message);
+    }
+  };
+  const handleSelectionAll = () => {
+    setCheckAllBox(!checkAllBox);
+    setCheckBox();
   };
 
   useEffect(() => {
     ListCart();
-    // dispatch(updateProduct(totalQuantity));
   }, []);
 
   const handleQuantityChange = (index, newQuantity) => {
@@ -87,7 +83,13 @@ const ContentsCarts = () => {
           <Col lg={9}>
             <div className="details-product">
               <div className="title-carts-product">
-                <Form.Check inline label="Tất cả" className="check-box" />
+                <Form.Check
+                  inline
+                  label="Tất cả"
+                  className="check-box"
+                  value="check"
+                  onClick={handleSelectionAll}
+                />
                 <div className="title-price">Đơn giá</div>
                 <div className="title-quantity">Số lượng</div>
                 <div className="title-total-price">Thành tiền</div>
@@ -99,12 +101,9 @@ const ContentsCarts = () => {
                 <div className="title">Sản phẩm</div>
 
                 {listCartsItem.map((product, index) => {
-                  /* if (product.userId === user.id) {
-                    console.log("product", product);
-                  }*/
                   return (
                     <div className="info-product">
-                      <Form.Check inline />
+                      <Form.Check inline value="check" handleClick={handleCheck} id={product?.id} isChecked={isCheck.includes(product?.id)}/>
                       <div className="title-product">
                         <img src={img} alt="product" />
                         <div>{product?.Book?.title}</div>
@@ -145,7 +144,13 @@ const ContentsCarts = () => {
                       <div className="total-price-product">
                         {product?.Book?.price * product?.quantity}
                       </div>
-                      <div className="delete" onClick={handleDeleteCartProduct}>
+                      {console.log("product", product)}
+                      <div
+                        className="delete"
+                        onClick={() =>
+                          handleDeleteCart(product?.cartId, product?.bookId)
+                        }
+                      >
                         <MdDelete />
                       </div>
                     </div>
@@ -173,7 +178,7 @@ const ContentsCarts = () => {
       </div>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

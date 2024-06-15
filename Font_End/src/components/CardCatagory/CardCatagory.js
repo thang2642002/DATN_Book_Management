@@ -1,71 +1,33 @@
 import "./CardCatagory.scss";
-import { Col } from "react-bootstrap";
+import { getListGenres } from "../../services/genresService";
 import img1 from "../../public/assets/img/cardCatagory/card1.png";
-import img2 from "../../public/assets/img/cardCatagory/card2.png";
-import img3 from "../../public/assets/img/cardCatagory/card3.png";
-import img4 from "../../public/assets/img/cardCatagory/card4.jpg";
-import img5 from "../../public/assets/img/cardCatagory/card5.png";
-import img6 from "../../public/assets/img/cardCatagory/card6.png";
-import img7 from "../../public/assets/img/cardCatagory/card7.jpg";
-import img8 from "../../public/assets/img/cardCatagory/card8.jpg";
-import img9 from "../../public/assets/img/cardCatagory/card9.png";
-import img10 from "../../public/assets/img/cardCatagory/card10.jpg";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const CardCatagory = () => {
-  const listCardCatagory = [
-    {
-      img: img1,
-      title: "Bút vẽ trang trí",
-    },
-    {
-      img: img2,
-      title: "Quạt Mini",
-    },
-    {
-      img: img3,
-      title: "Bút Teen",
-    },
-    {
-      img: img4,
-      title: "Đam mỹ",
-    },
-    {
-      img: img5,
-      title: "Văn Học",
-    },
-    {
-      img: img6,
-      title: "Tâm lý lý kĩ năng",
-    },
-    {
-      img: img7,
-      title: "Thiếu nhi",
-    },
-    {
-      img: img8,
-      title: "Sức khỏe",
-    },
-    {
-      img: img9,
-      title: "Sách ngoại ngữ",
-    },
-    {
-      img: img10,
-      title: "Ngoại ngữ",
-    },
-  ];
+  const [listCardCatagory, setListCardCatagory] = useState([]);
+  const fetchListGenres = async () => {
+    const dataGenres = await getListGenres();
+    setListCardCatagory(dataGenres.data);
+    console.log(listCardCatagory);
+  };
+
+  useEffect(() => {
+    fetchListGenres();
+  }, []);
 
   return (
     <>
       <div className="card-catagogy-container">
-        {listCardCatagory.map((item, index) => {
-          return (
-            <div className="card-catagogy" key={index + 1}>
-              <img src={item.img} alt="" />
-              <div className="title-product">{item.title}</div>
-            </div>
-          );
-        })}
+        {listCardCatagory &&
+          listCardCatagory.map((genres, index) => {
+            return (
+              <div className="card-catagogy" key={index + 1}>
+                <img src={img1} alt="" />
+                <div className="title-product">{genres.genres_name}</div>
+              </div>
+            );
+          })}
       </div>
     </>
   );

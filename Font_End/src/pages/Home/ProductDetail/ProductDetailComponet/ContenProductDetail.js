@@ -27,7 +27,6 @@ const ContenProductDetail = (props) => {
   const [comment, setComment] = useState("");
   const [listReview, setListReview] = useState([]);
   const [showDescription, setShowDescription] = useState(false);
-  const [checkDataReview, setCheckDataReview] = useState(false);
   const user = useSelector((state) => state.user);
 
   const handleAddCarts = async () => {
@@ -91,27 +90,6 @@ const ContenProductDetail = (props) => {
       toast.success(dataDeleteReview.message);
     }
   };
-
-  // const checkRoleReview = (user) => {
-  //   let check;
-  //   const checkData = listReview.filter((item) => item.userId === user.id);
-  //   if (checkData.length > 0) {
-  //     console.log("ddd", checkData);
-  //     check = true;
-  //   } else {
-  //     console.log("ssss", checkData);
-  //     check = false;
-  //     return false;
-  //   }
-  //   setCheckDataReview(check);
-  //   console.log("check", check);
-  //   console.log("checkDataReview", checkDataReview);
-  // };
-  // const checkRoleReview = () => {
-  //   const hasReviewed = listReview.some((item) => item.userId === user.id);
-  //   setCheckDataReview(hasReviewed);
-  //   console.log("checkDataReview", hasReviewed);
-  // };
 
   useEffect(() => {
     fetchListReview();
@@ -307,31 +285,32 @@ const ContenProductDetail = (props) => {
           </button>
         </div>
         <div className="title-view-comment">Lượt đánh giá</div>
-        {listReview.map((review) => (
-          <>
-            <div key={review.id} className="content-comment">
-              <div className="img-user">
-                <img src={imguser} alt="img" />
+        {listReview.map((review, index) => {
+          return (
+            <div key={index + 1}>
+              <div key={review.id} className="content-comment">
+                <div className="img-user">
+                  <img src={imguser} alt="img" />
+                </div>
+                <div className="content-user">
+                  <div className="name-user">{review?.User?.username}</div>
+                  <div className="comment">{review?.comment}</div>
+                </div>
               </div>
-              <div className="content-user">
-                <div className="name-user">{review?.User?.username}</div>
-                <div className="comment">{review?.comment}</div>
-              </div>
+              {review.userId === user.id && (
+                <div className="edit-delete">
+                  <div className="edit">Chỉnh sửa</div>
+                  <div
+                    className="delete"
+                    onClick={() => handleDeleteReview(review)}
+                  >
+                    Xóa
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="edit-delete">
-              <div className="edit">Chỉnh sửa</div>
-              <div
-                className="delete"
-                onClick={() => handleDeleteReview(review)}
-              >
-                Xóa
-              </div>
-            </div>
-            {/*{checkDataReview && (
-              
-            )}*/}
-          </>
-        ))}
+          );
+        })}
       </div>
       <ToastContainer
         position="top-right"
