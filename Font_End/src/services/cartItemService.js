@@ -9,4 +9,12 @@ const deleteProductCart = (cartId, bookId) => {
   });
 };
 
-export { getListCartItem, deleteProductCart };
+const updateCartItem = (id, quantity) => {
+  console.log("id", id);
+  console.log("quantity", quantity);
+  return axios.put(`/api/cart-item/update-cart-item/${id}`, {
+    data: { quantity },
+  });
+};
+
+export { getListCartItem, deleteProductCart, updateCartItem };

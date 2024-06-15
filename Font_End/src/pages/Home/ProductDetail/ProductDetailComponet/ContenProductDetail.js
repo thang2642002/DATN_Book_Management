@@ -2,6 +2,7 @@ import "./ContenProductDetail.scss";
 import { Row, Col } from "react-bootstrap";
 import { Image } from "antd";
 import { createCarts } from "../../../../services/cartsService";
+import { useNavigate } from "react-router-dom";
 import {
   createReview,
   getListReview,
@@ -28,23 +29,36 @@ const ContenProductDetail = (props) => {
   const [listReview, setListReview] = useState([]);
   const [showDescription, setShowDescription] = useState(false);
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handleAddCarts = async () => {
-    const addCart = await createCarts(
-      user.id,
-      createDate,
-      quantity,
-      dataProduct.data.id
-    );
-    console.log("addCart", addCart);
-    if (addCart && addCart.errcode === 0) {
-      toast.success(addCart.message);
-      setQuantity(1);
+    if (user.id !== "") {
+      const addCart = await createCarts(
+        user.id,
+        createDate,
+        quantity,
+        dataProduct.data.id
+      );
+
+      if (addCart && addCart.errcode === 0) {
+        toast.success(addCart.message);
+        setQuantity(1);
+      } else {
+        toast.error(addCart.message);
+      }
     } else {
-      toast.error(addCart.message);
+      toast.error("vui lòng đăng nhập");
     }
   };
 
+  const buyNow = async () => {
+    if (user.id !== "") {
+      await createCarts(user.id, createDate, quantity, dataProduct.data.id);
+      navigate("/carts");
+    } else {
+      toast.error("Vui lòng đăng nhập");
+    }
+  };
   const fetchListReview = async () => {
     try {
       const dataListReview = await getListReview();
@@ -94,10 +108,6 @@ const ContenProductDetail = (props) => {
   useEffect(() => {
     fetchListReview();
   }, [dataProduct]);
-
-  // useEffect(() => {
-  //   checkRoleReview();
-  // }, [listReview]);
 
   return (
     <div className="product-detail-conten">
@@ -220,7 +230,9 @@ const ContenProductDetail = (props) => {
                 />
                 Thêm vào giỏ hàng
               </div>
-              <div className="reservation">Đặt trước</div>
+              <div className="reservation" onClick={buyNow}>
+                Mua ngay
+              </div>
             </div>
           </div>
         </Col>

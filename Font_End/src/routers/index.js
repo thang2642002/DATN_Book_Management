@@ -5,6 +5,7 @@ import TypeProductPage from "../pages/Home/TypeProductPage/TypeProductPage";
 import ProductDetail from "../pages/Home/ProductDetail/ProductDetail";
 import Carts from "../pages/Home/Carts/Carts";
 import InfoUser from "../pages/Home/InfoUser/InfoUser";
+import Payment from "../pages/Home/Payment/Payment";
 //import router root
 import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
@@ -40,6 +41,7 @@ export const routers = [
       },
       { path: "carts", element: <Carts /> },
       { path: "info-user", element: <InfoUser /> },
+      { path: "payment", element: <Payment /> },
     ],
   },
   {

@@ -13,7 +13,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../services/userService";
 import { resert } from "../../redux/Slice/userSlice";
+
 import "./HeaderClient.scss";
+import { ToastContainer, toast } from "react-toastify";
 
 const HeaderClient = () => {
   const dispatch = useDispatch();
@@ -28,6 +30,14 @@ const HeaderClient = () => {
     await logOut();
     localStorage.removeItem("acceess_tokens");
     dispatch(resert());
+  };
+
+  const handleOnCart = () => {
+    if (user.id !== "") {
+      navigate("/carts");
+    } else {
+      toast.error("Vui lòng đăng nhập");
+    }
   };
   return (
     <div className="container-header">
@@ -115,13 +125,7 @@ const HeaderClient = () => {
               <div className="note">
                 <button variant="light" className="btn-header">
                   <FaShoppingCart className="icon" />
-                  <Link
-                    to="/carts"
-                    style={{ textDecoration: "none", color: "#fff" }}
-                  >
-                    {" "}
-                    Giỏ hàng
-                  </Link>
+                  <span onClick={handleOnCart}>Giỏ hàng</span>
                 </button>
               </div>
               <div className="cart">
@@ -139,6 +143,18 @@ const HeaderClient = () => {
           </Col>
         </Row>
       </Container>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

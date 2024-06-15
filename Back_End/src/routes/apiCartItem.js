@@ -7,5 +7,6 @@ router.delete(
   "/delete-cart-item/:cartId/:bookId",
   apiCartItemController.deleteCartItem
 );
+router.put("/update-cart-item/:id", apiCartItemController.updateCartItem);
 
 export default router;

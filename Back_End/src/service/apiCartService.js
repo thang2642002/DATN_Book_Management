@@ -257,13 +257,8 @@ const updateCart = async (id, { userId, createDate, quantity, bookIds }) => {
 
 const deleteCart = async (id) => {
   try {
-    const cart = await db.Carts.findByPk(id);
-    if (!cart) {
-      return null;
-    }
-    await db.Cart_Item.destroy({ where: { cartId: id } });
-    await cart.destroy();
-    return cart;
+    await db.Carts.destroy({ where: { userId: id } });
+    return true;
   } catch (error) {
     console.log(error);
     return null;

@@ -9,7 +9,6 @@ const CardCatagory = () => {
   const fetchListGenres = async () => {
     const dataGenres = await getListGenres();
     setListCardCatagory(dataGenres.data);
-    console.log(listCardCatagory);
   };
 
   useEffect(() => {

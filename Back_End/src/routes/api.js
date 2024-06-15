@@ -10,6 +10,7 @@ import apiPayment from "./apiPayment";
 import apiCarts from "./apiCarts";
 import apiOrderDetails from "./apiOrderDetails";
 import apiCartItem from "./apiCartItem";
+import apiPayPall from "./apiPayPall";
 
 const apiWebRoutes = (app) => {
   app.use("/api/users", apiUser);
@@ -24,6 +25,7 @@ const apiWebRoutes = (app) => {
   app.use("/api/cart", apiCarts);
   app.use("/api/cart-item", apiCartItem);
   app.use("/api/orderdetails", apiOrderDetails);
+  app.use("/api/paypall", apiPayPall);
 };
 
 export default apiWebRoutes;

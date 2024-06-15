@@ -51,4 +51,36 @@ const deleteCartItem = async (req, res) => {
   }
 };
 
-module.exports = { getAllCartItem, deleteCartItem };
+const updateCartItem = async (req, res) => {
+  const quantity = req.body.data.quantity;
+  const id = req.params.id;
+  // console.log("req.body", req.body);
+  // console.log("id, quantyit", quantity, id);
+
+  try {
+    const dataUpdateCartItem = await apiCartItemService.updateCartItem(
+      id,
+      quantity
+    );
+    if (dataUpdateCartItem) {
+      return res.status(200).json({
+        message: "Update cart item is the success",
+        errCode: 0,
+        data: dataUpdateCartItem,
+      });
+    } else {
+      return res.status(404).json({
+        message: "Update cart item is the faild",
+        errCode: 1,
+        data: [],
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Update cart item is the faild",
+      errCode: -1,
+    });
+  }
+};
+
+module.exports = { getAllCartItem, deleteCartItem, updateCartItem };
