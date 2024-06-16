@@ -81,7 +81,7 @@ const ContenProductDetail = (props) => {
         user.id,
         comment
       );
-      console.log("comment", comment);
+
       if (dataReview && dataReview.errcode === 0) {
         toast.success(dataReview.message);
         fetchListReview();
@@ -95,7 +95,6 @@ const ContenProductDetail = (props) => {
   };
 
   const handleDeleteReview = async (review) => {
-    console.log("reviewid", review);
     const dataDeleteReview = await deleteReview(review.id);
     if (dataDeleteReview && dataDeleteReview.errcode === 0) {
       toast.success(dataDeleteReview.message);

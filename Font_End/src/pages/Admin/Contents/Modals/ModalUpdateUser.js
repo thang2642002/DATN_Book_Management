@@ -17,7 +17,7 @@ const ModalUpdateUser = (props) => {
     setUserName("");
     setPhone("");
     setRole("USER");
-    setImage("");
+    setImage(null);
     setPreviewImage("");
   };
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ const ModalUpdateUser = (props) => {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("USER");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
 
   useEffect(() => {
@@ -36,8 +36,12 @@ const ModalUpdateUser = (props) => {
       setUserName(dataUpdate.username);
       setPhone(dataUpdate.phone);
       setRole(dataUpdate.role);
-      setImage("");
-      setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
+      setImage(null);
+      console.log("check img", dataUpdate.avatar);
+      setPreviewImage(
+        `file:///D:/DATN_BookStore/Back_End/uploads/01185edfdde324eba570c69acfa0a854`
+      );
+      // setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
     }
   }, [dataUpdate]);
 

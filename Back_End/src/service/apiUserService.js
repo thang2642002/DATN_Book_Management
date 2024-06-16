@@ -57,36 +57,91 @@ const getUserById = async (userId) => {
   }
 };
 
-const createUser = async (
+// const createUser = async (
+//   email,
+//   password,
+//   username,
+//   address,
+//   phone,
+//   role,
+//   avatar = req.body.base64Image
+// ) => {
+//   try {
+//     const checkEmailExist = await db.User.findOne({
+//       where: {
+//         email: email,
+//       },
+//     });
+
+//     if (checkEmailExist) {
+//       return {
+//         status: 400,
+//         message: "Email already exists",
+//       };
+//     }
+
+//     // Chuyển đổi avatar thành base64 nếu nó tồn tại
+//     let base64Avatar = null;
+//     if (avatar) {
+//       base64Avatar = avatar.toString("base64");
+//     }
+
+//     console.log("check all:", email, password, username, address, phone, role);
+
+//     const user = await db.User.create({
+//       email,
+//       password,
+//       username,
+//       address,
+//       phone,
+//       role,
+//       avatar: base64Avatar, // Lưu base64Avatar vào cơ sở dữ liệu
+//     });
+//     console.log("user", user);
+
+//     if (user) {
+//       return {
+//         status: 200,
+//         message: "User created successfully",
+//         data: user,
+//       };
+//     } else {
+//       return {
+//         status: 500,
+//         message: "Failed to create user",
+//       };
+//     }
+//   } catch (error) {
+//     return {
+//       status: 500,
+//       message: "An error occurred",
+//       error: error.message,
+//     };
+//   }
+// };
+
+const createUser = async ({
   email,
   password,
   username,
   address,
   phone,
   role,
-  avatar = req.body.base64Image
-) => {
+  avatar,
+}) => {
   try {
-    const checkEmailExist = await db.User.findOne({
-      where: {
-        email: email,
-      },
-    });
-
-    if (checkEmailExist) {
+    const emailExists = await db.User.findOne({ where: { email } });
+    if (emailExists) {
       return {
         status: 400,
         message: "Email already exists",
       };
     }
 
-    // Chuyển đổi avatar thành base64 nếu nó tồn tại
-    let base64Avatar = null;
+    let avatarPath = null;
     if (avatar) {
-      base64Avatar = avatar.toString("base64");
+      avatarPath = avatar.path;
     }
-
-    console.log("check all:", email, password, username, address, phone, role);
 
     const user = await db.User.create({
       email,
@@ -95,9 +150,8 @@ const createUser = async (
       address,
       phone,
       role,
-      avatar: base64Avatar, // Lưu base64Avatar vào cơ sở dữ liệu
+      avatar: avatarPath,
     });
-    console.log("user", user);
 
     if (user) {
       return {

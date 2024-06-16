@@ -7,5 +7,6 @@ router.get("/get-order-by-id/:id", apiOrderController.getOrderBookById);
 router.post("/create-order", apiOrderController.createOrderBook);
 router.put("/update-order/:id", apiOrderController.updateOrderBook);
 router.delete("/delete-order/:id", apiOrderController.deleteOrderBook);
+router.get("/static/:year/", apiOrderController.getDataForYear);
 
 export default router;

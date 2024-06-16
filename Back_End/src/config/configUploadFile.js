@@ -21,6 +21,9 @@ const uploadImage = async (req, res, next) => {
     // Thêm thuộc tính base64Image vào req.body để sử dụng trong route sau này
     req.body.base64Image = base64Image;
 
+    // Xóa tệp hình ảnh sau khi đã xử lý
+    await fs.unlink(req.file.path);
+
     // Tiếp tục chuyển đổi hoặc xử lý tệp ảnh nếu cần
     // Ví dụ: fs.unlink(req.file.path); // Xóa tệp đã tải lên sau khi đã sử dụng
 

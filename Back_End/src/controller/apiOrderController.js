@@ -1,19 +1,18 @@
 const orderBookService = require("../service/apiOrderBookService");
 
 const createOrderBook = async (req, res) => {
-  const { order_date, totalPrice, description, userId } = req.body;
-
+  const { totalPrice, userId } = req.body;
+  console.log("totalPrice", totalPrice);
+  console.log("totalPrice", userId);
   try {
-    if (!order_date || !totalPrice || !userId) {
+    if (!totalPrice || !userId) {
       return res.status(201).json({
         message: "Input is the required",
         errcode: 1,
       });
     }
     const newOrderBook = await orderBookService.createOrderBook(
-      order_date,
       totalPrice,
-      description,
       userId
     );
     if (newOrderBook) {
@@ -150,10 +149,39 @@ const getAllOrderBooks = async (req, res) => {
   }
 };
 
+const getDataForYear = async (req, res) => {
+  const year = req.params.year;
+
+  try {
+    const orderBooks = await orderBookService.getDataForYear(year);
+    if (orderBooks) {
+      return res.status(200).json({
+        message: "All Order_Books retrieved successfully",
+        errcode: 0,
+        data: orderBooks,
+      });
+    } else {
+      return res.status(200).json({
+        message: "All Order_Books retrieved faild",
+        errcode: 1,
+        data: [],
+      });
+    }
+  } catch (error) {
+    console.error("Error getting all Data:", error);
+    return res.status(500).json({
+      message: "Failed to get all Data Statics",
+      errcode: -1,
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createOrderBook,
   updateOrderBook,
   deleteOrderBook,
   getOrderBookById,
   getAllOrderBooks,
+  getDataForYear,
 };

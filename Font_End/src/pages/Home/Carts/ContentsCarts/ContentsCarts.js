@@ -27,9 +27,7 @@ const ContentsCarts = () => {
   const user = useSelector((state) => state.user);
   const ListCart = async () => {
     const data = await getListCartItem();
-    console.log("data", data.data);
     setListCartsItem(data.data);
-    console.log("listCartsItem", data.data);
   };
   const handleCheckAll = () => {
     const newCheckAll = !checkAll;
@@ -55,7 +53,6 @@ const ContentsCarts = () => {
     }
   };
 
-  console.log("chekk ListBuy", listBuy);
   const handleDeleteCart = async (cartId, bookId) => {
     const dataDelete = await deleteProductCart(cartId, bookId);
     if (dataDelete && dataDelete.errCode === 0) {
@@ -65,8 +62,6 @@ const ContentsCarts = () => {
       toast.error(dataDelete.message);
     }
   };
-
-  console.log("checkedItems", checkedItems);
 
   useEffect(() => {
     ListCart();
@@ -137,11 +132,8 @@ const ContentsCarts = () => {
               </div>
               <div className="product-carts">
                 <div className="title">Sản phẩm</div>
-                {console.log("listCartsItem", listCartsItem)}
                 {listCartsItem.map((product, index) => {
                   if (product?.Cart?.userId === user?.id) {
-                    console.log("user", user?.id);
-                    console.log("produt", product?.Cart?.userId);
                     return (
                       <div className="info-product">
                         <Form.Check
@@ -195,7 +187,6 @@ const ContentsCarts = () => {
                         <div className="total-price-product">
                           {product?.Book?.price * product?.quantity}
                         </div>
-                        {console.log("product", product)}
                         <div
                           className="delete"
                           onClick={() =>

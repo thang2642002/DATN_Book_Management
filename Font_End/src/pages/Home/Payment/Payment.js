@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import img from "../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
 import { PayPalButton } from "react-paypal-button-v2";
 import { getIdClient } from "../../../services/payPallService";
-import { createOrderDetails } from "../../../services/orderDetailsService";
+import { createOrder, getListOrder } from "../../../services/orderService";
 import "./Payment.scss";
 import { useSelector } from "react-redux";
 
@@ -17,9 +17,7 @@ const Payment = () => {
 
   const location = useLocation();
   const data = location.state;
-  console.log("check data", data);
   const checkPayPall = (e) => {
-    console.log("name", e.target.value);
     if (e.target.value === "paypall") {
       setPayPall(true);
     } else {
@@ -45,13 +43,16 @@ const Payment = () => {
       setSdkReady(true);
     };
     document.body.appendChild(script);
-    console.log("data", data);
+  };
+  const handPaymentSuccess = async () => {
+    // const dataOrrder = await createOrder(data.totalPrice, user.id);
+    const dataOrrder = await getListOrder();
+    console.log("check order", dataOrrder);
   };
 
   const onSuccessPaypal = async (details, data) => {
-    console.log("details", details);
-    console.log("data", data);
-
+    // console.log("details", details);
+    // console.log("data", data);
     // const dataOrder = await createOrderDetails(
     //   quantity,
     //   unitPrice,
@@ -117,7 +118,6 @@ const Payment = () => {
 
             {data.listBuy &&
               data.listBuy.map((item, index) => {
-                console.log("chek item", item);
                 return (
                   <div className="product" key={index + 1}>
                     <div className="img-product">
@@ -143,7 +143,11 @@ const Payment = () => {
                 }}
               />
             ) : (
-              <button type="button" class="btn btn-primary">
+              <button
+                type="button"
+                class="btn btn-primary"
+                onClick={handPaymentSuccess}
+              >
                 Xác nhận đặt hàng
               </button>
             )}

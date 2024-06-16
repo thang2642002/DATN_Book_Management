@@ -87,7 +87,7 @@ const HeaderClient = () => {
                       {user.role === "ADMIN" ? (
                         <>
                           <ul>
-                            <Link>
+                            <Link to="/info-user">
                               <li>Thông tin tài khoản</li>
                             </Link>
                             <Link to="/admin">

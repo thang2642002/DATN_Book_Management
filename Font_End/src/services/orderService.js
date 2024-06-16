@@ -4,10 +4,12 @@ const getListOrder = () => {
   return axios.get("/api/orderbook/get-all-order");
 };
 
-const createOrder = (orderDate, description, totalPrice, userId) => {
+const getDataToChart = (year) => {
+  return axios.get(`/api/orderbook/static/${year}`);
+};
+
+const createOrder = (totalPrice, userId) => {
   const data = {
-    order_date: orderDate,
-    description: description,
     totalPrice: totalPrice,
     userId: userId,
   };
@@ -22,4 +24,4 @@ const deleteOrder = (id) => {
   return axios.delete(`/api/orderbook/delete-order/${id}`, { data: { id } });
 };
 
-export { getListOrder, createOrder, deleteOrder, updateOrder };
+export { getListOrder, createOrder, deleteOrder, updateOrder, getDataToChart };

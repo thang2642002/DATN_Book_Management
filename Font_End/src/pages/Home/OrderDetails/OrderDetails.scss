@@ -1,0 +1,31 @@
+.order-container {
+  .hearder-order {
+    .title {
+      padding: 10px 0;
+      border-bottom: 1px solid #000;
+    }
+  }
+  .conten-order-container {
+    .title-order {
+      display: flex;
+      justify-content: space-between;
+      .name-supplier {
+      }
+      .transaction {
+        display: flex;
+      }
+    }
+    .details-product {
+      display: flex;
+      .img-product {
+        flex: 1;
+      }
+      .title-product {
+        flex: 3;
+      }
+      .price-product {
+        flex: 1;
+      }
+    }
+  }
+}
