@@ -22,7 +22,7 @@ const ContentsInfoUser = () => {
           <div className="title_info">Thông tin cá nhân</div>
           <div className="info">
             <div className="avatar">
-              <img src={avatar} alt="avatar" />
+              <img src={user.avatar} alt="avatar" />
             </div>
             <div style={{ display: "block" }}>
               <div className="username">

@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { Image } from "antd";
 import { createCarts } from "../../../../services/cartsService";
 import { useNavigate } from "react-router-dom";
+import RecommendationProduct from "../../RecommendationProduct/RecommendationProduct";
 import {
   createReview,
   getListReview,
@@ -285,6 +286,8 @@ const ContenProductDetail = (props) => {
           </button>
         </div>
       </div>
+
+      <RecommendationProduct dataProduct={dataProduct} />
 
       <div className="review-container">
         <div className="title">Đánh giá sản phẩm</div>

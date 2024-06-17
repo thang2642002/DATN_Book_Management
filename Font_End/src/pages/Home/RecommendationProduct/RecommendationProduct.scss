@@ -1,0 +1,59 @@
+.recommendation-container {
+  .conaten-recommendation {
+    margin-top: 40px;
+    .title {
+      font-weight: 700;
+      font-size: 18px;
+      padding: 20px 0;
+    }
+    .content-product {
+      .slider-container {
+        .item-product {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          cursor: pointer;
+          padding: 0 20px;
+          .img-product {
+            width: 200px;
+            height: 180px;
+            text-align: center;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .title-product {
+            padding: 15px 0;
+            font-weight: 600;
+          }
+          .price-sales {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            .price {
+              color: #c92127;
+              font-weight: 500;
+            }
+            .sales {
+              color: #888888;
+              text-decoration: line-through;
+              font-weight: 400;
+            }
+          }
+
+          .genres-author {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .genres {
+            }
+            .author {
+            }
+          }
+        }
+      }
+    }
+  }
+}

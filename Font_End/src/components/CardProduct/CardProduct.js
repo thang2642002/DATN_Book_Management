@@ -10,7 +10,7 @@ const CardProduct = ({ product }) => {
     >
       <div className="card-product">
         <div className="img-product">
-          <img src={img2} alt="img-product" />
+          <img src={product.img_book} alt="img-product" />
         </div>
         <div className="title-product">{product.title}</div>
         <div className="special-price">

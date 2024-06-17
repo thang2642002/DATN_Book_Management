@@ -64,15 +64,15 @@ const createProduct = async (req, res) => {
       !quantity ||
       !sales
     ) {
-      return res.status(200).json({
-        message: "Input is the required",
+      return res.status(400).json({
+        message: "Missing required fields",
         errcode: 1,
       });
     }
 
     const dataProduct = await apiProductService.createProduct(
       title,
-      req.body.base64Image,
+      img_book ? img_book.path : undefined, // Lưu đường dẫn của ảnh sách
       authorId,
       genresId,
       price,
@@ -81,53 +81,73 @@ const createProduct = async (req, res) => {
       supplierIds
     );
 
+    console.log("img_book.path", img_book.path);
+
     if (dataProduct) {
       return res.status(200).json({
-        message: "Create product is the success",
+        message: "Create product successful",
         errcode: 0,
         data: dataProduct,
       });
     } else {
-      return res.status(200).json({
-        message: "Create product is the faidle",
+      if (img_book) cloudinary.uploader.destroy(avatar.filename);
+      return res.status(500).json({
+        message: "Failed to create product",
         errcode: 1,
         data: [],
       });
     }
   } catch (error) {
+    console.error("Error creating product:", error);
     return res.status(500).json({
-      message: "Create product is the error",
+      message: "Failed to create product",
       errcode: -1,
     });
   }
 };
 
 const updateProduct = async (req, res) => {
-  const id = req.params.id;
-  const dataUpdate = req.body;
+  const img_book = req.file;
+  const { title, authorId, genresId, price, quantity, sales, supplierIds } =
+    req.body;
+  const productId = req.params.id;
 
-  console.log("id: ", id);
-  console.log("dataUpdate: ", dataUpdate);
   try {
-    let updateProduct = await apiProductService.updateProduct(id, dataUpdate);
-    console.log("dataUpdate: ", updateProduct);
-    if (updateProduct) {
+    const dataUpdate = {
+      title,
+      authorId,
+      genresId,
+      price,
+      quantity,
+      sales,
+      supplierIds,
+    };
+
+    if (img_book) {
+      dataUpdate.img_book = img_book.path;
+    }
+
+    const updatedProduct = await apiProductService.updateProduct(
+      productId,
+      dataUpdate
+    );
+
+    if (updatedProduct) {
       return res.status(200).json({
-        message: "Update Product was successful",
+        message: "Update product successful",
         errcode: 0,
-        data: updateProduct,
+        data: updatedProduct,
       });
     } else {
       return res.status(404).json({
-        message: "Update Product failed: Product not found",
+        message: "Product not found",
         errcode: 1,
-        data: [],
       });
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error updating product:", error);
     return res.status(500).json({
-      message: "An error occurred while updating the product",
+      message: "Failed to update product",
       errcode: -1,
     });
   }
@@ -162,10 +182,37 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const recommendAuthorsAndGenres = async (req, res) => {
+  const { bookId } = req.params;
+  console.log(bookId);
+  try {
+    const recommendations = await apiProductService.recommendByGenren(bookId);
+    if (recommendAuthorsAndGenres) {
+      return res.status(200).json({
+        message: " Recommendations product successfully",
+        data: recommendations,
+        errcode: 0,
+      });
+    } else {
+      return res.status(404).json({
+        message: "Recommendations product not found",
+        errcode: 1,
+        data: [],
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Recommendations product erorr", errcode: -1 });
+  }
+};
+
 module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
   getAllProducts,
   getAllProductById,
+  recommendAuthorsAndGenres,
 };

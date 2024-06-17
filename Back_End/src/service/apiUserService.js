@@ -138,10 +138,10 @@ const createUser = async ({
       };
     }
 
-    let avatarPath = null;
-    if (avatar) {
-      avatarPath = avatar.path;
-    }
+    // let avatarPath = null;
+    // if (avatar) {
+    //   avatarPath = avatar.path;
+    // }
 
     const user = await db.User.create({
       email,
@@ -150,7 +150,7 @@ const createUser = async ({
       address,
       phone,
       role,
-      avatar: avatarPath,
+      avatar,
     });
 
     if (user) {
@@ -189,18 +189,18 @@ const updateUserService = async (
     if (!user) {
       return null;
     }
-    console.log("user", user);
-    const userUpdate = {
-      userId,
-      email,
-      password,
-      username,
-      address,
-      phone,
-      role,
-      avatar,
-    };
-    await user.update(userUpdate);
+    user.email = email;
+    user.password = password;
+    user.username = username;
+    user.address = address;
+    user.phone = phone;
+    user.role = role;
+    if (avatar) {
+      user.avatar = avatar;
+    }
+
+    await user.save();
+
     console.log("User: ", user);
     return user;
   } catch (error) {
@@ -215,7 +215,7 @@ const deleteUserService = async (userId) => {
     if (!user) {
       return false;
     }
-    await user.destroy(); // Xóa user khỏi cơ sở dữ liệu
+    await user.destroy();
     return true;
   } catch (error) {
     console.error("Error deleting user:", error);

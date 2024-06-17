@@ -1,5 +1,5 @@
 import db from "../models/index";
-
+const { Op } = require("sequelize");
 const getAllProducts = async () => {
   try {
     const listProduct = await db.Books.findAll({
@@ -49,7 +49,7 @@ const getAllProductById = async (id) => {
 
 const createProduct = async (
   title,
-  img_book = req.body.base64Image,
+  img_book,
   authorId,
   genresId,
   price,
@@ -60,26 +60,19 @@ const createProduct = async (
   let transaction;
   try {
     transaction = await db.sequelize.transaction();
+
     const genres = await db.Genres.findByPk(genresId);
-    console.log("genres", genres);
     if (!genres) {
-      return false;
+      throw new Error(`Genres with ID ${genresId} not found`);
     }
 
-    // const author = await db.Author.findByPk(authorId);
-    // console.log("authorId", authorId);
-    // if (!author) {
-    //   return false;
-    // }
+    console.log("img_book", img_book);
 
-    let base64Avatar = null;
-    if (img_book) {
-      base64Avatar = img_book.toString("base64");
-    }
+    // Tạo sản phẩm mới
     let dataProduct = await db.Books.create(
       {
         title,
-        img_book: base64Avatar,
+        img_book,
         authorId,
         genresId,
         price,
@@ -88,40 +81,40 @@ const createProduct = async (
       },
       { transaction }
     );
+
+    // Nếu có các nhà cung cấp được chọn, thêm vào sản phẩm
     if (supplierIds && supplierIds.length > 0) {
       await dataProduct.addSuppliers(supplierIds, { transaction });
     }
+
     await transaction.commit();
     return dataProduct;
   } catch (error) {
     if (transaction) await transaction.rollback();
-    console.error(error);
+    console.error("Error creating product:", error);
     throw error;
   }
 };
 
 const updateProduct = async (id, dataUpdate) => {
+  let transaction;
   try {
-    const product = await db.Books.findByPk(id);
-    console.log("check id product: ", product);
+    transaction = await db.sequelize.transaction();
+    const product = await db.Books.findByPk(id, { transaction });
     if (!product) {
       return null;
     }
 
-    await product.update(dataUpdate);
-    console.log("checkUpdate", dataUpdate);
+    await product.update(dataUpdate, { transaction });
 
-    // Kiểm tra nếu có supplierIds được cung cấp trong dữ liệu cập nhật
     if (dataUpdate.supplierIds && Array.isArray(dataUpdate.supplierIds)) {
-      // Xóa tất cả các mối quan hệ cũ với các nhà cung cấp
-      await product.removeSuppliers();
-
-      // Thêm các mối quan hệ mới với các nhà cung cấp được cung cấp
-      await product.addSuppliers(dataUpdate.supplierIds);
+      await product.setSuppliers(dataUpdate.supplierIds, { transaction });
     }
 
+    await transaction.commit();
     return product;
   } catch (error) {
+    if (transaction) await transaction.rollback();
     console.error(error);
     throw new Error("Failed to update product");
   }
@@ -142,10 +135,51 @@ const removeProduct = async (productId) => {
   }
 };
 
+const recommendByGenren = async (bookId) => {
+  try {
+    // Lấy thông tin về cuốn sách gốc
+    const originalBook = await db.Books.findByPk(bookId, {
+      include: [
+        {
+          model: db.Genres,
+          attributes: ["genres_name"],
+        },
+        {
+          model: db.Author,
+          attributes: ["author_name"],
+        },
+      ],
+    });
+
+    if (!originalBook) {
+      throw new Error(`Không tìm thấy cuốn sách với ID ${bookId}`);
+    }
+
+    // Tìm các sách khác cùng thể loại với cuốn sách gốc
+    const recommendedBooks = await db.Books.findAll({
+      where: {
+        genresId: originalBook.genresId,
+        id: { [Op.ne]: bookId }, // Loại trừ cuốn sách gốc
+      },
+      include: [
+        { model: db.Author, attributes: ["author_name"] },
+        { model: db.Genres, attributes: ["genres_name"] },
+      ],
+      limit: 10, // Giới hạn số lượng sách đề xuất
+    });
+
+    return recommendedBooks;
+  } catch (error) {
+    console.error("Lỗi khi đề xuất sách theo thể loại:", error);
+    throw new Error("Không thể đề xuất sách theo thể loại.");
+  }
+};
+
 module.exports = {
   getAllProducts,
   createProduct,
   removeProduct,
   updateProduct,
   getAllProductById,
+  recommendByGenren,
 };

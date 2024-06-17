@@ -1,4 +1,5 @@
 import apiUserService from "../service/apiUserService";
+const cloudinary = require("cloudinary").v2;
 
 const getPaginatedUsers = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -110,6 +111,45 @@ const getUserById = async (req, res) => {
   }
 };
 
+//lấy ảnh thông qua cloudmery
+
+const createUser = async (req, res) => {
+  try {
+    const { email, password, username, address, phone, role } = req.body;
+    const avatar = req.file;
+    const createUserResult = await apiUserService.createUser({
+      email,
+      password,
+      username,
+      address,
+      phone,
+      role,
+      avatar: avatar?.path,
+    });
+    if (createUserResult.status === 200) {
+      return res.status(200).json({
+        message: "User created successfully",
+        errcode: 0,
+        data: createUserResult.data,
+      });
+    } else {
+      if (avatar) cloudinary.uploader.destroy(avatar.filename);
+      return res.status(500).json({
+        message: createUserResult.message || "Failed to create user",
+        errcode: 1,
+        data: createUserResult.data,
+      });
+    }
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return res
+      .status(500)
+      .json({ message: "Failed to create user", errcode: -1 });
+  }
+};
+
+// lấy ảnh base64
+
 // const createUser = async (req, res) => {
 //   try {
 //     const avatar = req.file; // Di chuyển đây để đảm bảo bạn truy cập req.file sau khi Multer đã xử lý
@@ -166,45 +206,47 @@ const getUserById = async (req, res) => {
 //   }
 // };
 
-const createUser = async (req, res) => {
-  try {
-    const { email, password, username, address, phone, role } = req.body;
-    const avatar = req.file;
+/// lấy ảnh thường
 
-    const createUserResult = await apiUserService.createUser({
-      email,
-      password,
-      username,
-      address,
-      phone,
-      role,
-      avatar,
-    });
-    if (createUserResult.status === 200) {
-      return res.status(200).json({
-        message: "User created successfully",
-        errcode: 0,
-        data: createUserResult.data,
-      });
-    } else {
-      return res.status(500).json({
-        message: createUserResult.message || "Failed to create user",
-        errcode: 1,
-        data: createUserResult.data,
-      });
-    }
-  } catch (error) {
-    console.error("Error creating user:", error);
-    return res
-      .status(500)
-      .json({ message: "Failed to create user", errcode: -1 });
-  }
-};
+// const createUser = async (req, res) => {
+//   try {
+//     const { email, password, username, address, phone, role } = req.body;
+//     const avatar = req.file;
+
+//     const createUserResult = await apiUserService.createUser({
+//       email,
+//       password,
+//       username,
+//       address,
+//       phone,
+//       role,
+//       avatar,
+//     });
+//     if (createUserResult.status === 200) {
+//       return res.status(200).json({
+//         message: "User created successfully",
+//         errcode: 0,
+//         data: createUserResult.data,
+//       });
+//     } else {
+//       return res.status(500).json({
+//         message: createUserResult.message || "Failed to create user",
+//         errcode: 1,
+//         data: createUserResult.data,
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error creating user:", error);
+//     return res
+//       .status(500)
+//       .json({ message: "Failed to create user", errcode: -1 });
+//   }
+// };
 
 const updateUser = async (req, res) => {
   const userId = req.params.id;
-  const avatar = req.file;
-  let { email, password, username, address, phone, role } = req.body;
+  const avatar = req.file; // Đổi từ req.body.avatar sang req.file vì avatar được gửi qua multipart/form-data
+  const { email, password, username, address, phone, role } = req.body; // Lấy các thông tin còn lại từ req.body
   console.log("check data", req.body);
   try {
     const updatedUser = await apiUserService.updateUserService(
@@ -215,15 +257,15 @@ const updateUser = async (req, res) => {
       address,
       phone,
       role,
-      req.body.base64Image
+      avatar ? avatar?.path : undefined
     );
     if (updatedUser) {
       res.status(200).json({
-        message: "Update User Successs",
+        message: "Update User Success",
         errcode: 0,
         data: updatedUser,
       });
-      console.log("updatedUser", updateUser);
+      console.log("updatedUser", updatedUser);
     } else {
       res.status(404).json({ message: "User not found", errcode: 1 });
     }

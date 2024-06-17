@@ -65,4 +65,17 @@ const getBookById = (id) => {
   return axios.get(`/api/products/get-product-by-id/${id}`, { data: { id } });
 };
 
-export { getListBooks, deleteBook, getBookById, createBook, updateBook };
+const recommendation = (bookId) => {
+  return axios.get(`/api/products/recommendation/authors_genres/${bookId}`, {
+    data: { bookId },
+  });
+};
+
+export {
+  getListBooks,
+  deleteBook,
+  getBookById,
+  createBook,
+  updateBook,
+  recommendation,
+};
