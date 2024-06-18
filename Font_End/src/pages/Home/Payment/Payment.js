@@ -1,4 +1,4 @@
-import { Container, Row } from "react-bootstrap";
+import { Container, ListGroup, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import img from "../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
 import { PayPalButton } from "react-paypal-button-v2";
@@ -45,21 +45,15 @@ const Payment = () => {
     document.body.appendChild(script);
   };
   const handPaymentSuccess = async () => {
-    // const dataOrrder = await createOrder(data.totalPrice, user.id);
-    const dataOrrder = await getListOrder();
-    console.log("check order", dataOrrder);
+    console.log(data.totalPrice, user.id);
+    const dataOrder = await createOrder(data.totalPrice, user.id);
+    console.log("dataOrder", dataOrder);
   };
 
   const onSuccessPaypal = async (details, data) => {
-    // console.log("details", details);
-    // console.log("data", data);
-    // const dataOrder = await createOrderDetails(
-    //   quantity,
-    //   unitPrice,
-    //   description,
-    //   orderId,
-    //   bookId
-    // );
+    console.log(data.totalPrice, user.id);
+    const dataOrder = await createOrder(data.totalPrice, user.id);
+    console.log("dataOrder", dataOrder);
   };
 
   useEffect(() => {}, [showPayPall]);
@@ -133,13 +127,18 @@ const Payment = () => {
                 );
               })}
           </div>
+          <div className="total">
+            <div className="total_price">
+              Tổng tiền: <span>{data.totalPrice}</span>
+            </div>
+          </div>
           <div className="btn-confirm">
             {showPayPall ? (
               <PayPalButton
-                amount={data.totalPrice / 32000}
+                amount={(data.totalPrice / 32000).toFixed(2)}
                 onSuccess={onSuccessPaypal}
-                onError={() => {
-                  alert("lỗi");
+                onError={(e) => {
+                  console.log(e);
                 }}
               />
             ) : (

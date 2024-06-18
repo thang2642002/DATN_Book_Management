@@ -1,8 +1,9 @@
 import { Container, Row, Col } from "react-bootstrap";
 import SideBarInfoUser from "./SideBarInfoUser/SideBarInfoUser";
 import ContentsInfoUser from "./ContentsInfoUser/ContentsInfoUser";
+import OrderDetails from "../OrderDetails/OrderDetails";
 
-const InfoUser = () => {
+const InfoUser = ({ children }) => {
   return (
     <div
       className="info-user-container"
@@ -14,9 +15,7 @@ const InfoUser = () => {
             <SideBarInfoUser />
           </Col>
 
-          <Col lg={9}>
-            <ContentsInfoUser />
-          </Col>
+          <Col lg={9}>{children}</Col>
         </Row>
       </Container>
     </div>

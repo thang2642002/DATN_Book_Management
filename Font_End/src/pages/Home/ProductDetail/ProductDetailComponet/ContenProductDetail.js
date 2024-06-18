@@ -287,7 +287,7 @@ const ContenProductDetail = (props) => {
         </div>
       </div>
 
-      <RecommendationProduct dataProduct={dataProduct} />
+      <RecommendationProduct />
 
       <div className="review-container">
         <div className="title">Đánh giá sản phẩm</div>

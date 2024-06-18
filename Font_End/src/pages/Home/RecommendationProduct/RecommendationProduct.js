@@ -3,8 +3,8 @@ import img from "../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png
 import { recommendation } from "../../../services/BookService";
 import "./RecommendationProduct.scss";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 const RecommendationProduct = (props) => {
-  const { dataProduct } = props;
   var settings = {
     dots: false,
     infinite: true,
@@ -15,14 +15,15 @@ const RecommendationProduct = (props) => {
     autoplaySpeed: 3000,
   };
 
+  const id = useParams();
+
   const [dataRecomendation, setDataRecomendation] = useState([]);
 
   const getRecommendation = async () => {
-    const data = await recommendation(dataProduct?.data?.id);
-    setDataRecomendation(data?.data);
+    const data = await recommendation(id?.id);
+    setDataRecomendation(data.data);
   };
-  console.log("dataProduct", dataProduct?.data?.id);
-  console.log("dataRecomendation", dataRecomendation?.data);
+  console.log("dataRecomendation", dataRecomendation);
 
   useEffect(() => {
     getRecommendation();
@@ -35,7 +36,7 @@ const RecommendationProduct = (props) => {
         <div className="content-product">
           <div className="slider-container">
             <Slider {...settings}>
-              {/** {dataRecomendation &&
+              {dataRecomendation &&
                 dataRecomendation.map((item, index) => {
                   console.log("item", item);
                   return (
@@ -58,7 +59,7 @@ const RecommendationProduct = (props) => {
                       </div>
                     </div>
                   );
-                })} */}
+                })}
             </Slider>
           </div>
         </div>
