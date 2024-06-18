@@ -188,7 +188,12 @@ const ContenProductDetail = (props) => {
               <span className="original-price">
                 {dataProduct?.data?.sales} đ
               </span>
-              <span className="discount-value">5%</span>
+              <span className="discount-value">
+                {((dataProduct?.data?.sales - dataProduct?.data?.price) /
+                  dataProduct?.data?.sales) *
+                  100}
+                %
+              </span>
             </div>
 
             <div className="delivery-address">

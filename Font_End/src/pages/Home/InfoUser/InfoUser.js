@@ -1,9 +1,10 @@
 import { Container, Row, Col } from "react-bootstrap";
 import SideBarInfoUser from "./SideBarInfoUser/SideBarInfoUser";
+import { Outlet } from "react-router-dom";
 import ContentsInfoUser from "./ContentsInfoUser/ContentsInfoUser";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
-const InfoUser = ({ children }) => {
+const InfoUser = () => {
   return (
     <div
       className="info-user-container"
@@ -14,11 +15,14 @@ const InfoUser = ({ children }) => {
           <Col lg={3}>
             <SideBarInfoUser />
           </Col>
-
-          <Col lg={9}>{children}</Col>
+          <Col lg={9}>
+            <ContentsInfoUser />
+            <OrderDetails />
+          </Col>
         </Row>
       </Container>
     </div>
   );
 };
+
 export default InfoUser;

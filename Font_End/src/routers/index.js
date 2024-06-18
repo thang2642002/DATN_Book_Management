@@ -65,7 +65,7 @@ export const routers = [
       // Add more admin routes here
     ],
   },
-  
+
   { path: "*", element: <NotFoundPage /> },
   { path: "/users", element: <User /> },
   { path: "/sign-in", element: <SignInPage /> },
