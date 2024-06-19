@@ -24,4 +24,15 @@ const deleteOrder = (id) => {
   return axios.delete(`/api/orderbook/delete-order/${id}`, { data: { id } });
 };
 
-export { getListOrder, createOrder, deleteOrder, updateOrder, getDataToChart };
+const getOrderById = (id) => {
+  return axios.get(`/api/orderbook/get-order-by-id/${id}`, { data: { id } });
+};
+
+export {
+  getListOrder,
+  createOrder,
+  deleteOrder,
+  updateOrder,
+  getDataToChart,
+  getOrderById,
+};

@@ -22,10 +22,10 @@ const SideBarInfoUser = () => {
             </div>
           </MenuItem>
           <MenuItem>
-            <Link to="/">Thông tin tài khoản</Link>
+            <Link to="/info-user/info-content-user">Thông tin tài khoản</Link>
           </MenuItem>
           <MenuItem>
-            <Link to="">Chi tiết đơn hàng</Link>
+            <Link to="/info-user/order-details">Chi tiết đơn hàng</Link>
           </MenuItem>
         </Menu>
       </ProSidebar>

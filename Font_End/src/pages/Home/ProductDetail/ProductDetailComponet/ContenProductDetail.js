@@ -114,21 +114,21 @@ const ContenProductDetail = (props) => {
       <Row>
         <Col lg={4} className="pd-0">
           <div className="img-product">
-            <img src={img1} alt="anh" />
+            <img src={dataProduct?.data?.img_book} alt="anh" />
           </div>
           <div className="img-preview">
             <Row>
               <Col lg={3} className="pd-0">
-                <Image src={img1} alt="anh" />
+                <Image src={dataProduct?.data?.img_book} alt="anh" />
               </Col>
               <Col lg={3} className="pd-0">
-                <Image src={img1} alt="anh" />
+                <Image src={dataProduct?.data?.img_book} alt="anh" />
               </Col>
               <Col lg={3} className="pd-0">
-                <Image src={img1} alt="anh" />
+                <Image src={dataProduct?.data?.img_book} alt="anh" />
               </Col>
               <Col lg={3} className="pd-0">
-                <Image src={img1} alt="anh" />
+                <Image src={dataProduct?.data?.img_book} alt="anh" />
               </Col>
             </Row>
           </div>

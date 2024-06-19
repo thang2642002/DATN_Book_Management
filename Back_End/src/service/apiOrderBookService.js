@@ -93,18 +93,12 @@ const getDataForYear = async (year) => {
         [fn("YEAR", col("order_date")), "ASC"],
       ],
     });
-
-    // Step 2: Convert the result to a plain array of objects
     const result = monthlyData.map((data) => data.get({ plain: true }));
-
-    // Step 3: Create a complete array for all months of the year with default values
     const completeData = Array.from({ length: 12 }, (_, index) => ({
       year,
       month: index + 1,
       totalPrice: 0,
     }));
-
-    // Step 4: Merge the result into the complete data array
     result.forEach((item) => {
       const index = item.month - 1;
       completeData[index] = item;

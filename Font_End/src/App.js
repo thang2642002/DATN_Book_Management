@@ -42,7 +42,15 @@ function App() {
                   key={childIndex}
                   path={child.path}
                   element={child.element}
-                />
+                >
+                  {child.children?.map((child, childIndex) => (
+                    <Route
+                      key={childIndex}
+                      path={child.path}
+                      element={child.element}
+                    />
+                  ))}
+                </Route>
               ))}
             </Route>
           ))}

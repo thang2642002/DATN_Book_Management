@@ -38,23 +38,24 @@ const RecommendationProduct = (props) => {
             <Slider {...settings}>
               {dataRecomendation &&
                 dataRecomendation.map((item, index) => {
-                  console.log("item", item);
                   return (
                     <div key={index + 1}>
                       <div className="item-product">
                         <div className="img-product">
-                          <img src={img} alt="ảnh sản phẩm" />
+                          <img src={item?.img_book} alt="ảnh sản phẩm" />
                         </div>
-                        <div className="title-product">
-                          Đối Thoại Với Những Người Tiên Phong
-                        </div>
+                        <div className="title-product">{item?.title}</div>
                         <div className="price-sales">
-                          <div className="price">100000đ</div>
-                          <div className="sales">1000đ</div>
+                          <div className="price">{item?.price}</div>
+                          <div className="sales">{item?.sales}</div>
                         </div>
                         <div className="genres-author">
-                          <div className="genres">Thể loại</div>
-                          <div className="author">Tác Giả</div>
+                          <div className="genres">
+                            {item?.Genre?.genres_name}
+                          </div>
+                          <div className="author">
+                            {item?.Author?.author_name}
+                          </div>
                         </div>
                       </div>
                     </div>

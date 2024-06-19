@@ -4,19 +4,22 @@ import img from "../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png
 import { PayPalButton } from "react-paypal-button-v2";
 import { getIdClient } from "../../../services/payPallService";
 import { createOrder, getListOrder } from "../../../services/orderService";
+import { createOrderDetails } from "../../../services/orderDetailsService";
 import "./Payment.scss";
 import { useSelector } from "react-redux";
-
+import { ToastContainer, toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Payment = () => {
   const [showPayPall, setPayPall] = useState(false);
   const [SdkReady, setSdkReady] = useState(false);
   const user = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
   const location = useLocation();
+
   const data = location.state;
+
   const checkPayPall = (e) => {
     if (e.target.value === "paypall") {
       setPayPall(true);
@@ -44,16 +47,71 @@ const Payment = () => {
     };
     document.body.appendChild(script);
   };
-  const handPaymentSuccess = async () => {
-    console.log(data.totalPrice, user.id);
-    const dataOrder = await createOrder(data.totalPrice, user.id);
-    console.log("dataOrder", dataOrder);
+
+  const createOrderDetailsForOrder = async (orderId, userId) => {
+    try {
+      const orderDetailsPromises = data.listBuy.map((item) => {
+        return createOrderDetails(
+          item.quantity,
+          item.Book.price,
+          orderId,
+          item.Book.id,
+          userId
+        );
+      });
+      const orderDetailsResults = await Promise.all(orderDetailsPromises);
+      return orderDetailsResults;
+    } catch (error) {
+      console.error("Lỗi khi tạo chi tiết đơn hàng", error);
+    }
   };
 
-  const onSuccessPaypal = async (details, data) => {
-    console.log(data.totalPrice, user.id);
-    const dataOrder = await createOrder(data.totalPrice, user.id);
-    console.log("dataOrder", dataOrder);
+  const handPaymentSuccess = async () => {
+    try {
+      const dataOrder = await createOrder(data.totalPrice, user.id);
+      console.log("dataOrder", dataOrder);
+      const orderId = dataOrder.data.id;
+      if (dataOrder && dataOrder.errcode === 0) {
+        let dataOrderDetails = await createOrderDetailsForOrder(
+          orderId,
+          user.id
+        );
+        console.log("dataOrderDetails", dataOrderDetails);
+        dataOrderDetails.filter((detail) => detail.errcode === 0);
+        toast.success("Thanh toán thành công");
+      } else {
+        console.log("lỗi", dataOrder.message);
+        toast.error("Thanh toán thất bại");
+      }
+      setTimeout(() => {
+        navigate(`/info-user/order-details`);
+      }, 3000);
+    } catch (error) {
+      console.error("Thanh toán thất bại", error);
+      toast.error("Thanh toán thất bại");
+    }
+  };
+
+  const onSuccessPaypal = async () => {
+    try {
+      const dataOrder = await createOrder(data.totalPrice, user.id);
+      console.log("dataOrder", dataOrder);
+      const orderId = dataOrder.data.id;
+      if (dataOrder && dataOrder.errcode === 0) {
+        let dataOrderDetails = await createOrderDetailsForOrder(orderId);
+        dataOrderDetails.filter((detail) => detail.errcode === 0);
+        toast.success("Thanh toán thành công");
+      } else {
+        console.log("lỗi", dataOrder.message);
+        toast.error("Thanh toán thất bại");
+      }
+      setTimeout(() => {
+        navigate(`/info-user/order-details`);
+      }, 3000);
+    } catch (error) {
+      console.error("Thanh toán thất bại", error);
+      toast.error("Thanh toán thất bại");
+    }
   };
 
   useEffect(() => {}, [showPayPall]);
@@ -65,6 +123,7 @@ const Payment = () => {
       setSdkReady(true);
     }
   }, []);
+
   return (
     <div className="payment-container">
       <Container>
@@ -90,7 +149,7 @@ const Payment = () => {
                   value="paypall"
                   id="1"
                   className="check-radio"
-                  onChange={(e) => checkPayPall(e)}
+                  onChange={checkPayPall}
                 />
               </div>
               <div>
@@ -102,7 +161,7 @@ const Payment = () => {
                   type="radio"
                   id="2"
                   className="check-radio"
-                  onChange={(e) => checkPayment(e)}
+                  onChange={checkPayment}
                 />
               </div>
             </div>
@@ -115,7 +174,7 @@ const Payment = () => {
                 return (
                   <div className="product" key={index + 1}>
                     <div className="img-product">
-                      <img src={img} alt="product" />
+                      <img src={item?.Book?.img_book} alt="product" />
                     </div>
                     <div className="title-product">{item?.Book?.title}</div>
                     <div className="sales-product">{item?.Book?.price}</div>
@@ -144,7 +203,7 @@ const Payment = () => {
             ) : (
               <button
                 type="button"
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={handPaymentSuccess}
               >
                 Xác nhận đặt hàng
@@ -153,7 +212,20 @@ const Payment = () => {
           </div>
         </div>
       </Container>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
+
 export default Payment;

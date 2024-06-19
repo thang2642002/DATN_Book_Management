@@ -54,9 +54,9 @@ const getAllOrderDetailsById = async (req, res) => {
 };
 
 const createOrderDetails = async (req, res) => {
-  const { quantity, unit_price, description, orderId, bookId } = req.body;
+  const { quantity, unit_price, orderId, bookId, userId } = req.body;
   try {
-    if (!quantity || !unit_price || !description || !orderId || !bookId) {
+    if (!quantity || !unit_price || !orderId || !bookId || !userId) {
       return res.status(200).json({
         message: "Input is the requid",
         errcode: 1,
@@ -65,9 +65,9 @@ const createOrderDetails = async (req, res) => {
     const dataOrderDetails = await apiOrderDetailService.createOrderDetails(
       quantity,
       unit_price,
-      description,
       orderId,
-      bookId
+      bookId,
+      userId
     );
     if (dataOrderDetails) {
       return res.status(200).json({

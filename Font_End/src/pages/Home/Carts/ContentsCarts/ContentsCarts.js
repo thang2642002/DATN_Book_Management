@@ -143,7 +143,7 @@ const ContentsCarts = () => {
                           onChange={() => handleCheckChange(index, product)}
                         />
                         <div className="title-product">
-                          <img src={img} alt="product" />
+                          <img src={product?.Book?.img_book} alt="product" />
                           <div>{product?.Book?.title}</div>
                         </div>
                         <div className="price-product">

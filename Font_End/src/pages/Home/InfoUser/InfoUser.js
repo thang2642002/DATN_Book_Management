@@ -1,8 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import SideBarInfoUser from "./SideBarInfoUser/SideBarInfoUser";
 import { Outlet } from "react-router-dom";
-import ContentsInfoUser from "./ContentsInfoUser/ContentsInfoUser";
-import OrderDetails from "../OrderDetails/OrderDetails";
 
 const InfoUser = () => {
   return (
@@ -16,8 +14,7 @@ const InfoUser = () => {
             <SideBarInfoUser />
           </Col>
           <Col lg={9}>
-            <ContentsInfoUser />
-            <OrderDetails />
+            <Outlet />
           </Col>
         </Row>
       </Container>

@@ -5,6 +5,7 @@ import TypeProductPage from "../pages/Home/TypeProductPage/TypeProductPage";
 import ProductDetail from "../pages/Home/ProductDetail/ProductDetail";
 import Carts from "../pages/Home/Carts/Carts";
 import InfoUser from "../pages/Home/InfoUser/InfoUser";
+import ContentsInfoUser from "../pages/Home/InfoUser/ContentsInfoUser/ContentsInfoUser";
 import Payment from "../pages/Home/Payment/Payment";
 import OrderDetails from "../pages/Home/OrderDetails/OrderDetails";
 //import router root
@@ -41,8 +42,14 @@ export const routers = [
         isShowHeader: true,
       },
       { path: "carts", element: <Carts /> },
-      { path: "info-user", element: <InfoUser /> },
-      { path: "order-details", element: <OrderDetails /> },
+      {
+        path: "info-user",
+        element: <InfoUser />,
+        children: [
+          { path: "info-content-user", element: <ContentsInfoUser /> },
+          { path: "order-details", element: <OrderDetails /> },
+        ],
+      },
       { path: "payment", element: <Payment /> },
     ],
   },

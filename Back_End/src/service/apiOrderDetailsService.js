@@ -2,7 +2,9 @@ import db from "../models/index";
 
 const getAllOrderDetails = async () => {
   try {
-    const orderDetails = await db.Order_Detail.findAll();
+    const orderDetails = await db.Order_Detail.findAll({
+      include: [{ model: db.Books }],
+    });
     if (!orderDetails) {
       return null;
     }
@@ -13,8 +15,10 @@ const getAllOrderDetails = async () => {
 };
 
 const getAllOrderDetailsById = async (id) => {
+  console.log("id", id);
   try {
     const orderDetails = await db.Order_Detail.findByPk(id);
+    console.log("orderDetails", orderDetails);
     if (!orderDetails) {
       return null;
     }
@@ -27,17 +31,17 @@ const getAllOrderDetailsById = async (id) => {
 const createOrderDetails = async (
   quantity,
   unit_price,
-  description,
   orderId,
-  bookId
+  bookId,
+  userId
 ) => {
   try {
     const orderDetails = await db.Order_Detail.create({
       quantity,
       unit_price,
-      description,
       orderId,
       bookId,
+      userId,
     });
     if (!orderDetails) {
       return null;

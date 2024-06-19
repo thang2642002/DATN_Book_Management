@@ -4,19 +4,19 @@ const getListOrderDetails = () => {
   return axios.get("/api/orderdetails/get-all-orderDetails");
 };
 
-const createOrderDetails = (
-  quantity,
-  unitPrice,
-  description,
-  orderId,
-  bookId
-) => {
+const getOderDetailsById = (id) => {
+  return axios.get(`/api/orderdetails/get-orderDetails-by-id/${id}`, {
+    data: { id },
+  });
+};
+
+const createOrderDetails = (quantity, unitPrice, orderId, bookId, userId) => {
   const data = {
     quantity: quantity,
     unit_price: unitPrice,
-    description: description,
     orderId: orderId,
     bookId: bookId,
+    userId: userId,
   };
   return axios.post("/api/orderdetails/craete-orderDetails", data);
 };
@@ -39,4 +39,5 @@ export {
   getListOrderDetails,
   deleteOrderDetails,
   updateOrderDetails,
+  getOderDetailsById,
 };

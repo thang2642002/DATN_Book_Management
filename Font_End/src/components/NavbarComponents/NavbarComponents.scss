@@ -19,6 +19,16 @@
         color: orange;
       }
     }
+    .title-genres {
+      padding-left: 20px;
+      font-size: 1rem;
+      font-size: 500;
+      cursor: pointer;
+      margin: 10px 0;
+      &:hover {
+        color: orange;
+      }
+    }
   }
   .list-price {
     padding-bottom: 10px 0;

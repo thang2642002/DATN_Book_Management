@@ -1,6 +1,18 @@
 import "./NavbarComponents.scss";
 import { Checkbox } from "antd";
+import { getListGenres } from "../../services/genresService";
+import { useEffect, useState } from "react";
 const NavbarComponent = () => {
+  const [dataGenres, setDataGenres] = useState([]);
+  const getAllGenres = async () => {
+    const dataGenres = await getListGenres();
+    setDataGenres(dataGenres.data);
+  };
+  console.log("dataGenres", dataGenres);
+
+  useEffect(() => {
+    getAllGenres();
+  }, []);
   const onChange = () => {};
   const rederConten = (type, options) => {
     switch (type) {
@@ -25,13 +37,11 @@ const NavbarComponent = () => {
     <div className="navbar-conatainer">
       <div className="list-catagory-product">
         <div className="tile-product">Nhóm sản phẩm</div>
-        {rederConten("text", [
-          "Tất cả sản phẩm",
-          "Sách Tiếng Việt",
-          "Foreign Books",
-          "Lưu niệm",
-          "Bách Hóa Tổng Hợp",
-        ])}
+        {dataGenres &&
+          dataGenres.map((genres, index) => {
+            console.log("genres", genres);
+            return <div key={index + 1} className="title-genres">{genres?.genres_name}</div>;
+          })}
       </div>
       <div className="list-price">
         <div className="tile-product">Giá</div>
