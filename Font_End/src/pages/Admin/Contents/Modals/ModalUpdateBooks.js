@@ -61,6 +61,7 @@ const ModalUpdateBook = (props) => {
       setQuantity(dataUpdate.quantity);
       setSalse(dataUpdate.sales);
       setSuppliersId(dataUpdate.supplierId);
+      setPreviewImage(dataUpdate.img_book);
       // setNameAuthor(dataUpdate.Author.author_name);
       // setNameGenres(dataUpdate.Genre.genres_name);
     }

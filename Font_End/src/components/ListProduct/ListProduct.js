@@ -18,7 +18,7 @@ const ListProduct = () => {
   // Group books by genre
   const groupByGenre = () => {
     return listproductblock.reduce((acc, product) => {
-      const genreName = product.Genre.genres_name;
+      const genreName = product?.Genre?.genres_name;
       if (!acc[genreName]) {
         acc[genreName] = [];
       }
