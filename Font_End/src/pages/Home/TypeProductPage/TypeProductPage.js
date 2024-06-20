@@ -34,8 +34,6 @@ const TypeProductPage = () => {
     setDataProduct(product.data);
   };
 
-  console.log("dataProduct", dataProduct);
-
   useEffect(() => {
     getAllProduct();
   }, []);

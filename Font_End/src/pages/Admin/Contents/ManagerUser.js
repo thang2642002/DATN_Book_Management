@@ -156,7 +156,6 @@ const ManagerUser = () => {
               onPageChange={handlePageClick}
               containerClassName="pagination"
               activeClassName="active"
-              // forcePage={pageOffset}
             />
           </>
         </div>
