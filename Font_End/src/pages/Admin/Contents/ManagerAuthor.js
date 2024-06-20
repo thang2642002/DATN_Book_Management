@@ -1,9 +1,10 @@
 import React from "react";
+import ReactPaginate from "react-paginate";
 import ModalCreateAuthor from "./Modals/ModalCreateAuthor";
 import ModalUpdateAuthor from "./Modals/ModalUpdateAuthor";
 import ModalDeleteAuthor from "./Modals/ModalDeleteAuthor";
 import { useEffect, useState } from "react";
-import { getListAuthor } from "../../../services/authorService";
+import { getListAuthor, getPage } from "../../../services/authorService";
 import TableAuthor from "./Modals/TableAuthor";
 import { FcPlus } from "react-icons/fc";
 
@@ -15,6 +16,9 @@ const ManagerAuthor = () => {
   const [dataUpdate, setDataUpdate] = useState({});
   const [listAuthor, setListAuthor] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
+  const pageSize = 8;
+  const [totalPage, setTotalPage] = useState(0);
+  const [limit, setLimit] = useState(1);
 
   const fetchListAuthor = async () => {
     let dataAuthor = await getListAuthor();
@@ -35,8 +39,25 @@ const ManagerAuthor = () => {
   const handleClickUpdate = (author) => {
     setShowModalUpdateAuthor(true);
     setDataUpdate(author);
-
   };
+
+  const fetchPage = async () => {
+    try {
+      const response = await getPage(limit, pageSize);
+      setTotalPage(response.totalPages);
+      setListAuthor(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handlePageClick = (event) => {
+    setLimit(event.selected + 1);
+  };
+
+  useEffect(() => {
+    fetchPage();
+  }, [limit]);
 
   return (
     <div className="manager-user-container">
@@ -75,6 +96,32 @@ const ManagerAuthor = () => {
             handleClickUpdate={handleClickUpdate}
             handleShowModalDeleteAuthor={handleShowModalDeleteAuthor}
           />
+        </div>
+        <div
+          className="custom-pagination"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <>
+            <ReactPaginate
+              previousLabel="Previous"
+              nextLabel="Next"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item"
+              previousLinkClassName="page-link"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              breakLabel="..."
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              pageCount={totalPage}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              containerClassName="pagination"
+              activeClassName="active"
+            />
+          </>
         </div>
       </div>
     </div>

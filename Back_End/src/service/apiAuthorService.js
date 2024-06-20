@@ -1,5 +1,24 @@
 import db from "../models/index";
 
+const fetchPaginatedAuthor = async (page, pageSize) => {
+  try {
+    const totalAuthor = await db.Author.count();
+    const listAuthor = await db.Author.findAll({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
+    const totalPages = Math.ceil(totalAuthor / pageSize);
+    return {
+      totalItems: totalAuthor,
+      totalPages: totalPages,
+      data: listAuthor,
+    };
+  } catch (error) {
+    console.error("Error fetching paginated Author:", error);
+    throw error;
+  }
+};
+
 const getAllAuthor = async () => {
   try {
     let author = await db.Author.findAll({ include: db.Books });
@@ -77,6 +96,7 @@ const deleteAuthor = async (authorId) => {
 };
 
 module.exports = {
+  fetchPaginatedAuthor,
   getAllAuthor,
   getAuthorById,
   createAuthor,

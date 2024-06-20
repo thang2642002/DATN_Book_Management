@@ -22,4 +22,8 @@ const deleteAuthor = (id) => {
   return axios.delete(`/api/author/delete-author/${id}`, { data: { id } });
 };
 
-export { getListAuthor, createAuthor, deleteAuthor, updateAuthor };
+const getPage = (page, pageSize) => {
+  return axios.get(`/api/author/get-page?page=${page}&pageSize=${pageSize}`);
+};
+
+export { getListAuthor, createAuthor, deleteAuthor, updateAuthor, getPage };

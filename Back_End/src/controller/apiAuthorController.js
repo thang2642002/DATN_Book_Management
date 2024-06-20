@@ -1,5 +1,27 @@
 import apiAuthorService from "../service/apiAuthorService";
 
+const getPaginatedAuthor = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  try {
+    const { totalItems, totalPages, data } =
+      await apiAuthorService.fetchPaginatedAuthor(page, pageSize);
+    res.status(200).json({
+      message: "PaginatedAuthor success",
+      errcode: 0,
+      data: data,
+      totalItems: totalItems,
+      totalPages: totalPages,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      message: "PaginatedAthor error",
+      errcode: -1,
+    });
+  }
+};
+
 const getAllAuthors = async (req, res) => {
   try {
     const listAuthor = await apiAuthorService.getAllAuthor();
@@ -146,6 +168,7 @@ const updateAuthor = async (req, res) => {
 };
 
 module.exports = {
+  getPaginatedAuthor,
   getAllAuthors,
   getAllAuthorById,
   createAuthor,

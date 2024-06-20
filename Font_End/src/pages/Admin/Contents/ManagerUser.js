@@ -57,6 +57,7 @@ const ManagerUser = () => {
 
   const handleShowDelete = (user) => {
     setShowModalDeleteUser(true);
+    console.log("user", user);
     setDataDelete(user);
   };
 

@@ -20,8 +20,8 @@ const TableOrder = (props) => {
                 <tr key={index + 1}>
                   <td>{order.id}</td>
                   <td>{order.order_date}</td>
-                  <td>{order.totalPrice}</td>
                   <td>{order.description}</td>
+                  <td>{order.totalPrice}</td>
                   <td>{order.userId}</td>
                   <td>
                     <button className="btn btn-secondary">View</button>
