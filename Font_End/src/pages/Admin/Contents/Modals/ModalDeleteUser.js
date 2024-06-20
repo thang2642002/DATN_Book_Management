@@ -8,7 +8,7 @@ const ModalDeleteUser = (props) => {
   const handleClose = () => setShow(false);
 
   const handleSubmitDeleteUser = async () => {
-    const data = await deleteUser(dataDelete.id);
+    const data = await deleteUser(dataDelete.id, dataDelete.role);
     if (data && data.errcode === 0) {
       toast.success(data.message);
       await fetchListUser();
@@ -16,6 +16,7 @@ const ModalDeleteUser = (props) => {
     }
     if (data && data.errcode !== 0) {
       toast.error(data.message);
+      handleClose();
     }
   };
 

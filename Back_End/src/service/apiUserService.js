@@ -144,16 +144,24 @@ const updateUserService = async (
   }
 };
 
-const deleteUserService = async (userId) => {
+const deleteUserService = async (userId, role) => {
   try {
-    const user = await db.User.findByPk(userId);
+    const user = await db.User.findOne({
+      where: {
+        id: userId,
+        role: role,
+      },
+    });
+
     if (!user) {
       return false;
     }
+
     await user.destroy();
     return true;
   } catch (error) {
     console.error("Error deleting user:", error);
+    throw error;
   }
 };
 

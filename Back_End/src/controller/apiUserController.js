@@ -87,6 +87,7 @@ const getAllUser = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const userId = req.params.id;
+
   try {
     const user = await apiUserService.getUserById(userId);
     if (user) {
@@ -277,14 +278,20 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const userId = req.params.id;
-  console.log(userId);
+  const role = req.query.role;
 
   if (!userId) {
     return res.status(400).json({ message: "User ID is required", errcode: 1 });
   }
 
+  if (role === "ADMIN") {
+    return res
+      .status(403)
+      .json({ message: "Xóa thằng này lấy gì mà dùng", errcode: 1 });
+  }
+
   try {
-    const result = await apiUserService.deleteUserService(userId);
+    const result = await apiUserService.deleteUserService(userId, role);
     if (result) {
       res
         .status(200)
