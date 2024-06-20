@@ -74,12 +74,9 @@ const createProduct = async (
   price,
   quantity,
   sales,
-  supplierIds
+  supplierId
 ) => {
-  let transaction;
   try {
-    transaction = await db.sequelize.transaction();
-
     const genres = await db.Genres.findByPk(genresId);
     if (!genres) {
       throw new Error(`Genres with ID ${genresId} not found`);
@@ -87,53 +84,35 @@ const createProduct = async (
 
     console.log("img_book", img_book);
 
-    // Tạo sản phẩm mới
-    let dataProduct = await db.Books.create(
-      {
-        title,
-        img_book,
-        authorId,
-        genresId,
-        price,
-        quantity,
-        sales,
-      },
-      { transaction }
-    );
+    let dataProduct = await db.Books.create({
+      title,
+      img_book,
+      authorId,
+      genresId,
+      price,
+      quantity,
+      sales,
+      supplierId,
+    });
 
-    // Nếu có các nhà cung cấp được chọn, thêm vào sản phẩm
-    if (supplierIds && supplierIds.length > 0) {
-      await dataProduct.addSuppliers(supplierIds, { transaction });
-    }
-
-    await transaction.commit();
     return dataProduct;
   } catch (error) {
-    if (transaction) await transaction.rollback();
     console.error("Error creating product:", error);
     throw error;
   }
 };
 
 const updateProduct = async (id, dataUpdate) => {
-  let transaction;
   try {
-    transaction = await db.sequelize.transaction();
-    const product = await db.Books.findByPk(id, { transaction });
+    const product = await db.Books.findByPk(id);
     if (!product) {
       return null;
     }
 
-    await product.update(dataUpdate, { transaction });
+    await product.update(dataUpdate);
 
-    if (dataUpdate.supplierIds && Array.isArray(dataUpdate.supplierIds)) {
-      await product.setSuppliers(dataUpdate.supplierIds, { transaction });
-    }
-
-    await transaction.commit();
     return product;
   } catch (error) {
-    if (transaction) await transaction.rollback();
     console.error(error);
     throw new Error("Failed to update product");
   }

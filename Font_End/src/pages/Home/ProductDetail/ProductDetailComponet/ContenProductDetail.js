@@ -32,6 +32,8 @@ const ContenProductDetail = (props) => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
+  console.log("dataProduct", dataProduct);
+
   const handleAddCarts = async () => {
     if (user.id !== "") {
       const addCart = await createCarts(
@@ -173,7 +175,7 @@ const ContenProductDetail = (props) => {
               <div className="suppliers-product">
                 Nhà cung cấp:
                 <span className="name-suppliers">
-                  {dataProduct?.data?.Suppliers[0]?.suppliers_name}
+                  {dataProduct?.data?.Supplier?.suppliers_name}
                 </span>
               </div>
               <div className="author-product">

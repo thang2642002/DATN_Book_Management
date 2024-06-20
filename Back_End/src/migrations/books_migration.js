@@ -29,6 +29,9 @@ module.exports = {
       sales: {
         type: Sequelize.INTEGER,
       },
+      supplierId: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { createBook } from "../../../../services/BookService";
 import { getListGenres } from "../../../../services/genresService";
 import { getListAuthor } from "../../../../services/authorService";
+import { getListPubliers } from "../../../../services/publiersService";
 // import "./ModalCreateBook.scss";
 
 const ModalCreateBook = (props) => {
@@ -28,10 +29,12 @@ const ModalCreateBook = (props) => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [salse, setSalse] = useState("");
+  const [supplierId, setSuppliersId] = useState(1);
   const [previewImage, setPreviewImage] = useState("");
 
   const [nameGenres, setNameGenres] = useState([]);
   const [nameAuthor, setNameAuthor] = useState([]);
+  const [nameSuppliers, setNameSupliers] = useState([]);
   const handleUploadImage = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {
       setPreviewImage(URL.createObjectURL(e.target.files[0]));
@@ -49,9 +52,15 @@ const ModalCreateBook = (props) => {
     setNameGenres(dataGenres.data);
   };
 
+  const getAllSuppliers = async () => {
+    const dataSuppliers = await getListPubliers();
+    setNameSupliers(dataSuppliers.data);
+  };
+
   useEffect(() => {
     getAllGenres();
     getAllAuthor();
+    getAllSuppliers();
   }, []);
 
   const handleSubmitCreateUsers = async () => {
@@ -71,6 +80,9 @@ const ModalCreateBook = (props) => {
     if (!salse) {
       toast.error("Invalid salse");
     }
+    if (!supplierId) {
+      toast.error("Invalid supplierId");
+    }
 
     let data = await createBook(
       title,
@@ -79,7 +91,8 @@ const ModalCreateBook = (props) => {
       genresId,
       price,
       quantity,
-      salse
+      salse,
+      supplierId
     );
 
     if (data && data.errcode === 0) {
@@ -133,7 +146,7 @@ const ModalCreateBook = (props) => {
                 ))}
               </select>
             </div>
-            <div className="col-12">
+            <div className="col-6">
               <label className="form-label">GenresId</label>
               <select
                 className="form-select"
@@ -150,15 +163,31 @@ const ModalCreateBook = (props) => {
                   })}
               </select>
             </div>
-            <div className="col-12">
+            <div className="col-6">
               <label className="form-label">Price</label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Address"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
+            </div>
+            <div className="col-6">
+              <label className="form-label">SupplierId</label>
+              <select
+                className="form-select"
+                value={supplierId}
+                onChange={(e) => setSuppliersId(e.target.value)}
+              >
+                {nameSuppliers &&
+                  nameSuppliers.map((suppliersname, index) => {
+                    return (
+                      <option value={suppliersname.id} key={index + 1}>
+                        {suppliersname.suppliers_name}
+                      </option>
+                    );
+                  })}
+              </select>
             </div>
             <div className="col-md-6">
               <label className="form-label">Quantity</label>
@@ -169,7 +198,7 @@ const ModalCreateBook = (props) => {
                 onChange={(e) => setQuantity(e.target.value)}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-12">
               <label className="form-label">Salse</label>
               <input
                 type="text"

@@ -20,7 +20,6 @@ const ModalCreatePubliers = (props) => {
   const [description, setDescription] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [bookIds, setBookIds] = useState("");
 
   const handleSubmitCreatePubliers = async () => {
     if (!name) {
@@ -41,18 +40,13 @@ const ModalCreatePubliers = (props) => {
       toast.error("Ivalid email");
       return;
     }
-    if (!bookIds) {
-      toast.error("Ivalid bookIds");
-      return;
-    }
 
     let data = await createSuppliers(
       name,
       contactInfo,
       description,
       phone,
-      email,
-      bookIds
+      email
     );
 
     if (data && data.errcode === 0) {
@@ -127,15 +121,6 @@ const ModalCreatePubliers = (props) => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">BookId</label>
-              <input
-                type="text"
-                className="form-control"
-                value={bookIds}
-                onChange={(e) => setBookIds(e.target.value)}
               />
             </div>
           </form>

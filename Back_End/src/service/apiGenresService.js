@@ -1,5 +1,24 @@
 import db from "../models/index";
 
+const fetchPaginatedGenres = async (page, pageSize) => {
+  try {
+    const totalGenres = await db.Genres.count();
+    const listGenres = await db.Genres.findAll({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
+    const totalPages = Math.ceil(totalGenres / pageSize);
+    return {
+      totalItems: totalGenres,
+      totalPages: totalPages,
+      data: listGenres,
+    };
+  } catch (error) {
+    console.error("Error fetching paginated products:", error);
+    throw error;
+  }
+};
+
 const getAllGenres = async () => {
   try {
     let getListGenres = await db.Genres.findAll({ include: db.Books });
@@ -102,6 +121,7 @@ const getNameGenres = async (nameGenres) => {
 };
 
 module.exports = {
+  fetchPaginatedGenres,
   createGenres,
   getGenresById,
   getAllGenres,

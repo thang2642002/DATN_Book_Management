@@ -11,7 +11,8 @@ const createBook = (
   genresId,
   price,
   quantity,
-  sales
+  sales,
+  supplierId
 ) => {
   const dataBook = new FormData();
   dataBook.append("title", title);
@@ -21,6 +22,7 @@ const createBook = (
   dataBook.append("price", price);
   dataBook.append("quantity", quantity);
   dataBook.append("sales", sales);
+  dataBook.append("supplierId", supplierId);
 
   console.log(
     "data create",
@@ -43,7 +45,8 @@ const updateBook = (
   genresId,
   price,
   quantity,
-  sales
+  sales,
+  supplierId
 ) => {
   const dataBook = new FormData();
   dataBook.append("title", title);
@@ -53,6 +56,7 @@ const updateBook = (
   dataBook.append("price", price);
   dataBook.append("quantity", quantity);
   dataBook.append("sales", sales);
+  dataBook.append("supplierId", supplierId);
   console.log("dataBook", dataBook);
   return axios.put(`/api/products/update-product/${id}`, dataBook);
 };

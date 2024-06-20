@@ -21,4 +21,8 @@ const deleteGenres = (id) => {
   return axios.delete(`/api/genres/delete-genres/${id}`, { data: { id } });
 };
 
-export { getListGenres, createGenres, deleteGenres, updateGenres };
+const getPage = (page, pageSize) => {
+  return axios.get(`/api/genres/get-page?page=${page}&pageSize=${pageSize}`);
+};
+
+export { getListGenres, createGenres, deleteGenres, updateGenres, getPage };

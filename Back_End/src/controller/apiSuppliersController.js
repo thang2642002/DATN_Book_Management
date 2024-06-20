@@ -52,18 +52,10 @@ const getSupplierById = async (req, res) => {
 };
 
 const createSupplier = async (req, res) => {
-  const { suppliers_name, contact_info, description, phone, email, bookIds } =
-    req.body;
+  const { suppliers_name, contact_info, description, phone, email } = req.body;
 
   try {
-    if (
-      !suppliers_name ||
-      !contact_info ||
-      !description ||
-      !phone ||
-      !email ||
-      !bookIds
-    ) {
+    if (!suppliers_name || !contact_info || !description || !phone || !email) {
       return res.status(200).json({
         message: "All fields are required",
         errcode: 1,
@@ -75,8 +67,7 @@ const createSupplier = async (req, res) => {
       contact_info,
       description,
       phone,
-      email,
-      bookIds
+      email
     );
 
     if (dataSupplier) {

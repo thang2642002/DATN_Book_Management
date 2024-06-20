@@ -75,7 +75,7 @@ const getAllProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   const img_book = req.file;
-  const { title, authorId, genresId, price, quantity, sales, supplierIds } =
+  const { title, authorId, genresId, price, quantity, sales, supplierId } =
     req.body;
 
   try {
@@ -86,7 +86,8 @@ const createProduct = async (req, res) => {
       !genresId ||
       !price ||
       !quantity ||
-      !sales
+      !sales ||
+      !supplierId
     ) {
       return res.status(400).json({
         message: "Missing required fields",
@@ -96,13 +97,13 @@ const createProduct = async (req, res) => {
 
     const dataProduct = await apiProductService.createProduct(
       title,
-      img_book ? img_book.path : undefined, // Lưu đường dẫn của ảnh sách
+      img_book ? img_book.path : undefined,
       authorId,
       genresId,
       price,
       quantity,
       sales,
-      supplierIds
+      supplierId
     );
 
     console.log("img_book.path", img_book.path);
@@ -132,7 +133,7 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const img_book = req.file;
-  const { title, authorId, genresId, price, quantity, sales, supplierIds } =
+  const { title, authorId, genresId, price, quantity, sales, supplierId } =
     req.body;
   const productId = req.params.id;
 
@@ -144,7 +145,7 @@ const updateProduct = async (req, res) => {
       price,
       quantity,
       sales,
-      supplierIds,
+      supplierId,
     };
 
     if (img_book) {

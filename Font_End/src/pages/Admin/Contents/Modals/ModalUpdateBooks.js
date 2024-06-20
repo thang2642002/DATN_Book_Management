@@ -29,6 +29,7 @@ const ModalUpdateBook = (props) => {
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [salse, setSalse] = useState(0);
+  const [supplierId, setSuppliersId] = useState(0);
   const [nameAuthor, setNameAuthor] = useState("");
   const [nameGenres, setNameGenres] = useState("");
   const [previewImage, setPreviewImage] = useState("");
@@ -59,8 +60,9 @@ const ModalUpdateBook = (props) => {
       setPrice(dataUpdate.price);
       setQuantity(dataUpdate.quantity);
       setSalse(dataUpdate.sales);
-      setNameAuthor(dataUpdate.Author.author_name);
-      setNameGenres(dataUpdate.Genre.genres_name);
+      setSuppliersId(dataUpdate.supplierId);
+      // setNameAuthor(dataUpdate.Author.author_name);
+      // setNameGenres(dataUpdate.Genre.genres_name);
     }
   }, [dataUpdate]);
 
@@ -95,7 +97,8 @@ const ModalUpdateBook = (props) => {
       genresId,
       price,
       quantity,
-      salse
+      salse,
+      supplierId
     );
 
     if (data && data.errcode === 0) {
@@ -193,6 +196,15 @@ const ModalUpdateBook = (props) => {
                 className="form-control"
                 value={salse}
                 onChange={(e) => setSalse(e.target.value)}
+              />
+            </div>
+            <div className="col-md-4">
+              <label className="form-label">SupplierId</label>
+              <input
+                type="text"
+                className="form-control"
+                value={supplierId}
+                onChange={(e) => setSuppliersId(e.target.value)}
               />
             </div>
             <div className="col-md-12">

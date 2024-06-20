@@ -46,8 +46,7 @@ const createSupplier = async (
   contact_info,
   description,
   phone,
-  email,
-  bookIds
+  email
 ) => {
   try {
     const newSupplier = await db.Suppliers.create({
@@ -57,11 +56,6 @@ const createSupplier = async (
       phone,
       email,
     });
-
-    // Tạo mối quan hệ với các books
-    if (bookIds && bookIds.length > 0) {
-      await newSupplier.setBooks(bookIds);
-    }
 
     return newSupplier;
   } catch (error) {
@@ -77,15 +71,7 @@ const updateSupplier = async (id, dataUpdate) => {
       return null;
     }
 
-    const { bookIds, ...supplierData } = dataUpdate;
-
-    await supplier.update(supplierData);
-
-    // Cập nhật mối quan hệ với các books
-    if (bookIds && bookIds.length > 0) {
-      await supplier.setBooks(bookIds);
-    }
-
+    await supplier.update(dataUpdate);
     return supplier;
   } catch (error) {
     console.error(error);
@@ -100,10 +86,6 @@ const removeSupplier = async (supplierId) => {
       return false;
     }
 
-    // Xóa tất cả các mối quan hệ của nhà cung cấp với sách trong bảng liên kết
-    await db.Book_Suppliers.destroy({ where: { supplierId: supplierId } });
-
-    // Sau đó xóa nhà cung cấp
     await supplier.destroy();
     return true;
   } catch (error) {
