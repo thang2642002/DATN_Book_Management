@@ -24,4 +24,14 @@ const deleteSuppliers = (id) => {
     data: { id },
   });
 };
-export { getListPubliers, createSuppliers, deleteSuppliers, updateSuppliers };
+
+const getPage = (page, pageSize) => {
+  return axios.get(`/api/suppliers/get-page?page=${page}&pageSize=${pageSize}`);
+};
+export {
+  getListPubliers,
+  createSuppliers,
+  deleteSuppliers,
+  updateSuppliers,
+  getPage,
+};

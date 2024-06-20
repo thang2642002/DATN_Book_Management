@@ -5,6 +5,7 @@ const router = express.Router();
 //   "/get-suppliers-by-name",
 //   apiSuppliersController.getSuppliersByName
 // );
+router.get("/get-page", apiSuppliersController.getPaginatedSuppliers);
 router.get("/get-suppliers-by-id/:id", apiSuppliersController.getSupplierById);
 router.get("/get-all-suppliers", apiSuppliersController.getAllSuppliers);
 router.post("/create-suppliers", apiSuppliersController.createSupplier);

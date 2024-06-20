@@ -1,9 +1,10 @@
 import React from "react";
+import ReactPaginate from "react-paginate";
 import ModalCreatePubliers from "./Modals/ModalCreatePubliers";
 import ModalUpdatePubliers from "./Modals/ModalUpdatePubliers";
 import ModalDeleteSuppliers from "./Modals/ModalDeleteSuppliers";
 import { useEffect, useState } from "react";
-import { getListPubliers } from "../../../services/publiersService";
+import { getListPubliers, getPage } from "../../../services/publiersService";
 import TablePubliers from "./Modals/TablePubliers";
 import { FcPlus } from "react-icons/fc";
 
@@ -15,6 +16,9 @@ const ManagerPubliers = () => {
   const [dataUpdate, setDataUpdate] = useState({});
   const [listPubliers, setListPubliers] = useState([]);
   const [dataDelete, setDataDelete] = useState({});
+  const pageSize = 8;
+  const [totalPage, setTotalPage] = useState(0);
+  const [limit, setLimit] = useState(1);
 
   const fetchListPubliers = async () => {
     let dataPubliers = await getListPubliers();
@@ -35,8 +39,26 @@ const ManagerPubliers = () => {
   const handleClickUpdate = (suppliers) => {
     setShowModalUpdatePubliers(true);
     setDataUpdate(suppliers);
-   
   };
+
+  const fetchPage = async () => {
+    try {
+      const response = await getPage(limit, pageSize);
+      console.log("response", response.data);
+      setListPubliers(response.data);
+      setTotalPage(response.totalPages);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handlePageClick = (event) => {
+    setLimit(event.selected + 1);
+  };
+
+  useEffect(() => {
+    fetchPage();
+  }, [limit]);
 
   return (
     <div className="manager-user-container">
@@ -76,6 +98,32 @@ const ManagerPubliers = () => {
             handleShowModalDeleteSubliers={handleShowModalDeleteSubliers}
             handleClickUpdate={handleClickUpdate}
           />
+        </div>
+        <div
+          className="custom-pagination"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <>
+            <ReactPaginate
+              previousLabel="Previous"
+              nextLabel="Next"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item"
+              previousLinkClassName="page-link"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              breakLabel="..."
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              pageCount={totalPage}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              containerClassName="pagination"
+              activeClassName="active"
+            />
+          </>
         </div>
       </div>
     </div>

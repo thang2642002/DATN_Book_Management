@@ -57,6 +57,7 @@ const ManagerBooks = () => {
   useEffect(() => {
     fetchPage();
   }, [limit]);
+
   return (
     <div className="manager-user-container">
       <div className="title">Manager Book</div>

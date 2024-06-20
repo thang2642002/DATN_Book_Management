@@ -21,10 +21,15 @@ const deleteReview = (id) => {
   return axios.delete(`/api/review/delete-review/${id}`, { data: { id } });
 };
 
+const getPage = (page, pageSize) => {
+  return axios.get(`/api/review/get-page?page=${page}&pageSize=${pageSize}`);
+};
+
 export {
   getListReview,
   createReview,
   deleteReview,
   updateReview,
   getListReviewById,
+  getPage,
 };

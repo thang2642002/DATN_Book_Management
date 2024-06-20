@@ -24,16 +24,6 @@ const createBook = (
   dataBook.append("sales", sales);
   dataBook.append("supplierId", supplierId);
 
-  console.log(
-    "data create",
-    title,
-    img_book,
-    authorId,
-    genresId,
-    price,
-    quantity,
-    sales
-  );
   return axios.post(`/api/products/craete-product`, dataBook);
 };
 
@@ -57,7 +47,7 @@ const updateBook = (
   dataBook.append("quantity", quantity);
   dataBook.append("sales", sales);
   dataBook.append("supplierId", supplierId);
-  console.log("dataBook", dataBook);
+
   return axios.put(`/api/products/update-product/${id}`, dataBook);
 };
 

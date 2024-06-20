@@ -124,7 +124,6 @@ const removeProduct = async (productId) => {
     if (!product) {
       return false;
     }
-    await db.Book_Suppliers.destroy({ where: { bookId: productId } });
     await product.destroy();
     return true;
   } catch (error) {

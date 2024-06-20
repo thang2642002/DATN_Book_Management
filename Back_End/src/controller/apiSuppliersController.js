@@ -1,5 +1,29 @@
 const apiSupplierService = require("../service/apiSuppliersService");
 
+const getPaginatedSuppliers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  console.log("page", page);
+  console.log("pageSize", pageSize);
+  try {
+    const { totalItems, totalPages, data } =
+      await apiSupplierService.fetchPaginatedSuppliers(page, pageSize);
+    res.status(200).json({
+      message: "PaginatedSuppliers success",
+      errcode: 0,
+      data: data,
+      totalItems: totalItems,
+      totalPages: totalPages,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      message: "PaginatedSuppliers error",
+      errcode: -1,
+    });
+  }
+};
+
 const getAllSuppliers = async (req, res) => {
   try {
     let listSupplier = await apiSupplierService.getAllSuppliers();
@@ -153,6 +177,7 @@ const deleteSupplier = async (req, res) => {
 };
 
 module.exports = {
+  getPaginatedSuppliers,
   createSupplier,
   updateSupplier,
   deleteSupplier,

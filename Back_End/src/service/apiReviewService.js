@@ -1,5 +1,24 @@
 import db from "../models";
 
+const fetchPaginatedReview = async (page, pageSize) => {
+  try {
+    const totalReview = await db.Review.count();
+    const listReview = await db.Review.findAll({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
+    const totalPages = Math.ceil(totalReview / pageSize);
+    return {
+      totalItems: totalReview,
+      totalPages: totalPages,
+      data: listReview,
+    };
+  } catch (error) {
+    console.error("Error fetching paginated Review:", error);
+    throw error;
+  }
+};
+
 const getAllReviews = async () => {
   try {
     const reviews = await db.Review.findAll({
@@ -82,6 +101,7 @@ const deleteReview = async (id) => {
 };
 
 module.exports = {
+  fetchPaginatedReview,
   getAllReviews,
   getReviewById,
   createReview,

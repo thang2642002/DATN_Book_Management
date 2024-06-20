@@ -1,5 +1,24 @@
 const db = require("../models");
 
+const fetchPaginatedSuppliers = async (page, pageSize) => {
+  try {
+    const totalSuppliers = await db.Suppliers.count();
+    const listSuppliers = await db.Suppliers.findAll({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
+    const totalPages = Math.ceil(totalSuppliers / pageSize);
+    return {
+      totalItems: totalSuppliers,
+      totalPages: totalPages,
+      data: listSuppliers,
+    };
+  } catch (error) {
+    console.error("Error fetching paginated Suppliers:", error);
+    throw error;
+  }
+};
+
 const getAllSuppliers = async () => {
   try {
     const listSupplier = await db.Suppliers.findAll({
@@ -95,6 +114,7 @@ const removeSupplier = async (supplierId) => {
 };
 
 module.exports = {
+  fetchPaginatedSuppliers,
   getAllSuppliers,
   getSupplierById,
   createSupplier,
