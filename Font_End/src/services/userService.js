@@ -56,7 +56,7 @@ const logOut = () => {
 };
 
 const getPage = (page, pageSize, username) => {
-  console.log("check : ", page, pageSize, username);
+  
   if (username) {
     return axios.get(
       `/api/users/get-page?page=${page}&pageSize=${pageSize}&username= ${username}`

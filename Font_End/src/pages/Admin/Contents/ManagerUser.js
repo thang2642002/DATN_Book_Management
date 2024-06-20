@@ -46,6 +46,8 @@ const ManagerUser = () => {
     const data = await getPage(limit, pageSize, userName);
     setListUser(data.data);
     setTotalPage(data.totalItems);
+    console.log("data.data", data.data);
+    console.log("data.totalItems", data.totalItems);
   };
 
   const handleClickUpdate = (user) => {

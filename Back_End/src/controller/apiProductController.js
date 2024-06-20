@@ -1,5 +1,29 @@
 import apiProductService from "../service/apiProductService";
 
+const getPaginatedProduct = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  console.log("page", page);
+  console.log("pageSize", pageSize);
+  try {
+    const { totalItems, totalPages, data } =
+      await apiProductService.fetchPaginatedProduct(page, pageSize);
+    res.status(200).json({
+      message: "PaginatedProduct success",
+      errcode: 0,
+      data: data,
+      totalItems: totalItems,
+      totalPages: totalPages,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({
+      message: "PaginatedProduct error",
+      errcode: -1,
+    });
+  }
+};
+
 const getAllProducts = async (req, res) => {
   try {
     let listProduct = await apiProductService.getAllProducts();
@@ -215,4 +239,5 @@ module.exports = {
   getAllProducts,
   getAllProductById,
   recommendAuthorsAndGenres,
+  getPaginatedProduct,
 };

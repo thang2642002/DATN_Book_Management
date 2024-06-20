@@ -70,6 +70,9 @@ const recommendation = (bookId) => {
     data: { bookId },
   });
 };
+const getPage = (page, pageSize) => {
+  return axios.get(`/api/products/get-page?page=${page}&pageSize=${pageSize}`);
+};
 
 export {
   getListBooks,
@@ -78,4 +81,5 @@ export {
   createBook,
   updateBook,
   recommendation,
+  getPage,
 };

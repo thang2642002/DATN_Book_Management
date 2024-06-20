@@ -8,8 +8,6 @@ const NavbarComponent = () => {
     const dataGenres = await getListGenres();
     setDataGenres(dataGenres.data);
   };
-  console.log("dataGenres", dataGenres);
-
   useEffect(() => {
     getAllGenres();
   }, []);
@@ -39,8 +37,11 @@ const NavbarComponent = () => {
         <div className="tile-product">Nhóm sản phẩm</div>
         {dataGenres &&
           dataGenres.map((genres, index) => {
-            console.log("genres", genres);
-            return <div key={index + 1} className="title-genres">{genres?.genres_name}</div>;
+            return (
+              <div key={index + 1} className="title-genres">
+                {genres?.genres_name}
+              </div>
+            );
           })}
       </div>
       <div className="list-price">

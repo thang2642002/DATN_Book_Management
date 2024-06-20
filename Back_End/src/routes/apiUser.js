@@ -8,12 +8,7 @@ router.get("/findByUserName", apiUserController.findByName);
 router.get("/get-page", apiUserController.getPaginatedUsers);
 router.get("/get-all-user", apiUserController.getAllUser);
 router.get("/get-user-by-id/:id", apiUserController.getUserById);
-// router.post(
-//   "/create-user",
-//   upload.single("avatar"),
-//   uploadImage,
-//   apiUserController.createUser
-// );
+
 router.post(
   "/create-user",
   uploadCloud.single("avatar"),

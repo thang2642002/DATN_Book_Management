@@ -1,5 +1,24 @@
 import db from "../models/index";
 const { Op } = require("sequelize");
+
+const fetchPaginatedProduct = async (page, pageSize) => {
+  try {
+    const totalProducts = await db.Books.count();
+    const listProducts = await db.Books.findAll({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
+    const totalPages = Math.ceil(totalProducts / pageSize);
+    return {
+      totalItems: totalProducts,
+      totalPages: totalPages,
+      data: listProducts,
+    };
+  } catch (error) {
+    console.error("Error fetching paginated products:", error);
+    throw error;
+  }
+};
 const getAllProducts = async () => {
   try {
     const listProduct = await db.Books.findAll({
@@ -137,7 +156,6 @@ const removeProduct = async (productId) => {
 
 const recommendByGenren = async (bookId) => {
   try {
-    // Lấy thông tin về cuốn sách gốc
     const originalBook = await db.Books.findByPk(bookId, {
       include: [
         {
@@ -155,7 +173,6 @@ const recommendByGenren = async (bookId) => {
       throw new Error(`Không tìm thấy cuốn sách với ID ${bookId}`);
     }
 
-    // Tìm các sách khác cùng thể loại với cuốn sách gốc
     const recommendedBooks = await db.Books.findAll({
       where: {
         genresId: originalBook.genresId,
@@ -165,7 +182,7 @@ const recommendByGenren = async (bookId) => {
         { model: db.Author, attributes: ["author_name"] },
         { model: db.Genres, attributes: ["genres_name"] },
       ],
-      limit: 10, // Giới hạn số lượng sách đề xuất
+      limit: 10,
     });
 
     return recommendedBooks;
@@ -182,4 +199,5 @@ module.exports = {
   updateProduct,
   getAllProductById,
   recommendByGenren,
+  fetchPaginatedProduct,
 };

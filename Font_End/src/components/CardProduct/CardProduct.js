@@ -4,7 +4,7 @@ import "./CardProduct.scss";
 
 const CardProduct = (props) => {
   const { product } = props;
-  console.log("product", product);
+
   return (
     <>
       <Link

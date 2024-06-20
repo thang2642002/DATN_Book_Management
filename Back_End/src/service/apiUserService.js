@@ -4,9 +4,7 @@ const jwt = require("jsonwebtoken");
 import { Op } from "sequelize";
 const fetchPaginatedUsers = async (page, pageSize, username) => {
   try {
-    console.log("username", username);
     const totalUser = await db.User.count();
-    console.log("totalUser", totalUser);
     const listUser = await db.User.findAll({
       limit: pageSize,
       offset: (page - 1) * pageSize,
@@ -56,69 +54,6 @@ const getUserById = async (userId) => {
     console.log(error);
   }
 };
-
-// const createUser = async (
-//   email,
-//   password,
-//   username,
-//   address,
-//   phone,
-//   role,
-//   avatar = req.body.base64Image
-// ) => {
-//   try {
-//     const checkEmailExist = await db.User.findOne({
-//       where: {
-//         email: email,
-//       },
-//     });
-
-//     if (checkEmailExist) {
-//       return {
-//         status: 400,
-//         message: "Email already exists",
-//       };
-//     }
-
-//     // Chuyển đổi avatar thành base64 nếu nó tồn tại
-//     let base64Avatar = null;
-//     if (avatar) {
-//       base64Avatar = avatar.toString("base64");
-//     }
-
-//     console.log("check all:", email, password, username, address, phone, role);
-
-//     const user = await db.User.create({
-//       email,
-//       password,
-//       username,
-//       address,
-//       phone,
-//       role,
-//       avatar: base64Avatar, // Lưu base64Avatar vào cơ sở dữ liệu
-//     });
-//     console.log("user", user);
-
-//     if (user) {
-//       return {
-//         status: 200,
-//         message: "User created successfully",
-//         data: user,
-//       };
-//     } else {
-//       return {
-//         status: 500,
-//         message: "Failed to create user",
-//       };
-//     }
-//   } catch (error) {
-//     return {
-//       status: 500,
-//       message: "An error occurred",
-//       error: error.message,
-//     };
-//   }
-// };
 
 const createUser = async ({
   email,
