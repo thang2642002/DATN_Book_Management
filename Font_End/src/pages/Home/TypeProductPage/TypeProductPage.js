@@ -9,6 +9,9 @@ const TypeProductPage = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [limit, setLimit] = useState(1);
   const [dataProduct, setDataProduct] = useState([]);
+  const [checkGenres, setCheckGenres] = useState();
+
+  console.log("checkGenres", checkGenres);
 
   const fetchPage = async () => {
     try {
@@ -27,7 +30,7 @@ const TypeProductPage = () => {
 
   useEffect(() => {
     fetchPage();
-  }, [limit]);
+  }, [limit, checkGenres]);
 
   const getAllProduct = async () => {
     const product = await getListBooks();
@@ -37,13 +40,14 @@ const TypeProductPage = () => {
   useEffect(() => {
     getAllProduct();
   }, []);
+
   return (
     <div className="type-product-container">
       <Container>
         <Row>
           <Col lg={3}>
             <div className="type-product-navbar">
-              <NavbarComponent />
+              <NavbarComponent setCheckGenres={setCheckGenres} />
             </div>
           </Col>
           <Col lg={9}>
@@ -51,11 +55,14 @@ const TypeProductPage = () => {
               <Row>
                 {dataProduct &&
                   dataProduct.map((product, index) => {
-                    return (
-                      <Col lg={3} key={index + 1}>
-                        <CardProduct product={product} />
-                      </Col>
-                    );
+                    console.log("product", product?.genresId);
+                    if (checkGenres === product?.genresId) {
+                      return (
+                        <Col lg={3} key={index + 1}>
+                          <CardProduct product={product} />
+                        </Col>
+                      );
+                    }
                   })}
               </Row>
               <div style={{ display: "flex", justifyContent: "center" }}>

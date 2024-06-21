@@ -98,7 +98,10 @@ const Payment = () => {
       console.log("dataOrder", dataOrder);
       const orderId = dataOrder.data.id;
       if (dataOrder && dataOrder.errcode === 0) {
-        let dataOrderDetails = await createOrderDetailsForOrder(orderId);
+        let dataOrderDetails = await createOrderDetailsForOrder(
+          orderId,
+          user.id
+        );
         dataOrderDetails.filter((detail) => detail.errcode === 0);
         toast.success("Thanh toán thành công");
       } else {

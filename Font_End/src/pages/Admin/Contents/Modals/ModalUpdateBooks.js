@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { updateBook } from "../../../../services/BookService";
 import { getListGenres } from "../../../../services/genresService";
 import { getListAuthor } from "../../../../services/authorService";
+import { getListPubliers } from "../../../../services/publiersService";
 import _ from "lodash";
 import "./ModalCreateUser.scss";
 
@@ -35,6 +36,7 @@ const ModalUpdateBook = (props) => {
   const [previewImage, setPreviewImage] = useState("");
   const [listGenres, setListGenres] = useState([]);
   const [lisAuthor, setListAuthor] = useState([]);
+  const [listSuppliers, setListSuppliers] = useState([]);
 
   const fechAllGenres = async () => {
     let data = await getListGenres();
@@ -46,12 +48,19 @@ const ModalUpdateBook = (props) => {
     setListAuthor(data.data);
   };
 
+  const fetchAllSuppliers = async () => {
+    let data = await getListPubliers();
+    setListSuppliers(data.data);
+  };
+
   useEffect(() => {
     fechAllGenres();
     fetchAllAuthor();
+    fetchAllSuppliers();
   }, []);
 
   useEffect(() => {
+    console.log("dataUpdate", dataUpdate);
     if (!_.isEmpty(dataUpdate)) {
       setTitle(dataUpdate.title);
       setImgBook(dataUpdate.img_book);
@@ -60,7 +69,7 @@ const ModalUpdateBook = (props) => {
       setPrice(dataUpdate.price);
       setQuantity(dataUpdate.quantity);
       setSalse(dataUpdate.sales);
-      setSuppliersId(dataUpdate.supplierId);
+      setSuppliersId(dataUpdate?.Supplier?.supplierId);
       setPreviewImage(dataUpdate.img_book);
       // setNameAuthor(dataUpdate.Author.author_name);
       // setNameGenres(dataUpdate.Genre.genres_name);
@@ -199,14 +208,21 @@ const ModalUpdateBook = (props) => {
                 onChange={(e) => setSalse(e.target.value)}
               />
             </div>
-            <div className="col-md-4">
-              <label className="form-label">SupplierId</label>
-              <input
-                type="text"
-                className="form-control"
+            <div className="col-6">
+              <label className="form-label">Supplier</label>
+              <select
+                className="form-select"
                 value={supplierId}
-                onChange={(e) => setSuppliersId(e.target.value)}
-              />
+                onChange={(e) => setGenresId(e.target.value)}
+              >
+                {listSuppliers.map((supplier, index) => {
+                  return (
+                    <option value={supplier.id} key={index + 1}>
+                      {supplier.suppliers_name}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div className="col-md-12">
               <label className="form-label label-upload" htmlFor="labelUpload">

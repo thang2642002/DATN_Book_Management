@@ -5,6 +5,15 @@ const fetchPaginatedProduct = async (page, pageSize) => {
   try {
     const totalProducts = await db.Books.count();
     const listProducts = await db.Books.findAll({
+      include: [
+        {
+          model: db.Genres,
+        },
+        {
+          model: db.Author,
+        },
+        { model: db.Suppliers },
+      ],
       limit: pageSize,
       offset: (page - 1) * pageSize,
     });

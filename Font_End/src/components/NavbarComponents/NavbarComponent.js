@@ -2,7 +2,8 @@ import "./NavbarComponents.scss";
 import { Checkbox } from "antd";
 import { getListGenres } from "../../services/genresService";
 import { useEffect, useState } from "react";
-const NavbarComponent = () => {
+const NavbarComponent = (props) => {
+  const { setCheckGenres } = props;
   const [dataGenres, setDataGenres] = useState([]);
   const getAllGenres = async () => {
     const dataGenres = await getListGenres();
@@ -38,7 +39,11 @@ const NavbarComponent = () => {
         {dataGenres &&
           dataGenres.map((genres, index) => {
             return (
-              <div key={index + 1} className="title-genres">
+              <div
+                key={index + 1}
+                className="title-genres"
+                onClick={() => setCheckGenres(genres.id)}
+              >
                 {genres?.genres_name}
               </div>
             );

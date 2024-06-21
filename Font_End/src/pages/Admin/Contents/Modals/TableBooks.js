@@ -1,5 +1,6 @@
 const TableBooks = (props) => {
   const { listBook, ShowModalDelete, handleClickUpdate } = props;
+  console.log("listBook", listBook);
   return (
     <div className="table-user-container px-4 mt-4">
       <table className="table table-striped table-hover table-bordered">
