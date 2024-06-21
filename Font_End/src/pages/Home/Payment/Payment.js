@@ -5,6 +5,7 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { getIdClient } from "../../../services/payPallService";
 import { createOrder, getListOrder } from "../../../services/orderService";
 import { createOrderDetails } from "../../../services/orderDetailsService";
+import { SendEmail } from "../../../services/sendEmailService";
 import "./Payment.scss";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,9 +18,8 @@ const Payment = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const location = useLocation();
-
   const data = location.state;
-
+  console.log("user", user);
   const checkPayPall = (e) => {
     if (e.target.value === "paypall") {
       setPayPall(true);
@@ -27,6 +27,8 @@ const Payment = () => {
       setPayPall(false);
     }
   };
+
+  console.log("data", data);
 
   const checkPayment = (e) => {
     if (e.target.value === "payment") {
@@ -79,6 +81,7 @@ const Payment = () => {
         console.log("dataOrderDetails", dataOrderDetails);
         dataOrderDetails.filter((detail) => detail.errcode === 0);
         toast.success("Thanh toán thành công");
+        await SendEmail(user.email, data);
       } else {
         console.log("lỗi", dataOrder.message);
         toast.error("Thanh toán thất bại");
@@ -89,6 +92,7 @@ const Payment = () => {
     } catch (error) {
       console.error("Thanh toán thất bại", error);
       toast.error("Thanh toán thất bại");
+      await SendEmail(user.email, data);
     }
   };
 
@@ -104,6 +108,7 @@ const Payment = () => {
         );
         dataOrderDetails.filter((detail) => detail.errcode === 0);
         toast.success("Thanh toán thành công");
+        await SendEmail(user.email, data);
       } else {
         console.log("lỗi", dataOrder.message);
         toast.error("Thanh toán thất bại");
