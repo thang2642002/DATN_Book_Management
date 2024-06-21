@@ -17,7 +17,7 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 
-import img1 from "../../../../public/assets/img/img-productDetail/img1.jpg";
+import EditReviewProduct from "./EditReviewProduct";
 import imguser from "../../../../public/assets/img/avatar.png";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -29,10 +29,10 @@ const ContenProductDetail = (props) => {
   const [comment, setComment] = useState("");
   const [listReview, setListReview] = useState([]);
   const [showDescription, setShowDescription] = useState(false);
+  const [showModalEditReview, setShowModalEditReview] = useState(false);
+  const [dataUpdateReview, setDataUpdateReview] = useState({});
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-
-  console.log("dataProduct", dataProduct);
 
   const handleAddCarts = async () => {
     if (user.id !== "") {
@@ -105,6 +105,11 @@ const ContenProductDetail = (props) => {
     } else {
       toast.success(dataDeleteReview.message);
     }
+  };
+
+  const handleShowModalEditReview = (review) => {
+    setShowModalEditReview(true);
+    setDataUpdateReview(review);
   };
 
   useEffect(() => {
@@ -320,7 +325,12 @@ const ContenProductDetail = (props) => {
               </div>
               {review.userId === user.id && (
                 <div className="edit-delete">
-                  <div className="edit">Chỉnh sửa</div>
+                  <div
+                    className="edit"
+                    onClick={() => handleShowModalEditReview(review)}
+                  >
+                    Chỉnh sửa
+                  </div>
                   <div
                     className="delete"
                     onClick={() => handleDeleteReview(review)}
@@ -333,6 +343,12 @@ const ContenProductDetail = (props) => {
           );
         })}
       </div>
+      <EditReviewProduct
+        show={showModalEditReview}
+        setShow={setShowModalEditReview}
+        dataUpdateReview={dataUpdateReview}
+      />
+
       <ToastContainer
         position="top-right"
         autoClose={5000}

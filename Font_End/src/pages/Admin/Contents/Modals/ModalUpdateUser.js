@@ -41,17 +41,8 @@ const ModalUpdateUser = (props) => {
       setPreviewImage(
         `file:///D:/DATN_BookStore/Back_End/uploads/01185edfdde324eba570c69acfa0a854`
       );
-      // setPreviewImage(`data:image/png;base64,${dataUpdate.avatar}`);
     }
   }, [dataUpdate]);
-
-  // const handleImageChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const base64String = await readFileAsBase64(file);
-  //     setAvatar(base64String); // Lưu chuỗi base64 vào state
-  //   }
-  // };
 
   const handleUploadImage = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {

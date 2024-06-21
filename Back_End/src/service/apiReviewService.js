@@ -77,6 +77,7 @@ const updateReview = async (id, dataUpdate) => {
       return null;
     }
 
+    console.log("Updating review with data:", dataUpdate);
     await review.update(dataUpdate);
     return review;
   } catch (error) {

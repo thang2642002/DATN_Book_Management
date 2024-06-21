@@ -122,6 +122,9 @@ const updateReview = async (req, res) => {
   const { id } = req.params;
   const dataUpdate = req.body;
 
+  console.log("Request ID:", id);
+  console.log("Data to update:", dataUpdate);
+
   try {
     const updatedReview = await apiReviewService.updateReview(id, dataUpdate);
     if (updatedReview) {

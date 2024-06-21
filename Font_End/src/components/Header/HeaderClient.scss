@@ -7,8 +7,16 @@
     color: #fff;
   }
   .search {
+    margin-top: 5px;
+    .ant-select {
+      width: 540px !important;
+    }
     .btn-search {
+      height: 33px;
+      padding: 3px 10px;
       color: #fff;
+      margin-left: 10px;
+      padding: 3px 10px 5px 10px;
       border: none;
       outline: none;
       background-color: green;
