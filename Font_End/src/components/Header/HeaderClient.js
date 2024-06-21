@@ -1,5 +1,7 @@
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
+import { AutoComplete } from "antd";
+import { Link, Navigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -13,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../services/userService";
 import { resert } from "../../redux/Slice/userSlice";
+import { getNameProduct } from "../../services/BookService";
 
 import "./HeaderClient.scss";
 import { ToastContainer, toast } from "react-toastify";
@@ -21,7 +24,8 @@ const HeaderClient = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-
+  const [listFindProduct, setListFindProduct] = useState([]);
+  const [options, setOptions] = useState([]);
   const handleLoginAccount = () => {
     navigate("/sign-in");
   };
@@ -39,6 +43,35 @@ const HeaderClient = () => {
       toast.error("Vui lòng đăng nhập");
     }
   };
+
+  const getProductName = async (nameProduct) => {
+    const dataNameProduct = await getNameProduct(nameProduct);
+    setListFindProduct(dataNameProduct.data);
+  };
+
+  const onSelect = (value) => {
+    console.log("value", value);
+    navigate(`/product-detail/${value}`);
+    setOptions([]);
+    setListFindProduct([]);
+    };
+
+  const handleSearch = (value) => {
+    if (value) {
+      getProductName(value);
+    } else {
+      setListFindProduct([]);
+    }
+    setOptions(() => {
+      console.log(options);
+      return listFindProduct.map((product, index) => ({
+        label: `${product.title}`,
+        value: `${product.id}`,
+        placeholder: "",
+      }));
+    });
+  };
+
   return (
     <div className="container-header">
       <Container>
@@ -50,20 +83,22 @@ const HeaderClient = () => {
           </Col>
           <Col sm={6}>
             <div className="search">
-              <InputGroup className="mb-3">
-                <Form.Control
-                  placeholder="Recipient's username"
-                  aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
-                />
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon2"
-                  className="btn-search"
-                >
-                  Tìm kiếm
-                </Button>
-              </InputGroup>
+              <AutoComplete
+                style={{
+                  width: 200,
+                }}
+                onSearch={handleSearch}
+                placeholder="input here"
+                options={options}
+                onSelect={onSelect}
+              />
+              <Button
+                variant="outline-secondary"
+                id="button-addon2"
+                className="btn-search"
+              >
+                Tìm kiếm
+              </Button>
             </div>
           </Col>
           <Col sm={4}>

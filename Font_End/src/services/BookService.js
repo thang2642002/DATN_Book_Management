@@ -64,8 +64,15 @@ const recommendation = (bookId) => {
     data: { bookId },
   });
 };
-const getPage = (page, pageSize) => {
-  return axios.get(`/api/products/get-page?page=${page}&pageSize=${pageSize}`);
+const getPage = (page, pageSize, genresId) => {
+  return axios.get(
+    `/api/products/get-page?page=${page}&pageSize=${pageSize}&genresId=${genresId}`
+  );
+};
+
+const getNameProduct = (nameProduct) => {
+  console.log("nameProduct", nameProduct);
+  return axios.get(`/api/products/get-product-name/${nameProduct}`);
 };
 
 export {
@@ -76,4 +83,5 @@ export {
   updateBook,
   recommendation,
   getPage,
+  getNameProduct,
 };

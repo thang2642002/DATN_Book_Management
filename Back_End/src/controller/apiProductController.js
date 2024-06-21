@@ -3,11 +3,14 @@ import apiProductService from "../service/apiProductService";
 const getPaginatedProduct = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
+  const genresId = parseInt(req.query.genresId) || 0;
+
   console.log("page", page);
   console.log("pageSize", pageSize);
   try {
     const { totalItems, totalPages, data } =
-      await apiProductService.fetchPaginatedProduct(page, pageSize);
+      await apiProductService.fetchPaginatedProduct(page, pageSize, genresId);
+    console.log("totalItems, totalPages, data", totalItems, totalPages, data);
     res.status(200).json({
       message: "PaginatedProduct success",
       errcode: 0,
@@ -19,6 +22,41 @@ const getPaginatedProduct = async (req, res) => {
     console.error("Error:", error);
     res.status(500).json({
       message: "PaginatedProduct error",
+      errcode: -1,
+    });
+  }
+};
+
+const getNameProduct = async (req, res) => {
+  const productName = req.params.productName;
+  console.log("productName", productName);
+  if (!productName) {
+    return res.status(404).json({
+      message: "Find name product is the faild",
+      errcode: 1,
+    });
+  }
+
+  try {
+    const dataNameProduct = await apiProductService.findNameProduct(
+      productName
+    );
+    if (dataNameProduct) {
+      return res.status(200).json({
+        message: "Find name product is the success",
+        errcode: 0,
+        data: dataNameProduct,
+      });
+    } else {
+      return res.status(404).json({
+        message: "Find name product is the faild",
+        errcode: 1,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Find name product is the error",
       errcode: -1,
     });
   }
@@ -241,4 +279,5 @@ module.exports = {
   getAllProductById,
   recommendAuthorsAndGenres,
   getPaginatedProduct,
+  getNameProduct,
 };

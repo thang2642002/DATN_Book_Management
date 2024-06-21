@@ -4,18 +4,22 @@ import CardProduct from "../../../components/CardProduct/CardProduct";
 import { useEffect, useState } from "react";
 import { getListBooks, getPage } from "../../../services/BookService";
 import ReactPaginate from "react-paginate";
+import { useLocation } from "react-router-dom";
+
 const TypeProductPage = () => {
   const pageSize = 12;
   const [totalPage, setTotalPage] = useState(0);
   const [limit, setLimit] = useState(1);
   const [dataProduct, setDataProduct] = useState([]);
-  const [checkGenres, setCheckGenres] = useState();
+  const location = useLocation();
+  const id = location.state;
+  const [checkGenres, setCheckGenres] = useState(id);
 
   console.log("checkGenres", checkGenres);
 
   const fetchPage = async () => {
     try {
-      const response = await getPage(limit, pageSize);
+      const response = await getPage(limit, pageSize, checkGenres);
       console.log("response", response);
       setTotalPage(response.totalPages);
       setDataProduct(response.data);
@@ -56,13 +60,11 @@ const TypeProductPage = () => {
                 {dataProduct &&
                   dataProduct.map((product, index) => {
                     console.log("product", product?.genresId);
-                    if (checkGenres === product?.genresId) {
-                      return (
-                        <Col lg={3} key={index + 1}>
-                          <CardProduct product={product} />
-                        </Col>
-                      );
-                    }
+                    return (
+                      <Col lg={3} key={index + 1}>
+                        <CardProduct product={product} />
+                      </Col>
+                    );
                   })}
               </Row>
               <div style={{ display: "flex", justifyContent: "center" }}>

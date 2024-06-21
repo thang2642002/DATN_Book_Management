@@ -2,17 +2,31 @@
   margin: 10px 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
-  .icon-menu {
-    img {
-      width: 100%;
+  .header-catarory {
+    display: flex;
+    align-items: center;
+    .icon-menu {
+      img {
+        width: 100%;
+      }
+    }
+    .title-catagory {
+      margin-left: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #212121;
+      letter-spacing: 0px;
     }
   }
-  .title-catagory {
-    margin-left: 10px;
-    font-size: 1.6em;
-    font-weight: bold;
-    color: #212121;
-    letter-spacing: 0px;
+  .more-catagory {
+    margin-right: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #ccc;
+    &:hover {
+      color: #000;
+    }
   }
 }

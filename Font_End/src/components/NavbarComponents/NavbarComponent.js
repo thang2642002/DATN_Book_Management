@@ -36,6 +36,9 @@ const NavbarComponent = (props) => {
     <div className="navbar-conatainer">
       <div className="list-catagory-product">
         <div className="tile-product">Nhóm sản phẩm</div>
+        <div className="title-genres" onClick={() => setCheckGenres(0)}>
+          Tất cả sản phẩm
+        </div>
         {dataGenres &&
           dataGenres.map((genres, index) => {
             return (

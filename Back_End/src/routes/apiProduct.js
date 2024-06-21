@@ -4,6 +4,10 @@ import apiProductController from "../controller/apiProductController";
 import uploadCloud from "../config/cloudinary.config";
 
 const router = express.Router();
+router.get(
+  "/get-product-name/:productName",
+  apiProductController.getNameProduct
+);
 router.get("/get-page", apiProductController.getPaginatedProduct);
 router.get("/get-all-product", apiProductController.getAllProducts);
 router.get("/get-product-by-id/:id", apiProductController.getAllProductById);

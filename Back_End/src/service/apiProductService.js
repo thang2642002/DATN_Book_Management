@@ -1,22 +1,42 @@
 import db from "../models/index";
 const { Op } = require("sequelize");
 
-const fetchPaginatedProduct = async (page, pageSize) => {
+const fetchPaginatedProduct = async (page, pageSize, genresId) => {
   try {
     const totalProducts = await db.Books.count();
-    const listProducts = await db.Books.findAll({
-      include: [
-        {
-          model: db.Genres,
+    let listProducts;
+    if (genresId !== 0) {
+      listProducts = await db.Books.findAll({
+        where: {
+          genresId: genresId,
         },
-        {
-          model: db.Author,
-        },
-        { model: db.Suppliers },
-      ],
-      limit: pageSize,
-      offset: (page - 1) * pageSize,
-    });
+        include: [
+          {
+            model: db.Genres,
+          },
+          {
+            model: db.Author,
+          },
+          { model: db.Suppliers },
+        ],
+        limit: pageSize,
+        offset: (page - 1) * pageSize,
+      });
+    } else {
+      listProducts = await db.Books.findAll({
+        include: [
+          {
+            model: db.Genres,
+          },
+          {
+            model: db.Author,
+          },
+          { model: db.Suppliers },
+        ],
+        limit: pageSize,
+        offset: (page - 1) * pageSize,
+      });
+    }
     const totalPages = Math.ceil(totalProducts / pageSize);
     return {
       totalItems: totalProducts,
@@ -26,6 +46,27 @@ const fetchPaginatedProduct = async (page, pageSize) => {
   } catch (error) {
     console.error("Error fetching paginated products:", error);
     throw error;
+  }
+};
+
+const findNameProduct = async (productName) => {
+  try {
+    const dataNameProduct = await db.Books.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${productName}%`,
+        },
+      },
+    });
+
+    console.log("dataNameProduct11111", dataNameProduct);
+
+    if (!dataNameProduct) {
+      return null;
+    }
+    return dataNameProduct;
+  } catch (error) {
+    console.log(error);
   }
 };
 const getAllProducts = async () => {
@@ -187,4 +228,5 @@ module.exports = {
   getAllProductById,
   recommendByGenren,
   fetchPaginatedProduct,
+  findNameProduct,
 };

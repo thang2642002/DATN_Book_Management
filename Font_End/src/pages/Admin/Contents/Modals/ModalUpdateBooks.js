@@ -213,9 +213,10 @@ const ModalUpdateBook = (props) => {
               <select
                 className="form-select"
                 value={supplierId}
-                onChange={(e) => setGenresId(e.target.value)}
+                onChange={(e) => setSuppliersId(e.target.value)}
               >
                 {listSuppliers.map((supplier, index) => {
+                  console.log("supplier", supplier.id);
                   return (
                     <option value={supplier.id} key={index + 1}>
                       {supplier.suppliers_name}
