@@ -21,7 +21,7 @@ router.post("/send-order", (req, res) => {
     from: "tranthang0369@gmail.com",
     to: email,
     subject: "Order Confirmation",
-    text: `Thank you for your order! Here are your order details: ${orderDetails}`,
+    html: orderDetails,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
