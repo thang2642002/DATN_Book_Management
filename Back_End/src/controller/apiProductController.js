@@ -271,6 +271,35 @@ const recommendAuthorsAndGenres = async (req, res) => {
   }
 };
 
+const getByPriceProduct = async (req, res) => {
+  const { minPrice, maxPrice } = req.query;
+  try {
+    const dataPrice = await apiProductService.getByPriceProduct(
+      minPrice,
+      maxPrice
+    );
+    if (dataPrice) {
+      res.status(200).json({
+        message: "Show all price product success",
+        errcode: 0,
+        data: dataPrice,
+      });
+    } else {
+      res.status(200).json({
+        message: "Show all price product faild",
+        errcode: 1,
+        data: [],
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(200).json({
+      message: "Show all price product error",
+      errcode: -1,
+    });
+  }
+};
+
 module.exports = {
   createProduct,
   updateProduct,
@@ -280,4 +309,5 @@ module.exports = {
   recommendAuthorsAndGenres,
   getPaginatedProduct,
   getNameProduct,
+  getByPriceProduct,
 };

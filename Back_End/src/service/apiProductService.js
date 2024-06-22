@@ -220,6 +220,43 @@ const recommendByGenren = async (bookId) => {
   }
 };
 
+const getByPriceProduct = async (minPrice, maxPrice) => {
+  try {
+    let whereCondition = {};
+    if (minPrice && maxPrice) {
+      whereCondition = {
+        price: {
+          [Op.between]: [minPrice, maxPrice],
+        },
+      };
+    } else if (minPrice) {
+      whereCondition = {
+        price: {
+          [Op.gte]: minPrice,
+        },
+      };
+    } else if (maxPrice) {
+      whereCondition = {
+        price: {
+          [Op.lte]: maxPrice,
+        },
+      };
+    }
+
+    const dataPrice = await db.Books.findAll({
+      where: whereCondition,
+      order: [["price", "ASC"]],
+    });
+
+    if (!dataPrice || dataPrice.length === 0) {
+      return null;
+    }
+    return dataPrice;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 module.exports = {
   getAllProducts,
   createProduct,
@@ -229,4 +266,5 @@ module.exports = {
   recommendByGenren,
   fetchPaginatedProduct,
   findNameProduct,
+  getByPriceProduct,
 };

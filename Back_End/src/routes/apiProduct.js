@@ -4,6 +4,7 @@ import apiProductController from "../controller/apiProductController";
 import uploadCloud from "../config/cloudinary.config";
 
 const router = express.Router();
+router.get("/get-product-by-price", apiProductController.getByPriceProduct);
 router.get(
   "/get-product-name/:productName",
   apiProductController.getNameProduct
