@@ -1,20 +1,22 @@
-import { Axios } from "axios";
 import axios from "../utils/axiosCustommize";
 const getListGenres = () => {
   return axios.get("/api/genres/get-all-genres");
 };
 
-const createGenres = (name, description) => {
-  const data = { genresName: name, description: description };
-  return axios.post("/api/genres/create-genres", data);
+const createGenres = async (genresName, description, img_genres) => {
+  const genresData = new FormData();
+  genresData.append("genresName", genresName);
+  genresData.append("description", description);
+  genresData.append("img_genres", img_genres);
+  return axios.post("/api/genres/create-genres", genresData);
 };
 
-const updateGenres = (genresName, description, id) => {
-  return axios.put(`/api/genres/update-genres/${id}`, {
-    genresName,
-    description,
-    genresId: id,
-  });
+const updateGenres = (genresName, description, id, img_genres) => {
+  const genresData = new FormData();
+  genresData.append("genresName", genresName);
+  genresData.append("description", description);
+  genresData.append("img_genres", img_genres);
+  return axios.put(`/api/genres/update-genres/${id}`, genresData);
 };
 
 const deleteGenres = (id) => {

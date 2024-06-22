@@ -42,7 +42,7 @@ const getGenresById = async (id) => {
   }
 };
 
-const createGenres = async (genresName, description) => {
+const createGenres = async (genresName, description, img_genres) => {
   try {
     let checkGenresName = await db.Genres.findOne({
       where: {
@@ -54,6 +54,7 @@ const createGenres = async (genresName, description) => {
       let createGenresNew = await db.Genres.create({
         genres_name: genresName,
         description: description,
+        img_genres: img_genres,
       });
       return createGenresNew;
     }
@@ -62,13 +63,11 @@ const createGenres = async (genresName, description) => {
   }
 };
 
-const updateGenres = async (genresName, description, genresId) => {
+const updateGenres = async (genresName, description, genresId, img_genres) => {
   try {
     let getGenres = await db.Genres.findOne({
       where: { id: genresId },
     });
-
-    console.log("check get", getGenres);
 
     if (!getGenres) {
       return null;
@@ -77,9 +76,9 @@ const updateGenres = async (genresName, description, genresId) => {
     await getGenres.update({
       genres_name: genresName,
       description: description,
+      img_genres: img_genres,
     });
 
-    console.log("check get 2: ", getGenres);
     return getGenres;
   } catch (error) {
     console.log(error);

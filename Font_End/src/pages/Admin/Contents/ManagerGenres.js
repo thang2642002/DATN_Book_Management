@@ -46,7 +46,7 @@ const ManagerGenres = () => {
       const response = await getPage(limit, pageSize);
       console.log("response", response);
       setTotalPage(response.totalPages);
-      listGenres(response.data);
+      listGenres(response?.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

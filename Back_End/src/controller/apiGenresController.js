@@ -76,10 +76,11 @@ const getGenresById = async (req, res) => {
 };
 
 const createGenres = async (req, res) => {
+  const img_genres = req.file;
   const { genresName, description } = req.body;
-  console.log(genresName, description);
+  console.log(genresName, description, img_genres);
   try {
-    if (!genresName) {
+    if (!genresName || !img_genres) {
       return res.status(200).json({
         message: "Input Genres Name The Requied",
         errcode: 1,
@@ -87,7 +88,8 @@ const createGenres = async (req, res) => {
     }
     const dataGenres = await apiGenresService.createGenres(
       genresName,
-      description
+      description,
+      img_genres ? img_genres.path : undefined
     );
     if (dataGenres) {
       return res.status(200).json({
@@ -112,34 +114,38 @@ const createGenres = async (req, res) => {
 };
 
 const UpdateGenres = async (req, res) => {
+  const img_genres = req.file;
   const { genresName, description } = req.body;
   const genresId = req.params.id;
-  console.log("id: ", genresId);
-  console.log("genres,  des", genresName, description);
-
   try {
-    const updateGenres = await apiGenresService.updateGenres(
+    let updatedImgGenres = null;
+    if (img_genres) {
+      updatedImgGenres = img_genres.path;
+    }
+    const updateGenresResult = await apiGenresService.updateGenres(
       genresName,
       description,
-      genresId
+      genresId,
+      updatedImgGenres
     );
 
-    if (updateGenres) {
+    if (updateGenresResult) {
       return res.status(200).json({
-        message: "Update Genres Is The Success ",
+        message: "Update Genres Successful",
         errcode: 0,
-        data: updateGenres,
+        data: updateGenresResult,
       });
     } else {
       return res.status(200).json({
-        message: "Update Genres Is The Failed ",
+        message: "Update Genres Failed",
         errcode: 1,
         data: [],
       });
     }
   } catch (error) {
+    console.error("Error updating genres:", error);
     return res.status(500).json({
-      message: "Update Genres Is The Error ",
+      message: "Update Genres Error",
       errcode: -1,
     });
   }

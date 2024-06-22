@@ -32,7 +32,7 @@ const CardCatagory = () => {
                 key={index + 1}
                 onClick={() => handleCtagory(genres.id)}
               >
-                <img src={img1} alt="" />
+                {/*<img src={img1} alt="" />*/}
                 <div className="title-product">{genres.genres_name}</div>
               </div>
             );

@@ -132,8 +132,6 @@ const createProduct = async (
       throw new Error(`Genres with ID ${genresId} not found`);
     }
 
-    console.log("img_book", img_book);
-
     let dataProduct = await db.Books.create({
       title,
       img_book,

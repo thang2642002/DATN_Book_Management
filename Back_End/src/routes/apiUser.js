@@ -1,4 +1,3 @@
-import { upload, uploadImage } from "../config/configUploadFile";
 import apiUserController from "../controller/apiUserController";
 import express from "express";
 import uploadCloud from "../config/cloudinary.config";

@@ -73,11 +73,6 @@ const createUser = async ({
       };
     }
 
-    // let avatarPath = null;
-    // if (avatar) {
-    //   avatarPath = avatar.path;
-    // }
-
     const user = await db.User.create({
       email,
       password,
