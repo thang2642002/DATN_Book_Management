@@ -176,7 +176,7 @@ const ContenProductDetail = (props) => {
                 ( Xem và đánh giá ) | Đã bán {dataProduct?.data?.sales}
               </span>
             </div>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex" }} className="supllier-author">
               <div className="suppliers-product">
                 Nhà cung cấp:
                 <span className="name-suppliers">
@@ -196,9 +196,11 @@ const ContenProductDetail = (props) => {
                 {dataProduct?.data?.sales} đ
               </span>
               <span className="discount-value">
-                {((dataProduct?.data?.sales - dataProduct?.data?.price) /
-                  dataProduct?.data?.sales) *
-                  100}
+                {(
+                  ((dataProduct?.data?.sales - dataProduct?.data?.price) /
+                    dataProduct?.data?.sales) *
+                  100
+                ).toFixed(2)}
                 %
               </span>
             </div>

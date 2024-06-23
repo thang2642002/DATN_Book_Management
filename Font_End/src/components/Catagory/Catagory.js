@@ -1,3 +1,5 @@
+import React from "react";
+import Slider from "react-slick";
 import catagory1 from "../../public/assets/img/catagory/catagory1.png";
 import catagory2 from "../../public/assets/img/catagory/catagory2.png";
 import catagory3 from "../../public/assets/img/catagory/catagory3.png";
@@ -9,7 +11,11 @@ import catagory8 from "../../public/assets/img/catagory/catagory8.png";
 import catagory9 from "../../public/assets/img/catagory/catagory9.png";
 import catagory10 from "../../public/assets/img/catagory/catagory10.png";
 import { Link } from "react-router-dom";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./Catagory.scss";
+import useWindowSize from "../../windowSize";
+
 const Catagory = () => {
   const name_catagory = [
     { title: "DDay 05/05", img: catagory1 },
@@ -23,13 +29,65 @@ const Catagory = () => {
     { title: "Phiên Chợ ", img: catagory9 },
     { title: "Sản Phẩm mới", img: catagory10 },
   ];
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const size = useWindowSize();
+
   return (
     <div className="catagory-container">
-      <div className="catagory-content">
-        {name_catagory.map((item, index) => {
-          return (
-            <Link>
-              <div className="catagory-item" key={index + 1}>
+      {size.width < 1024 ? (
+        <Slider {...settings}>
+          {name_catagory.map((item, index) => (
+            <Link key={index}>
+              <div className="catagory-item">
+                <div className="img-catagory">
+                  <img src={item.img} alt="catagory" />
+                </div>
+                <div>
+                  <p className="title-catagory">{item.title}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </Slider>
+      ) : (
+        <div className="catagory-content">
+          {name_catagory.map((item, index) => (
+            <Link key={index}>
+              <div className="catagory-item">
                 <div>
                   <img src={item.img} alt="catagory" />
                 </div>
@@ -38,9 +96,9 @@ const Catagory = () => {
                 </div>
               </div>
             </Link>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

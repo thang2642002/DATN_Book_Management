@@ -39,7 +39,7 @@ const userSlice = createSlice({
       state.refreshToken = refreshToken ? refreshToken : state.refreshToken;
       console.log("acctions:", action);
     },
-    resert: (state) => {
+    resetUser: (state) => {
       state.username = "";
       state.email = "";
       state.address = "";
@@ -53,5 +53,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateUser, resert } = userSlice.actions;
+export const { updateUser, resetUser } = userSlice.actions;
 export default userSlice.reducer;

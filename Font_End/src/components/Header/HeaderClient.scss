@@ -9,7 +9,7 @@
   .search {
     margin-top: 5px;
     .ant-select {
-      width: 540px !important;
+      width: 100% !important;
     }
     .btn-search {
       height: 33px;
@@ -31,7 +31,7 @@
     justify-content: space-between;
     gap: 5px;
 
-    .cart {
+    .info-user {
       position: relative;
 
       &:hover ul {
@@ -63,6 +63,21 @@
       }
     }
 
+    .carts {
+      position: relative;
+      .cart-item {
+      }
+      .quantity-cart-item {
+        position: absolute;
+        top: -8px;
+        right: -12px;
+        background-color: red;
+        font-size: 12px;
+        padding: 0px 7px;
+        border-radius: 50%;
+      }
+    }
+
     .btn-header {
       background-color: transparent;
       border: none;
@@ -73,6 +88,104 @@
     .icon {
       margin: 0 5px;
       font-size: 18px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .container-header {
+    background-color: #2c3e50;
+    padding: 10px 0;
+    .logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .search {
+      margin-top: 5px;
+      .ant-select {
+        width: 100% !important;
+      }
+      .btn-search {
+        height: 33px;
+        padding: 3px 10px;
+        color: #fff;
+        margin-left: 10px;
+        padding: 3px 10px 5px 10px;
+        border: none;
+        outline: none;
+        background-color: green;
+        &::hover {
+          opacity: 0.8 !important;
+        }
+      }
+    }
+    .content-info {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+
+      .info-user {
+        position: relative;
+
+        &:hover ul {
+          display: block;
+        }
+        ul {
+          z-index: 999;
+          position: absolute;
+          top: 25px;
+          display: none;
+          width: 150%;
+          background-color: #fff;
+          padding: 8px 5px;
+          border-radius: 5px;
+
+          a {
+            text-decoration: none;
+          }
+
+          li {
+            text-decoration: none;
+            list-style: none;
+            padding: 5px 0;
+            color: #000;
+            &:hover {
+              background-color: #ebebeb;
+            }
+          }
+        }
+      }
+
+      .carts {
+        position: relative;
+        .cart-item {
+        }
+        .quantity-cart-item {
+          position: absolute;
+          top: -8px;
+          right: -12px;
+          background-color: red;
+          font-size: 12px;
+          padding: 0px 7px;
+          border-radius: 50%;
+        }
+      }
+
+      .btn-header {
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .icon {
+        margin: 0 5px;
+        font-size: 18px;
+      }
     }
   }
 }

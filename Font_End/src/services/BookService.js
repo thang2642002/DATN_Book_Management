@@ -75,6 +75,19 @@ const getNameProduct = (nameProduct) => {
   return axios.get(`/api/products/get-product-name/${nameProduct}`);
 };
 
+const getPriceProduct = (minPrice, maxPrice) => {
+  console.log(minPrice, maxPrice);
+  if (maxPrice !== null && minPrice !== null) {
+    return axios.get(
+      `/api/products/get-product-by-price?minPrice=${minPrice}&maxPrice=${maxPrice}`
+    );
+  } else if (maxPrice !== null) {
+    return axios.get(`/api/products/get-product-by-price?maxPrice=${maxPrice}`);
+  } else {
+    return axios.get(`/api/products/get-product-by-price?minPrice=${minPrice}`);
+  }
+};
+
 export {
   getListBooks,
   deleteBook,
@@ -84,4 +97,5 @@ export {
   recommendation,
   getPage,
   getNameProduct,
+  getPriceProduct,
 };

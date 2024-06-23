@@ -245,3 +245,77 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .product-detail-conten {
+    padding: 0 !important;
+    .pd-0 {
+      padding: 0 !important;
+      display: flex;
+      justify-content: center;
+    }
+    .img-preview {
+      display: none;
+    }
+    .img-product {
+      width: 200px;
+      height: 200px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .info-detailproduct {
+      .title-product {
+        color: rgb(36, 36, 36);
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 32px;
+      }
+      .supllier-author {
+        justify-content: space-between;
+        .author-product {
+          margin-left: 0 !important;
+        }
+      }
+      .price-product {
+        .price {
+          font-size: 25px;
+        }
+        .original-price {
+          font-size: 16px;
+        }
+      }
+      .quantity-product {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+      }
+      .purchase {
+        display: flex;
+        flex-direction: column;
+        .add-to-cart {
+          padding: 7px 50px;
+        }
+        .reservation {
+          padding: 9px 110px;
+          margin-left: 0;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  .review-container {
+    padding: 0 0 !important;
+    .input-comment {
+      margin-left: 0 !important;
+    }
+    .title-view-comment {
+      margin-left: 0 !important;
+    }
+    .content-comment {
+      margin-left: 0 !important;
+    }
+  }
+}

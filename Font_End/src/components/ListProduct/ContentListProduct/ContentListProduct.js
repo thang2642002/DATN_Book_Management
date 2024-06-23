@@ -12,7 +12,7 @@ const ContentListProduct = (props) => {
     <>
       <Row style={{ padding: "0", margin: "0" }}>
         {books.map((book, index) => (
-          <Col key={index} lg={2}>
+          <Col key={index} xs={6} md={4} lg={2}>
             <CardProduct product={book} />
           </Col>
         ))}

@@ -246,6 +246,8 @@ const getByPriceProduct = async (minPrice, maxPrice) => {
       order: [["price", "ASC"]],
     });
 
+    console.log("dataPrice", dataPrice);
+
     if (!dataPrice || dataPrice.length === 0) {
       return null;
     }

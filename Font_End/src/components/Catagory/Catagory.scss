@@ -31,3 +31,49 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .catagory-container {
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+    .slick-slide {
+      text-align: center;
+    }
+
+    .catagory-item {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .img-catagory {
+        width: 50px;
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+
+    .title-catagory {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  }
+
+  .catagory-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+
+    .catagory-item {
+      flex: 1 1 calc(20% - 10px); /* Adjust based on the number of columns you want */
+      max-width: calc(
+        20% - 10px
+      ); /* Adjust based on the number of columns you want */
+    }
+  }
+}

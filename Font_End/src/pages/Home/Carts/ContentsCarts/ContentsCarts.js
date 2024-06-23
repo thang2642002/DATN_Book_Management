@@ -1,21 +1,17 @@
-import Form from "react-bootstrap/Form";
-import { Row, Col } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Row, Col, Container, Form } from "react-bootstrap";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "./ContentsCarts.scss";
-import img from "../../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
-import { deleteCarts } from "../../../../services/cartsService";
 import {
   getListCartItem,
   deleteProductCart,
   updateCartItem,
 } from "../../../../services/cartItemService";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { updateProduct } from "../../../../redux/Slice/productSlice";
-import { useNavigate } from "react-router-dom";
+import { deleteCarts } from "../../../../services/cartsService";
 
 const ContentsCarts = () => {
   const [quantity, setQuantity] = useState();
@@ -25,10 +21,14 @@ const ContentsCarts = () => {
   const [listBuy, setListBuy] = useState([]);
   const Navigate = useNavigate();
   const user = useSelector((state) => state.user);
+
+  console.log("listCartsItem", listCartsItem);
+
   const ListCart = async () => {
     const data = await getListCartItem();
     setListCartsItem(data.data);
   };
+
   const handleCheckAll = () => {
     const newCheckAll = !checkAll;
     setCheckAll(newCheckAll);
@@ -111,115 +111,125 @@ const ContentsCarts = () => {
     <div className="contents-carts-container">
       <div className="title-carts">Giỏ hàng</div>
       <div className="content-carts">
-        <Row>
-          <Col lg={9}>
-            <div className="details-product">
-              <div className="title-carts-product">
-                <Form.Check
-                  inline
-                  label="Tất cả"
-                  className="check-box"
-                  value="check"
-                  checked={checkAll}
-                  onChange={handleCheckAll}
-                />
-                <div className="title-price">Đơn giá</div>
-                <div className="title-quantity">Số lượng</div>
-                <div className="title-total-price">Thành tiền</div>
-                <div className="delete">
-                  <MdDelete onClick={() => deleteAllCarts(user.id)} />
+        <Container>
+          <Row>
+            <Col lg={9}>
+              <div className="details-product">
+                <div className="title-carts-product">
+                  <Form.Check
+                    inline
+                    label="Tất cả"
+                    className="check-box"
+                    value="check"
+                    checked={checkAll}
+                    onChange={handleCheckAll}
+                  />
+                  <div className="title-price">Đơn giá</div>
+                  <div className="title-quantity">Số lượng</div>
+                  <div className="title-total-price">Thành tiền</div>
+                  <div className="delete">
+                    <MdDelete onClick={() => deleteAllCarts(user.id)} />
+                  </div>
+                </div>
+                <div className="product-carts">
+                  <div className="title">Sản phẩm</div>
+                  {listCartsItem.map((product, index) => {
+                    if (product?.Cart?.userId === user?.id) {
+                      return (
+                        <Row key={index} className="info-product">
+                          <Col md={1}>
+                            <Form.Check
+                              inline
+                              value="check"
+                              checked={checkedItems[index] || false}
+                              onChange={() => handleCheckChange(index, product)}
+                            />
+                          </Col>
+
+                          <Col md={4}>
+                            <div className="title-product">
+                              <img
+                                src={product?.Book?.img_book}
+                                alt="product"
+                              />
+                              <div>{product?.Book?.title}</div>
+                            </div>
+                          </Col>
+                          <Col md={2}>
+                            <div className="price-product">
+                              {product?.Book?.price} đ
+                            </div>
+                          </Col>
+                          <Col md={2}>
+                            <div className="count-product">
+                              <span
+                                className="minus"
+                                onClick={() =>
+                                  handleQuantityChange(
+                                    index,
+                                    product.quantity > 0
+                                      ? product.quantity - 1
+                                      : 0,
+                                    product?.id
+                                  )
+                                }
+                              >
+                                <MinusOutlined />
+                              </span>
+                              <input
+                                value={product?.quantity}
+                                style={{
+                                  width: "40px",
+                                  height: "34px",
+                                  border: "1px solid #ccc",
+                                  paddingLeft: "15px",
+                                }}
+                              />
+                              <span
+                                className="plus"
+                                onClick={() =>
+                                  handleQuantityChange(
+                                    index,
+                                    product.quantity + 1,
+                                    product?.id
+                                  )
+                                }
+                              >
+                                <PlusOutlined />
+                              </span>
+                            </div>
+                          </Col>
+                          <Col md={2}>
+                            <div className="total-price-product">
+                              {product?.Book?.price * product?.quantity} đ
+                            </div>
+                          </Col>
+                        </Row>
+                      );
+                    }
+                  })}
                 </div>
               </div>
-              <div className="product-carts">
-                <div className="title">Sản phẩm</div>
-                {listCartsItem.map((product, index) => {
-                  if (product?.Cart?.userId === user?.id) {
-                    return (
-                      <div className="info-product">
-                        <Form.Check
-                          inline
-                          value="check"
-                          checked={checkedItems[index] || false}
-                          onChange={() => handleCheckChange(index, product)}
-                        />
-                        <div className="title-product">
-                          <img src={product?.Book?.img_book} alt="product" />
-                          <div>{product?.Book?.title}</div>
-                        </div>
-                        <div className="price-product">
-                          {product?.Book?.price} đ
-                        </div>
-                        <div className="count-product">
-                          <span
-                            className="minus"
-                            onClick={() =>
-                              handleQuantityChange(
-                                index,
-                                product.quantity > 0 ? product.quantity - 1 : 0,
-                                product?.id
-                              )
-                            }
-                          >
-                            <MinusOutlined />
-                          </span>
-                          <input
-                            value={product?.quantity}
-                            style={{
-                              width: "40px",
-                              height: "34px",
-                              border: "1px solid #ccc",
-                              paddingLeft: "15px",
-                            }}
-                          />
-                          <span
-                            className="plus"
-                            onClick={() =>
-                              handleQuantityChange(
-                                index,
-                                product.quantity + 1,
-                                product?.id
-                              )
-                            }
-                          >
-                            <PlusOutlined />
-                          </span>
-                        </div>
-                        <div className="total-price-product">
-                          {product?.Book?.price * product?.quantity}
-                        </div>
-                        <div
-                          className="delete"
-                          onClick={() =>
-                            handleDeleteCart(product?.cartId, product?.bookId)
-                          }
-                        >
-                          <MdDelete />
-                        </div>
-                      </div>
-                    );
-                  }
-                })}
-              </div>
-            </div>
-          </Col>
-          <Col lg={3}>
-            <div className="total-payment">
-              <div className="total-price">
-                <div className="provisional">
-                  <div className="title">Tạm tính</div>
-                  <div className="price">{totalPrice} đ</div>
+            </Col>
+            <Col lg={3}>
+              <div className="total-payment">
+                <div className="total-price">
+                  <div className="provisional">
+                    <div className="title">Tạm tính</div>
+                    <div className="price">{totalPrice} đ</div>
+                  </div>
+                  <div className="sum-price">
+                    <div className="title">Tổng tiền</div>
+                    <div className="price">{totalPrice} đ</div>
+                  </div>
                 </div>
-                <div className="sum-price">
-                  <div className="title">Tổng tiền</div>
-                  <div className="price">{totalPrice} đ</div>
-                </div>
+                <button className="btn" onClick={handleBuy}>
+                  Thanh Toán
+                </button>
               </div>
-              <button className="btn" onClick={handleBuy}>
-                Thanh Toán
-              </button>
-            </div>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </Container>
       </div>
       <ToastContainer
         position="top-right"

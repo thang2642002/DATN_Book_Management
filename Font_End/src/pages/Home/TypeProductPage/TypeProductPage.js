@@ -51,7 +51,10 @@ const TypeProductPage = () => {
         <Row>
           <Col lg={3}>
             <div className="type-product-navbar">
-              <NavbarComponent setCheckGenres={setCheckGenres} />
+              <NavbarComponent
+                setCheckGenres={setCheckGenres}
+                setDataProduct={setDataProduct}
+              />
             </div>
           </Col>
           <Col lg={9}>

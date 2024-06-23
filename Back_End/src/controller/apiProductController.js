@@ -285,7 +285,7 @@ const getByPriceProduct = async (req, res) => {
         data: dataPrice,
       });
     } else {
-      res.status(200).json({
+      res.status(404).json({
         message: "Show all price product faild",
         errcode: 1,
         data: [],

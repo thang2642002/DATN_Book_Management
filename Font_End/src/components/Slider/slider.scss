@@ -7,3 +7,12 @@
     height: 350px;
   }
 }
+
+@media (max-width: 480px) {
+  .slider-container {
+    height: 150px;
+    img {
+      height: 100%;
+    }
+  }
+}

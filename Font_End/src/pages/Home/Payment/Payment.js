@@ -1,4 +1,4 @@
-import { Container, ListGroup, Row } from "react-bootstrap";
+import { Container, ListGroup, Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import img from "../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
 import { PayPalButton } from "react-paypal-button-v2";
@@ -180,17 +180,27 @@ const Payment = () => {
             {data.listBuy &&
               data.listBuy.map((item, index) => {
                 return (
-                  <div className="product" key={index + 1}>
-                    <div className="img-product">
-                      <img src={item?.Book?.img_book} alt="product" />
+                  <Row>
+                    <div className="product" key={index + 1}>
+                      <Col md={2} lg={2}>
+                        <div className="img-product">
+                          <img src={item?.Book?.img_book} alt="product" />
+                        </div>
+                      </Col>
+                      <Col md={4} lg={4}>
+                        <div className="title-product">{item?.Book?.title}</div>
+                      </Col>
+
+                      <Col md={3} lg={2}>
+                        <div className="sales-product">{item?.Book?.price}</div>
+                      </Col>
+                      <Col md={3} lg={2}>
+                        <div className="price-product">
+                          {item?.Book?.price * item?.quantity} đ
+                        </div>
+                      </Col>
                     </div>
-                    <div className="title-product">{item?.Book?.title}</div>
-                    <div className="sales-product">{item?.Book?.price}</div>
-                    <div className="quantity-product">{item?.quantity}</div>
-                    <div className="price-product">
-                      {item?.Book?.price * item?.quantity} đ
-                    </div>
-                  </div>
+                  </Row>
                 );
               })}
           </div>

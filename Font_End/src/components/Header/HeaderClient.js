@@ -4,28 +4,31 @@ import { AutoComplete } from "antd";
 import { Link, Navigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import InputGroup from "react-bootstrap/InputGroup";
-import Dropdown from "react-bootstrap/Dropdown";
+
 import { FaShoppingCart } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../services/userService";
-import { resert } from "../../redux/Slice/userSlice";
+import { resetUser } from "../../redux/Slice/userSlice";
 import { getNameProduct } from "../../services/BookService";
 
 import "./HeaderClient.scss";
 import { ToastContainer, toast } from "react-toastify";
+import { resetProduct } from "../../redux/Slice/productSlice";
 
 const HeaderClient = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const product = useSelector((state) => state.product);
   const [listFindProduct, setListFindProduct] = useState([]);
   const [options, setOptions] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+
+  console.log("product", product);
+
   const handleLoginAccount = () => {
     navigate("/sign-in");
   };
@@ -33,7 +36,8 @@ const HeaderClient = () => {
   const handleLogOut = async () => {
     await logOut();
     localStorage.removeItem("acceess_tokens");
-    dispatch(resert());
+    dispatch(resetUser());
+    dispatch(resetProduct());
   };
 
   const handleOnCart = () => {
@@ -54,9 +58,11 @@ const HeaderClient = () => {
     navigate(`/product-detail/${value}`);
     setOptions([]);
     setListFindProduct([]);
-    };
+    setInputValue("");
+  };
 
   const handleSearch = (value) => {
+    setInputValue(value);
     if (value) {
       getProductName(value);
     } else {
@@ -71,6 +77,8 @@ const HeaderClient = () => {
       }));
     });
   };
+
+  useEffect(() => {}, [product]);
 
   return (
     <div className="container-header">
@@ -91,25 +99,20 @@ const HeaderClient = () => {
                 placeholder="input here"
                 options={options}
                 onSelect={onSelect}
+                value={inputValue}
+                onChange={setInputValue}
               />
-              <Button
-                variant="outline-secondary"
-                id="button-addon2"
-                className="btn-search"
-              >
-                Tìm kiếm
-              </Button>
             </div>
           </Col>
           <Col sm={4}>
             <div className="content-info">
-              <div className="cart">
+              <div className="note">
                 <button variant="outline-secondary" className="btn-header">
                   <FaBell className="icon" />
                   Thông báo
                 </button>
               </div>
-              <div className="cart">
+              <div className="info-user">
                 <button variant="light" className="btn-header">
                   <MdAccountCircle className="icon" />
                   {user?.username.length > 0 ? (
@@ -157,22 +160,14 @@ const HeaderClient = () => {
                   )}
                 </button>
               </div>
-              <div className="note">
+              <div className="carts">
                 <button variant="light" className="btn-header">
                   <FaShoppingCart className="icon" />
-                  <span onClick={handleOnCart}>Giỏ hàng</span>
+                  <span onClick={handleOnCart} className="cart-item">
+                    Giỏ hàng
+                  </span>
+                  <span className="quantity-cart-item">{product.quantity}</span>
                 </button>
-              </div>
-              <div className="cart">
-                <Dropdown>
-                  <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    VN
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">EN</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
               </div>
             </div>
           </Col>

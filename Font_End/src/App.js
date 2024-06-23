@@ -2,15 +2,30 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { routers } from "./routers/index";
 import "./App.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { getUserById } from "./services/userService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "./redux/Slice/userSlice";
+import { getListCartItem } from "./services/cartItemService";
+import { updateProduct } from "./redux/Slice/productSlice";
 
 function App() {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+
+  const addQuantity = async (id) => {
+    const data = await getListCartItem();
+    if (data) {
+      let quantity = 0;
+      data.data
+        .filter((item) => item?.Cart?.userId === id)
+        .map((product, index) => {
+          quantity += product?.quantity;
+        });
+      dispatch(updateProduct(quantity));
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -18,9 +33,9 @@ function App() {
 
   useEffect(() => {
     let storageData = localStorage.getItem("acceess_tokens");
-
     if (storageData) {
       const decode = jwtDecode(storageData);
+      addQuantity(decode?.id);
       if (decode?.id) {
         handleGetDetailUser(decode?.id, storageData);
       }

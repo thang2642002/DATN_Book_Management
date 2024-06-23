@@ -9,15 +9,14 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     updateProduct: (state, action) => {
-      const { quantity = 0 } = action.payload;
+      const quantity = action.payload;
       state.quantity = quantity ? quantity : state.quantity;
-      console.log("acctions:", action);
     },
-    resert: (state) => {
+    resetProduct: (state) => {
       state.quantity = 0;
     },
   },
 });
 
-export const { updateProduct, resert } = productSlice.actions;
+export const { updateProduct, resetProduct } = productSlice.actions;
 export default productSlice.reducer;

@@ -47,6 +47,10 @@
           border-top: 1px solid #f5f3f3;
           border-radius: 0 0 5px 5px;
 
+          &.info-product.row {
+            --bs-gutter-x: 0 !important;
+          }
+
           .form-check-inline {
             margin-right: 0 !important;
           }
