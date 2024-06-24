@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import img2 from "../../public/assets/img/cards/card2.jpg";
 import "./CardProduct.scss";
 
 const CardProduct = (props) => {
@@ -18,8 +17,11 @@ const CardProduct = (props) => {
           <div className="title-product">{product?.title}</div>
           <div className="special-price">
             <span>{product?.price} đ</span>
-            <span>
-              {((product?.sales - product?.price) / product?.sales) * 100}
+            <span className="salse">
+              {Math.round(
+                ((product?.sales - product?.price) / product?.sales) * 100
+              )}
+              %
             </span>
           </div>
           <div className="old-price">{product?.price}</div>

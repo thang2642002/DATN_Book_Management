@@ -35,7 +35,7 @@ const TableOrderDetails = (props) => {
                       className="btn btn-warning mx-3"
                       onClick={() => handleClickUpdate(orderDetails)}
                     >
-                      Upadte
+                      Update
                     </button>
                     <button
                       className="btn btn-danger"

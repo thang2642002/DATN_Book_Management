@@ -20,7 +20,8 @@ import {
 import EditReviewProduct from "./EditReviewProduct";
 import imguser from "../../../../public/assets/img/avatar.png";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { pushProduct } from "../../../../redux/Slice/productSlice";
 
 const ContenProductDetail = (props) => {
   const { dataProduct } = props;
@@ -32,6 +33,7 @@ const ContenProductDetail = (props) => {
   const [showModalEditReview, setShowModalEditReview] = useState(false);
   const [dataUpdateReview, setDataUpdateReview] = useState({});
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleAddCarts = async () => {
@@ -43,6 +45,7 @@ const ContenProductDetail = (props) => {
         dataProduct.data.id
       );
 
+      dispatch(pushProduct(quantity));
       if (addCart && addCart.errcode === 0) {
         toast.success(addCart.message);
         setQuantity(1);
@@ -196,11 +199,11 @@ const ContenProductDetail = (props) => {
                 {dataProduct?.data?.sales} đ
               </span>
               <span className="discount-value">
-                {(
+                {Math.round(
                   ((dataProduct?.data?.sales - dataProduct?.data?.price) /
                     dataProduct?.data?.sales) *
-                  100
-                ).toFixed(2)}
+                    100
+                )}
                 %
               </span>
             </div>

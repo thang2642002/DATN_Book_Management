@@ -16,12 +16,30 @@ import { getNameProduct } from "../../services/BookService";
 
 import "./HeaderClient.scss";
 import { ToastContainer, toast } from "react-toastify";
-import { resetProduct } from "../../redux/Slice/productSlice";
-
+import { resetProduct, updateProduct } from "../../redux/Slice/productSlice";
+import { getListCartItem } from "../../services/cartItemService";
 const HeaderClient = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+
+  const addQuantity = async (id) => {
+    const data = await getListCartItem();
+    if (data) {
+      let quantity = 0;
+      data.data
+        .filter((item) => item?.Cart?.userId === id)
+        .map((product, index) => {
+          quantity += product?.quantity;
+        });
+      dispatch(updateProduct(quantity));
+    }
+  };
+
+  if (user) {
+    addQuantity(user.id);
+  }
+
   const product = useSelector((state) => state.product);
   const [listFindProduct, setListFindProduct] = useState([]);
   const [options, setOptions] = useState([]);

@@ -27,7 +27,7 @@ const TablePubliers = (props) => {
                       className="btn btn-warning mx-3"
                       onClick={() => handleClickUpdate(carts)}
                     >
-                      Upadate
+                      Update
                     </button>
                     <button
                       className="btn btn-danger"

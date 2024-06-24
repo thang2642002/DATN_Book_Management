@@ -31,7 +31,7 @@ const TableReview = (props) => {
                       className="btn btn-warning mx-3"
                       onClick={() => handleClickUpdate(review)}
                     >
-                      Upadte
+                      Update
                     </button>
                     <button
                       className="btn btn-danger"

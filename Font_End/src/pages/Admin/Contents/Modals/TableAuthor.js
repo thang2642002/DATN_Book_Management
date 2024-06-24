@@ -31,7 +31,7 @@ const TableAuthor = (props) => {
                         handleClickUpdate(author);
                       }}
                     >
-                      Upadte
+                      Update
                     </button>
                     <button
                       className="btn btn-danger"

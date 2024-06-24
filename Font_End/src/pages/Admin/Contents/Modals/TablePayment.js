@@ -32,7 +32,7 @@ const TablePayment = (props) => {
                       className="btn btn-warning mx-3"
                       onClick={() => handleClickUpdate(payment)}
                     >
-                      Upadte
+                      Update
                     </button>
                     <button
                       className="btn btn-danger"

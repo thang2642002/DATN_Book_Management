@@ -35,7 +35,7 @@ const TableBooks = (props) => {
                       className="btn btn-warning mx-3"
                       onClick={() => handleClickUpdate(book)}
                     >
-                      Upadte
+                      Update
                     </button>
                     <button
                       className="btn btn-danger"

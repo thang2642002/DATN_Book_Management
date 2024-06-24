@@ -35,7 +35,7 @@ const TableUser = (props) => {
                     className="btn btn-warning mx-3"
                     onClick={() => handleClickUpdate(user)}
                   >
-                    Upadte
+                    Update
                   </button>
                   <button
                     className="btn btn-danger"

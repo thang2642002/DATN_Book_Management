@@ -25,7 +25,7 @@ const TableGenres = (props) => {
                       className="btn btn-warning mx-3"
                       onClick={() => handleClickUpdate(genres)}
                     >
-                      Upadte
+                      Update
                     </button>
                     <button
                       className="btn btn-danger"

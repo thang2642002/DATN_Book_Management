@@ -12,6 +12,11 @@ import {
   updateCartItem,
 } from "../../../../services/cartItemService";
 import { deleteCarts } from "../../../../services/cartsService";
+import {
+  decrementProduct,
+  incrementProduct,
+  pushProduct,
+} from "../../../../redux/Slice/productSlice";
 
 const ContentsCarts = () => {
   const [quantity, setQuantity] = useState();
@@ -21,6 +26,7 @@ const ContentsCarts = () => {
   const [listBuy, setListBuy] = useState([]);
   const Navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   console.log("listCartsItem", listCartsItem);
 
@@ -67,11 +73,16 @@ const ContentsCarts = () => {
     ListCart();
   }, []);
 
-  const handleQuantityChange = async (index, newQuantity, id) => {
+  const handleQuantityChange = async (index, newQuantity, id, quantitypush) => {
     const updatedList = [...listCartsItem];
     updatedList[index].quantity = newQuantity;
     setListCartsItem(updatedList);
     await updateCartItem(id, newQuantity);
+    if ((quantitypush = "increment")) {
+      dispatch(incrementProduct());
+    } else {
+      dispatch(decrementProduct());
+    }
   };
 
   const calculateTotalPrice = () => {
@@ -170,7 +181,8 @@ const ContentsCarts = () => {
                                     product.quantity > 0
                                       ? product.quantity - 1
                                       : 0,
-                                    product?.id
+                                    product?.id,
+                                    "decrement"
                                   )
                                 }
                               >
@@ -191,7 +203,8 @@ const ContentsCarts = () => {
                                   handleQuantityChange(
                                     index,
                                     product.quantity + 1,
-                                    product?.id
+                                    product?.id,
+                                    "increment"
                                   )
                                 }
                               >
