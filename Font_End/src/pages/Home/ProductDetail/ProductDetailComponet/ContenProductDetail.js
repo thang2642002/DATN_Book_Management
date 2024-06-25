@@ -69,7 +69,8 @@ const ContenProductDetail = (props) => {
     try {
       const dataListReview = await getListReview();
       const dataReview = dataListReview.data;
-      const idproduct = dataProduct.data.id;
+      const idproduct = dataProduct?.data?.id;
+      console.log("idproduct", idproduct);
 
       const filteredReviews = dataReview.filter(
         (item) => item.bookId === idproduct
