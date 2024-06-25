@@ -21,6 +21,7 @@ const ModalUpdateBook = (props) => {
     setPrice(0);
     setQuantity(0);
     setSalse(0);
+    setDescription("");
     setPreviewImage("");
   };
   const [title, setTitle] = useState("");
@@ -31,6 +32,7 @@ const ModalUpdateBook = (props) => {
   const [quantity, setQuantity] = useState(0);
   const [salse, setSalse] = useState(0);
   const [supplierId, setSuppliersId] = useState(0);
+  const [description, setDescription] = useState("");
   const [nameAuthor, setNameAuthor] = useState("");
   const [nameGenres, setNameGenres] = useState("");
   const [previewImage, setPreviewImage] = useState("");
@@ -62,15 +64,16 @@ const ModalUpdateBook = (props) => {
   useEffect(() => {
     console.log("dataUpdate", dataUpdate);
     if (!_.isEmpty(dataUpdate)) {
-      setTitle(dataUpdate.title);
-      setImgBook(dataUpdate.img_book);
+      setTitle(dataUpdate?.title);
+      setImgBook(dataUpdate?.img_book);
       setAuthordId(dataUpdate?.Author?.id);
       setGenresId(dataUpdate?.Genre?.id);
-      setPrice(dataUpdate.price);
-      setQuantity(dataUpdate.quantity);
-      setSalse(dataUpdate.sales);
+      setPrice(dataUpdate?.price);
+      setQuantity(dataUpdate?.quantity);
+      setSalse(dataUpdate?.sales);
       setSuppliersId(dataUpdate?.Supplier?.supplierId);
-      setPreviewImage(dataUpdate.img_book);
+      setPreviewImage(dataUpdate?.img_book);
+      setDescription(dataUpdate?.description);
       // setNameAuthor(dataUpdate.Author.author_name);
       // setNameGenres(dataUpdate.Genre.genres_name);
     }
@@ -108,7 +111,8 @@ const ModalUpdateBook = (props) => {
       price,
       quantity,
       salse,
-      supplierId
+      supplierId,
+      description
     );
 
     if (data && data.errcode === 0) {
@@ -148,7 +152,17 @@ const ModalUpdateBook = (props) => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-6">
+              <label className="form-label">Price</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Address"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
+            <div className="col-md-4">
               <label className="form-label">AuthorId</label>
               <select
                 className="form-select"
@@ -164,7 +178,7 @@ const ModalUpdateBook = (props) => {
                 })}
               </select>
             </div>
-            <div className="col-12">
+            <div className="col-4">
               <label className="form-label">GenresId</label>
               <select
                 className="form-select"
@@ -180,35 +194,7 @@ const ModalUpdateBook = (props) => {
                 })}
               </select>
             </div>
-            <div className="col-12">
-              <label className="form-label">Price</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Address"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Quantity</label>
-              <input
-                type="text"
-                className="form-control"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-            </div>
-            <div className="col-md-4">
-              <label className="form-label">Salse</label>
-              <input
-                type="text"
-                className="form-control"
-                value={salse}
-                onChange={(e) => setSalse(e.target.value)}
-              />
-            </div>
-            <div className="col-6">
+            <div className="col-4">
               <label className="form-label">Supplier</label>
               <select
                 className="form-select"
@@ -225,6 +211,38 @@ const ModalUpdateBook = (props) => {
                 })}
               </select>
             </div>
+            <div className="col-md-6">
+              <label className="form-label">Quantity</label>
+              <input
+                type="text"
+                className="form-control"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Salse</label>
+              <input
+                type="text"
+                className="form-control"
+                value={salse}
+                onChange={(e) => setSalse(e.target.value)}
+              />
+            </div>
+            <div className="col-md-12">
+              <label className="form-label">Comment</label>
+              <div>
+                <textarea
+                  className="p-2"
+                  rows={6}
+                  cols="145"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Nhập mổ tả vào đây..."
+                />
+              </div>
+            </div>
+
             <div className="col-md-12">
               <label className="form-label label-upload" htmlFor="labelUpload">
                 <FcPlus />

@@ -12,7 +12,8 @@ const createBook = (
   price,
   quantity,
   sales,
-  supplierId
+  supplierId,
+  description
 ) => {
   const dataBook = new FormData();
   dataBook.append("title", title);
@@ -23,7 +24,7 @@ const createBook = (
   dataBook.append("quantity", quantity);
   dataBook.append("sales", sales);
   dataBook.append("supplierId", supplierId);
-
+  dataBook.append("description", description);
   return axios.post(`/api/products/craete-product`, dataBook);
 };
 
@@ -36,7 +37,8 @@ const updateBook = (
   price,
   quantity,
   sales,
-  supplierId
+  supplierId,
+  description
 ) => {
   const dataBook = new FormData();
   dataBook.append("title", title);
@@ -47,7 +49,8 @@ const updateBook = (
   dataBook.append("quantity", quantity);
   dataBook.append("sales", sales);
   dataBook.append("supplierId", supplierId);
-
+  dataBook.append("description", description);
+  console.log("dataBook", dataBook.description);
   return axios.put(`/api/products/update-product/${id}`, dataBook);
 };
 
@@ -88,6 +91,12 @@ const getPriceProduct = (minPrice, maxPrice) => {
   }
 };
 
+const recommendationDescription = (productId, take) => {
+  return axios.get(
+    `/api/products/recommendation/description/${productId}/${take}`
+  );
+};
+
 export {
   getListBooks,
   deleteBook,
@@ -98,4 +107,5 @@ export {
   getPage,
   getNameProduct,
   getPriceProduct,
+  recommendationDescription,
 };

@@ -262,36 +262,7 @@ const ContenProductDetail = (props) => {
             showDescription ? "show-full" : ""
           }`}
         >
-          Giá sản phẩm trên Fahasa.com đã bao gồm thuế theo luật hiện hành. Bên
-          cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có
-          thể phát sinh thêm chi phí khác như Phụ phí đóng gói, phí vận chuyển,
-          phụ phí hàng cồng kềnh,... Hội trưởng Shirogane Miyuki và hội phó
-          Shinomiya Kaguya gặp nhau tại Hội Học Sinh của học viện Shuchiin, nơi
-          hội tụ của những con người thuộc tầng lớp thượng lưu… Đây là câu
-          chuyện tình cảm hài hước mới mẻ về hai thiên tài tuy trong lòng thích
-          nhau lắm rồi nhưng vẫn ngày ngày bày mưu tính kế cầm cưa, bắt đối
-          phương phải tỏ tình trước. Sau 7 năm rưỡi, cuối cùng câu chuyện cũng
-          đi tới hồi kết!! “Chương cuối về Shirogane Kei” “Chương cuối về Shijo
-          Maki, Kashiwagi Nagisa và Tanuma Tsubasa” “Chương cuối về Osaragi
-          Kobachi” “Chương cuối về Hayasaka Ai” “Chương cuối về Iino Miko và
-          Ishigami Yu” “Chương cuối về Fujiwara Chika” cùng “chương cuối” của
-          các nhân vật khác! Và điều gì sẽ đón chờ Kaguya và Shiroganetrong lễ
-          tốt nghiệp…!? Mã hàng combo-kaguya28-kaguya28db-qt Dự Kiến Có Hàng
-          24/05/2024 Ngày Dự Kiến Phát Hành 24/05/2024 Độ Tuổi 17+ Tên Nhà Cung
-          Cấp Nhà Xuất Bản Kim Đồng Tác giả Aka Akasaka Người Dịch Dĩ Ninh NXB
-          Kim Đồng Năm XB 2024 Ngôn Ngữ Tiếng Việt Kích Thước Bao Bì 18 x 13 x 1
-          cm Số trang 216 Hình thức Bìa Mềm Sản phẩm bán chạy nhất Top 100 sản
-          phẩm Manga Khác bán chạy của tháng Giá sản phẩm trên Fahasa.com đã bao
-          gồm thuế theo luật hiện hành. Bên cạnh đó, tuỳ vào loại sản phẩm, hình
-          thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như
-          Phụ phí đóng gói, phí vận chuyển, phụ phí hàng cồng kềnh,... Chính
-          sách khuyến mãi trên Fahasa.com không áp dụng cho Hệ thống Nhà sách
-          Fahasa trên toàn quốc Kaguya-Sama: Cuộc Chiến Tỏ Tình - Tập 28 Hội
-          trưởng Shirogane Miyuki và hội phó Shinomiya Kaguya gặp nhau tại Hội
-          Học Sinh của học viện Shuchiin, nơi hội tụ của những con người thuộc
-          tầng lớp thượng lưu… Đây là câu chuyện tình cảm hài hước mới mẻ về hai
-          thiên tài tuy trong lòng thích nhau lắm rồi nhưng vẫn ngày ngày bày
-          mưu tính kế cầm cưa, bắt đối phương phải tỏ tình trước.
+          {dataProduct?.data?.description}
         </div>
         <div className="custom-btn">
           <button
@@ -304,7 +275,7 @@ const ContenProductDetail = (props) => {
         </div>
       </div>
 
-      <RecommendationProduct />
+      <RecommendationProduct dataProduct={dataProduct} />
 
       <div className="review-container">
         <div className="title">Đánh giá sản phẩm</div>

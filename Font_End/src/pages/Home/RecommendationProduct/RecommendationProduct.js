@@ -1,6 +1,9 @@
 import Slider from "react-slick";
-import img from "../../../public/assets/img/9d3cedd64b6b23004040abefb6d0949e.png.webp";
-import { recommendation } from "../../../services/BookService";
+
+import {
+  recommendation,
+  recommendationDescription,
+} from "../../../services/BookService";
 import "./RecommendationProduct.scss";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -18,11 +21,15 @@ const RecommendationProduct = (props) => {
   const id = useParams();
 
   const [dataRecomendation, setDataRecomendation] = useState([]);
-
+  // const getRecommendation = async () => {
+  //   const data = await recommendation(id?.id);
+  //   setDataRecomendation(data.data);
+  // };
   const getRecommendation = async () => {
-    const data = await recommendation(id?.id);
+    const data = await recommendationDescription(id.id, 10);
     setDataRecomendation(data.data);
   };
+
   console.log("dataRecomendation", dataRecomendation);
 
   useEffect(() => {

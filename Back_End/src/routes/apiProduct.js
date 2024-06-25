@@ -28,4 +28,9 @@ router.get(
   apiProductController.recommendAuthorsAndGenres
 );
 
+router.get(
+  "/recommendation/description/:bookId/:take",
+  apiProductController.recommendDescription
+);
+
 export default router;

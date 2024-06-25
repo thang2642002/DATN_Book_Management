@@ -12,6 +12,7 @@ import apiOrderDetails from "./apiOrderDetails";
 import apiCartItem from "./apiCartItem";
 import apiPayPall from "./apiPayPall";
 import apiSendEmail from "./apiSendEmail";
+import apiVnPay from "./apivnPay";
 
 const apiWebRoutes = (app) => {
   app.use("/api/users", apiUser);
@@ -28,6 +29,7 @@ const apiWebRoutes = (app) => {
   app.use("/api/orderdetails", apiOrderDetails);
   app.use("/api/paypall", apiPayPall);
   app.use("/api/sendemail", apiSendEmail);
+  app.use("/api/vnPay", apiVnPay);
 };
 
 export default apiWebRoutes;

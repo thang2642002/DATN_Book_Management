@@ -113,8 +113,16 @@ const getAllProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   const img_book = req.file;
-  const { title, authorId, genresId, price, quantity, sales, supplierId } =
-    req.body;
+  const {
+    title,
+    authorId,
+    genresId,
+    price,
+    quantity,
+    sales,
+    supplierId,
+    description,
+  } = req.body;
 
   try {
     if (
@@ -141,7 +149,8 @@ const createProduct = async (req, res) => {
       price,
       quantity,
       sales,
-      supplierId
+      supplierId,
+      description
     );
 
     console.log("img_book.path", img_book.path);
@@ -171,10 +180,18 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const img_book = req.file;
-  const { title, authorId, genresId, price, quantity, sales, supplierId } =
-    req.body;
+  const {
+    title,
+    authorId,
+    genresId,
+    price,
+    quantity,
+    sales,
+    supplierId,
+    description,
+  } = req.body;
   const productId = req.params.id;
-
+  console.log("req.body", req.body.description);
   try {
     const dataUpdate = {
       title,
@@ -184,6 +201,7 @@ const updateProduct = async (req, res) => {
       quantity,
       sales,
       supplierId,
+      description,
     };
 
     if (img_book) {
@@ -271,6 +289,36 @@ const recommendAuthorsAndGenres = async (req, res) => {
   }
 };
 
+const recommendDescription = async (req, res) => {
+  const productId = parseInt(req.params.bookId);
+  const take = parseInt(req.params.take);
+  console.log("productId", productId);
+  console.log("take", take);
+
+  try {
+    const recommendations = await apiProductService.recommendProducts(
+      productId,
+      take
+    );
+    if (recommendations) {
+      return res.status(200).json({
+        message: "Get product by description is the success",
+        errcode: 0,
+        data: recommendations,
+      });
+    } else {
+      return res.status(200).json({
+        message: "Get product by description is the fail",
+        errcode: 1,
+        data: [],
+      });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const getByPriceProduct = async (req, res) => {
   const { minPrice, maxPrice } = req.query;
   try {
@@ -310,4 +358,5 @@ module.exports = {
   getPaginatedProduct,
   getNameProduct,
   getByPriceProduct,
+  recommendDescription,
 };
