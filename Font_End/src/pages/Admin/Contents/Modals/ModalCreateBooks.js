@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { createBook } from "../../../../services/BookService";
@@ -66,7 +68,7 @@ const ModalCreateBook = (props) => {
 
   const handleSubmitCreateUsers = async () => {
     if (!title) {
-      toast.error("Ivalid title");
+      toast.error("Invalid title");
       return;
     }
     if (!img_book) {
@@ -109,10 +111,6 @@ const ModalCreateBook = (props) => {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -121,7 +119,7 @@ const ModalCreateBook = (props) => {
         className="modal-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Craete New Book</Modal.Title>
+          <Modal.Title>Create New Book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
@@ -165,13 +163,11 @@ const ModalCreateBook = (props) => {
                 onChange={(e) => setGenresId(e.target.value)}
               >
                 {nameGenres &&
-                  nameGenres.map((genresname, index) => {
-                    return (
-                      <option value={genresname.id} key={index + 1}>
-                        {genresname.genres_name}
-                      </option>
-                    );
-                  })}
+                  nameGenres.map((genresname, index) => (
+                    <option value={genresname.id} key={index + 1}>
+                      {genresname.genres_name}
+                    </option>
+                  ))}
               </select>
             </div>
 
@@ -183,13 +179,11 @@ const ModalCreateBook = (props) => {
                 onChange={(e) => setSuppliersId(e.target.value)}
               >
                 {nameSuppliers &&
-                  nameSuppliers.map((suppliersname, index) => {
-                    return (
-                      <option value={suppliersname.id} key={index + 1}>
-                        {suppliersname.suppliers_name}
-                      </option>
-                    );
-                  })}
+                  nameSuppliers.map((suppliersname, index) => (
+                    <option value={suppliersname.id} key={index + 1}>
+                      {suppliersname.suppliers_name}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="col-md-6">
@@ -213,13 +207,10 @@ const ModalCreateBook = (props) => {
             <div className="col-md-12">
               <label className="form-label">Comment</label>
               <div>
-                <textarea
-                  className="p-2"
-                  rows={6}
-                  cols="145"
+                <ReactQuill
+                  theme="snow"
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Nhập mổ tả vào đây..."
+                  onChange={(value) => setDescription(value)}
                 />
               </div>
             </div>
@@ -248,7 +239,7 @@ const ModalCreateBook = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUsers()}>
+          <Button variant="primary" onClick={handleSubmitCreateUsers}>
             Save
           </Button>
         </Modal.Footer>

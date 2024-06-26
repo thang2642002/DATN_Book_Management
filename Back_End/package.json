@@ -31,6 +31,7 @@
     "nodemailer": "^6.9.14",
     "nodemon": "2.0.15",
     "querystring": "^0.2.1",
+    "sanitize-html": "^2.13.0",
     "sequelize": "6.13.0",
     "sequelize-cli": "6.3.0",
     "tf-idf": "^1.0.0"

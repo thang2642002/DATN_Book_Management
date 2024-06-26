@@ -1,6 +1,7 @@
 import "./ContenProductDetail.scss";
 import { Row, Col } from "react-bootstrap";
 import { Image } from "antd";
+import ReactHtmlParser from "react-html-parser";
 import { createCarts } from "../../../../services/cartsService";
 import { useNavigate } from "react-router-dom";
 import RecommendationProduct from "../../RecommendationProduct/RecommendationProduct";
@@ -263,7 +264,7 @@ const ContenProductDetail = (props) => {
             showDescription ? "show-full" : ""
           }`}
         >
-          {dataProduct?.data?.description}
+          {ReactHtmlParser(dataProduct?.data?.description)}
         </div>
         <div className="custom-btn">
           <button

@@ -161,6 +161,7 @@ const updateProduct = async (id, dataUpdate) => {
     }
 
     await product.update(dataUpdate);
+    console.log("product", product);
 
     return product;
   } catch (error) {
@@ -260,68 +261,6 @@ const getByPriceProduct = async (minPrice, maxPrice) => {
     throw error;
   }
 };
-
-// function preprocessText(text) {
-//   return text.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-// }
-
-// function cosineSimilarity(vecA, vecB) {
-//   const dotProduct = vecA.reduce((sum, a, idx) => sum + a * vecB[idx], 0);
-//   const magnitudeA = Math.sqrt(vecA.reduce((sum, a) => sum + a * a, 0));
-//   const magnitudeB = Math.sqrt(vecB.reduce((sum, b) => sum + b * b, 0));
-//   return dotProduct / (magnitudeA * magnitudeB);
-// }
-
-// const recommendProducts = async (productId) => {
-//   try {
-
-//     const products = await db.Books.findAll();
-//     const tfidf = new TfIdf();
-
-//     products.forEach((product) => {
-//       const processedDescription = preprocessText(product.description);
-
-//       tfidf.addDocument(processedDescription);
-//     });
-
-//     const productIndex = products.findIndex((p) => p.id === productId);
-//     if (productIndex === -1) {
-//       throw new Error(`Product with ID ${productId} not found`);
-//     }
-//     const targetVector = tfidf
-//       .listTerms(productIndex)
-//       .map((term) => term.tfidf);
-
-//     console.log(`Target Vector for product ID ${productId}:`, targetVector);
-
-//     const sumOfSquares = targetVector.reduce((acc, val) => acc + val ** 2, 0);
-//     const norm = Math.sqrt(sumOfSquares);
-//     const normalizedVector = targetVector.map((val) => val / norm);
-
-//     console.log(
-//       `Normalized Vector for product ID ${productId}:`,
-//       normalizedVector
-//     );
-
-//     const similarities = products.map((product, index) => {
-//       if (index === productIndex) return -1; // Bỏ qua sản phẩm hiện tại
-//       const vector = tfidf.listTerms(index).map((term) => term.tfidf);
-
-//       return cosineSimilarity(normalizedVector, vector);
-//     });
-
-//     const recommendedIndexes = similarities
-//       .map((similarity, index) => ({ similarity, index }))
-//       .sort((a, b) => b.similarity - a.similarity)
-//       .slice(0, 5) // Số lượng sản phẩm muốn đề xuất
-//       .map((item) => item.index);
-
-//     return recommendedIndexes.map((index) => products[index]);
-//   } catch (error) {
-//     console.error("Error in recommendProducts:", error);
-//     throw error;
-//   }
-// };
 
 const _ = require("lodash");
 
@@ -427,6 +366,8 @@ const recommendProducts = async (bookId, take = 10) => {
       return { id: otherBook.id, similarity };
     })
   );
+
+  console.log("similarBooksDictionary", similarBooksDictionary);
 
   const validSimilarBooks = similarBooksDictionary.filter(
     (entry) => entry.similarity >= 0 && entry.id !== book.id
