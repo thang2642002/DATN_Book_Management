@@ -29,25 +29,28 @@ router.post("/create_payment_url", (req, res) => {
     vnp_TxnRef: String(orderId),
     vnp_OrderInfo: `Thanh toán cho đơn hàng ${String(orderId)}`,
     vnp_OrderType: "other",
-    vnp_Amount: String(amount * 100),
+    vnp_Amount: (amount * 100).toString(),
     vnp_ReturnUrl: vnpayConfig.vnp_ReturnUrl,
-    vnp_IpAddr: String(ipAddr),
+    vnp_IpAddr: ipAddr,
     vnp_CreateDate: createDate,
   };
 
   vnpParams = sortObject(vnpParams);
 
-  const signData = querystring.stringify(vnpParams, { encode: false });
+  // Sử dụng URLSearchParams để tạo chuỗi ký tên
+  const signData = new URLSearchParams(vnpParams).toString();
   const hmac = crypto.createHmac("sha512", vnpayConfig.vnp_HashSecret);
   const signed = hmac.update(Buffer.from(signData, "utf-8")).digest("hex");
   vnpParams["vnp_SecureHash"] = signed;
 
-  const paymentUrl =
-    vnpayConfig.vnp_Url +
-    "?" +
-    querystring.stringify(vnpParams, { encode: false });
+  const paymentUrl = `${vnpayConfig.vnp_Url}?${new URLSearchParams(
+    vnpParams
+  ).toString()}`;
 
   console.log("paymentUrl:", paymentUrl);
+  console.log("vnpParams:", vnpParams);
+  console.log("signData:", signData);
+  console.log("signed:", signed);
 
   res.json({ paymentUrl });
 });
@@ -60,9 +63,15 @@ router.get("/vnpay_return", (req, res) => {
 
   vnp_Params = sortObject(vnp_Params);
 
-  const signData = querystring.stringify(vnp_Params, { encode: false });
+  // Sử dụng URLSearchParams để tạo chuỗi ký tên
+  const signData = new URLSearchParams(vnp_Params).toString();
   const hmac = crypto.createHmac("sha512", vnpayConfig.vnp_HashSecret);
   const signed = hmac.update(Buffer.from(signData, "utf-8")).digest("hex");
+
+  console.log("vnp_Params:", vnp_Params);
+  console.log("signData:", signData);
+  console.log("signed:", signed);
+  console.log("secureHash from VNPAY:", secureHash);
 
   if (secureHash === signed) {
     res.send("Thanh toán thành công!");
